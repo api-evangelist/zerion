@@ -1,0 +1,1081 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: REST chains swap API
+  description: REST-like API provides access to rich Zerion ecosystem.
+  contact:
+    name: Zerion API
+    url: https://developers.zerion.io/
+    email: api@zerion.io
+servers:
+- description: Production API
+  url: https://api.zerion.io
+security:
+- APIKeyBasicAuth: []
+tags:
+- name: swap
+  description: Operations related to swapping and bridging assets.
+paths:
+  /v1/swap/quotes/:
+    get:
+      operationId: swapQuotes
+      summary: Get swap and bridge quotes
+      description: 'Returns quotes from multiple liquidity sources for a same-chain swap or a cross-chain bridge between two fungible assets. Supports EVM chains and Solana, including EVM ↔ Solana bridges.
+
+
+        Quotes are returned best-first: sorted in descending order by the fiat value of `output_amount_after_fees` (output amount minus network, protocol and bridge fees that are not already included in the rate). Quotes with the same score are tied-broken alphabetically by `liquidity_source.id`, so identical requests always return quotes in the same order.
+
+
+        The `input` and `output` parameters are objects encoded with bracket notation in the URL — the request is sent as a flat query string. For example:
+
+
+        ```
+
+        GET /v1/swap/quotes/?currency=usd&input[chain_id]=base&input[fungible_id]=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&input[amount]=0.001&output[fungible_id]=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&from=0xd8da6bf26964af9d7eed9e03e53415d37aa96045&to=0xd8da6bf26964af9d7eed9e03e53415d37aa96045
+
+        ```
+
+        '
+      tags:
+      - swap
+      parameters:
+      - name: currency
+        in: query
+        required: false
+        description: Currency in which fiat values of amounts and fees in the response are expressed.
+        example: usd
+        schema:
+          type: string
+          default: usd
+      - name: from
+        in: query
+        required: true
+        description: Address of the wallet performing the swap. Must match the chain type of `input[chain_id]` (EVM hex or Solana base58).
+        example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+        schema:
+          type: string
+      - name: to
+        in: query
+        required: true
+        description: Recipient of the output asset. Must match the chain type of `output[chain_id]`. For a same-chain swap to the same wallet, set `to` equal to `from`.
+        example: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'
+        schema:
+          type: string
+      - name: input
+        in: query
+        required: true
+        description: The asset being sent.
+        style: deepObject
+        explode: true
+        schema:
+          type: object
+          required:
+          - chain_id
+          - fungible_id
+          - amount
+          properties:
+            chain_id:
+              type: string
+              description: Chain ID the input asset lives on.
+              example: base
+            fungible_id:
+              type: string
+              description: Unique fungible ID of the input asset.
+              minLength: 3
+              maxLength: 44
+              example: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+            amount:
+              type: string
+              description: Human-readable input amount as a positive decimal (not in the smallest unit).
+              example: '0.001'
+      - name: output
+        in: query
+        required: true
+        description: The asset being received.
+        style: deepObject
+        explode: true
+        schema:
+          type: object
+          required:
+          - fungible_id
+          properties:
+            chain_id:
+              type: string
+              description: Chain ID the output asset lives on. Defaults to `input[chain_id]` (same-chain swap).
+              example: base
+            fungible_id:
+              type: string
+              description: Unique fungible ID of the output asset.
+              minLength: 3
+              maxLength: 44
+              example: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+      - name: slippage_percent
+        in: query
+        required: false
+        description: Maximum acceptable slippage in percent. When omitted, an auto-slippage value is chosen.
+        example: 2
+        schema:
+          type: number
+          format: float
+          minimum: 0
+      responses:
+        '200':
+          $ref: '#/components/responses/SwapQuotesResponse'
+        '400':
+          $ref: '#/components/responses/MalformedParameters'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /v1/swap/fungibles/:
+    get:
+      operationId: swapFungibles
+      summary: List fungibles available for bridging
+      description: Returns the list of tokens available for bridging between two chains. Use this to populate a token picker UI. Only relevant for cross-chain swaps, same-chain swaps don't require this step.
+      tags:
+      - swap
+      parameters:
+      - name: input
+        in: query
+        required: false
+        style: deepObject
+        explode: true
+        schema:
+          type: object
+          properties:
+            chain_id:
+              type: string
+              description: Initial chain id the user want exchange fungibles from. If nothing specified then `ethereum` is used.
+              example: ethereum
+      - name: output
+        in: query
+        required: false
+        style: deepObject
+        explode: true
+        schema:
+          type: object
+          properties:
+            chain_id:
+              type: string
+              description: Target chain id the user want receive fungibles on. If nothing specified then `ethereum` is used.
+              example: polygon
+      - name: direction
+        in: query
+        description: 'The direction parameter is a parameter that determines the flow of fungibles involved in the transaction. It can have three possible values: ''input'', ''output'', or ''both''. The value ''input'' indicates that the API endpoint will only return fungibles that the user can send. The value ''output'' indicates that the API endpoint will only return fungibles that the user can receive. The value ''both'' means that the API endpoint will return fungibles which are ''input'' and ''output'' at the same time. In other words - intersection for ''input'' and output''. If nothing specified then `both` is used.'
+        example: both
+        schema:
+          type: string
+          enum:
+          - input
+          - output
+          - both
+      responses:
+        '200':
+          $ref: '#/components/responses/SwapFungiblesResponse'
+        '400':
+          $ref: '#/components/responses/MalformedParameters'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    ContainerShort:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Chain resource type.
+          example: chains
+        id:
+          type: string
+          description: Chain unique identifier.
+          example: polygon
+    AttributesImplementation:
+      type: object
+      required:
+      - chain_id
+      - address
+      - decimals
+      properties:
+        chain_id:
+          type: string
+          description: Unique id of the chain.
+          example: ethereum
+        address:
+          type: string
+          nullable: true
+          description: Implementation address on the chain.
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+        decimals:
+          type: integer
+          description: Number of decimals points of the implementation.
+          example: 18
+        market_data:
+          $ref: '#/components/schemas/ImplementationMarketData'
+        deployment_date:
+          type: string
+          format: date-time
+          description: Date and time when the token contract was deployed on this chain (ISO 8601).
+          example: '2020-09-09T11:11:13Z'
+    Relationships-6:
+      type: object
+      required:
+      - chart_hour
+      - chart_day
+      - chart_week
+      - chart_month
+      - chart_year
+      - chart_max
+      properties:
+        chart_hour:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour
+        chart_day:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day
+        chart_week:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week
+        chart_month:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month
+        chart_year:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year
+        chart_max:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max
+    QuotesResponse:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-16'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteContainer'
+    EVMTransaction:
+      type: object
+      description: EVM transaction in a form ready to be signed by an EVM wallet. Numeric fields are encoded as `0x`-prefixed hex strings.
+      required:
+      - type
+      - from
+      - to
+      - nonce
+      - chain_id
+      - gas
+      - value
+      - data
+      properties:
+        type:
+          type: string
+          description: EIP-2718 transaction type.
+          example: '0x2'
+        from:
+          type: string
+          description: Address that should sign and send the transaction.
+          example: '0xbf9db3564c22fd22ff30a8db7f689d654bf5f1fd'
+        to:
+          type: string
+          description: Address the transaction is sent to (typically the swap router contract).
+          example: '0xb2be281e8b11b47fec825973fc8bb95332022a54'
+        nonce:
+          type: string
+          description: Transaction nonce at the time the quote was built. The wallet may need to refresh it at signing time if the on-chain value has changed.
+          example: '0x42'
+        chain_id:
+          type: string
+          description: EIP-155 chain ID.
+          example: '0x1'
+        gas:
+          type: string
+          description: Gas limit.
+          example: '0x1c138'
+        gas_price:
+          type: string
+          description: Legacy (Type-0/1) gas price. Mutually exclusive with `max_fee` / `max_priority_fee` — present for legacy transactions, absent for EIP-1559.
+          example: '0x9502f900'
+        max_fee:
+          type: string
+          description: EIP-1559 max fee per gas. Mutually exclusive with `gas_price` — present for EIP-1559 transactions, absent for legacy.
+          example: '0xc6a17141'
+        max_priority_fee:
+          type: string
+          description: EIP-1559 max priority fee per gas. Mutually exclusive with `gas_price` — present for EIP-1559 transactions, absent for legacy.
+          example: '0x35aeb151'
+        value:
+          type: string
+          description: Native-asset value attached to the transaction, in wei.
+          example: '0x0'
+        data:
+          type: string
+          description: Calldata.
+          example: '0xa9059cbb000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa9604500000000000000000000000000000000000000000000000000000000000003e8'
+        custom_data:
+          allOf:
+          - description: Chain-specific extra fields (currently zkSync paymaster parameters). Omitted on chains that don't need them.
+          - $ref: '#/components/schemas/EVMCustomData'
+    FungiblesResponseLinks:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          description: URL of current resource
+          example: https://api.zerion.io/v1/swap/fungibles
+    ExternalLinks:
+      type: array
+      description: A list of relevant URLs.
+      items:
+        $ref: '#/components/schemas/ExternalLink'
+    MarketDataChanges:
+      type: object
+      properties:
+        percent_1d:
+          type: number
+          nullable: true
+          format: double
+          description: Price relative change in percent for 1 day
+          example: -0.7379066649086338
+        percent_30d:
+          type: number
+          nullable: true
+          format: double
+          description: Price relative change in percent for 30 days
+          example: -2.499465618806962
+        percent_90d:
+          type: number
+          nullable: true
+          format: double
+          description: Price relative change in percent for 90 days
+          example: 11.316340269371775
+        percent_365d:
+          type: number
+          nullable: true
+          format: double
+          description: Price relative change in percent for 1 year
+          example: null
+    RelationshipLinks:
+      type: object
+      required:
+      - related
+      properties:
+        related:
+          type: string
+          format: url
+          description: URL to the current chain.
+          example: https://api.zerion.io/v1/chains/polygon
+    ResponseLinks-16:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/wallet/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/swap-list
+    Relationship:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
+        data:
+          $ref: '#/components/schemas/ContainerShort'
+    TradingVolumes:
+      type: object
+      properties:
+        volume_1d:
+          type: number
+          format: double
+          description: Trading volume over the last 24 hours in the selected currency.
+          example: 40096375.69294812
+    RelationshipData:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Fungible resource type
+          example: fungibles
+        id:
+          type: string
+          description: Fungible unique identifier.
+          example: eth
+    QuoteRelationships:
+      type: object
+      required:
+      - input_chain
+      - output_chain
+      properties:
+        input_chain:
+          allOf:
+          - description: Source chain the swap originates from.
+          - $ref: '#/components/schemas/Relationship'
+        output_chain:
+          allOf:
+          - description: Target chain the output asset is delivered on.
+          - $ref: '#/components/schemas/Relationship'
+        input_fungible:
+          description: Fungible asset being sent.
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              $ref: '#/components/schemas/RelationshipLinks-2'
+            data:
+              $ref: '#/components/schemas/RelationshipData'
+        output_fungible:
+          description: Fungible asset being received.
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              $ref: '#/components/schemas/RelationshipLinks-2'
+            data:
+              $ref: '#/components/schemas/RelationshipData'
+    ExternalLink:
+      type: object
+      required:
+      - url
+      properties:
+        type:
+          type: string
+          description: Type of the link
+          example: website
+        name:
+          type: string
+          description: Displayable name of the link
+          example: Website
+        url:
+          type: string
+          format: url
+          description: Link to the external resource
+          example: https://www.indexcoop.com
+    QuoteAttributes:
+      type: object
+      required:
+      - liquidity_source
+      - input_amount
+      - output_amount
+      - minimum_output_amount
+      - output_amount_after_fees
+      - slippage_percent
+      properties:
+        liquidity_source:
+          type: object
+          required:
+          - id
+          - name
+          properties:
+            id:
+              type: string
+              description: Identifier of the liquidity source providing this quote.
+              example: relay
+            name:
+              type: string
+              description: Display name of the liquidity source.
+              example: Relay
+            icon:
+              $ref: '#/components/schemas/Icon'
+        input_amount:
+          allOf:
+          - description: Amount of the input asset being sent.
+          - $ref: '#/components/schemas/QuoteAmount'
+        output_amount:
+          allOf:
+          - description: Estimated amount of the output asset to be received before slippage.
+          - $ref: '#/components/schemas/QuoteAmount'
+        minimum_output_amount:
+          allOf:
+          - description: Minimum amount of the output asset to be received after slippage.
+          - $ref: '#/components/schemas/QuoteAmount'
+        output_amount_after_fees:
+          allOf:
+          - description: Amount of the output asset after subtracting fees. Same shape as `output_amount`; `value`/`usd_value` are absent when fiat conversion is unavailable.
+          - $ref: '#/components/schemas/QuoteAmount'
+        rate:
+          type: array
+          description: Two-element pair describing the exchange rate between the input and the output asset. Absent when no rate could be computed (e.g. for an errored quote).
+          items:
+            type: object
+            required:
+            - value
+            - symbol
+            properties:
+              value:
+                type: number
+                format: double
+                example: 1
+              symbol:
+                type: string
+                example: WETH
+        slippage_percent:
+          type: number
+          format: float
+          description: Slippage tolerance baked into this quote, in percent. Equals the `slippage_percent` query parameter when provided; otherwise an auto-slippage value chosen by Zerion based on the asset pair's volatility and liquidity. This is the slippage that will actually apply to the executed swap (used to compute `minimum_output_amount` and forwarded to the upstream provider when building the transaction).
+          example: 2
+        protocol_fee:
+          type: object
+          description: Zerion protocol fee applied to this quote. Absent when the route is not subject to a protocol fee.
+          required:
+          - amount
+          - base_percentage
+          - percentage
+          - included_in_rate
+          properties:
+            amount:
+              $ref: '#/components/schemas/QuoteAmount'
+            fungible:
+              allOf:
+              - description: Fungible asset in which the fee is taken. Absent when the source did not identify a fungible (e.g. native-asset fees).
+              - $ref: '#/components/schemas/RelationshipData'
+            base_percentage:
+              type: number
+              format: float
+              description: Default Zerion fee percentage before any waivers or overrides.
+              example: 0.67
+            percentage:
+              type: number
+              format: float
+              description: Effective fee percentage applied to this quote (after waivers and thresholds).
+              example: 0
+            included_in_rate:
+              type: boolean
+              description: Whether the fee is already deducted from the rate (and `output_amount`) or applied separately.
+              example: false
+        bridge_fee:
+          type: object
+          description: Fee charged by the provider for routing through bridge-style settlement. Typically appears on cross-chain quotes; may also appear on same-chain quotes when the provider routes through bridge infrastructure (e.g. Relay). Absent when the route does not charge a bridge fee.
+          required:
+          - amount
+          - included_in_rate
+          properties:
+            amount:
+              $ref: '#/components/schemas/QuoteAmount'
+            fungible:
+              allOf:
+              - description: Fungible asset in which the fee is taken. Absent when the source did not identify a fungible.
+              - $ref: '#/components/schemas/RelationshipData'
+            included_in_rate:
+              type: boolean
+              example: true
+        network_fee:
+          type: object
+          description: Network (gas) fee covered by the swap. Absent when the source did not provide a network-fee estimate (e.g. price-only quote with no transaction).
+          required:
+          - amount
+          - free
+          properties:
+            amount:
+              $ref: '#/components/schemas/QuoteAmount'
+            fungible:
+              allOf:
+              - description: Fungible asset in which the fee is taken. Absent when the source did not identify a fungible.
+              - $ref: '#/components/schemas/RelationshipData'
+            free:
+              type: boolean
+              description: Whether the network fee is sponsored.
+        transaction_approve:
+          type: object
+          description: ERC-20 approve transaction that must be signed before the swap. Absent for Solana swaps, EVM swaps with the chain's native asset as input, and when sufficient allowance is already granted.
+          allOf:
+          - $ref: '#/components/schemas/MultichainTransaction'
+        transaction_swap:
+          type: object
+          description: Swap transaction to be signed by the wallet. Absent when the quote is informational only (e.g. the wallet's balance is insufficient and `error` is set).
+          allOf:
+          - $ref: '#/components/schemas/MultichainTransaction'
+        error:
+          type: object
+          description: Reason this quote cannot be executed as-is. Absent when the quote is executable.
+          required:
+          - code
+          - hint
+          properties:
+            code:
+              type: string
+              description: Machine-readable error code. New values may be added; clients should treat unknown values as `unspecified`.
+              enum:
+              - unspecified
+              - not_enough_input_asset_balance
+              - not_enough_base_asset_balance
+              - input_amount_is_too_small
+              example: not_enough_input_asset_balance
+            message:
+              type: string
+              description: Human-readable description of the error. Absent when the source did not provide a message.
+              example: Input asset balance is not enough to execute a swap
+            hint:
+              type: string
+              description: Suggested action the user can take to resolve the error. New values may be added; clients should treat unknown values as `unspecified`.
+              enum:
+              - unspecified
+              - topup
+              - increase_input_amount
+              example: topup
+        estimated_time_seconds:
+          type: number
+          format: float
+          description: Estimated time until the output asset is delivered, when the source provides one. Bridge providers typically include it; same-chain DEX aggregators usually do not, but providers that route through bridge-style settlement may include it on same-chain quotes too.
+          example: 2
+    SolanaTransaction:
+      type: object
+      description: Solana transaction ready to be signed by a Solana wallet.
+      required:
+      - raw
+      properties:
+        raw:
+          type: string
+          description: Base64-encoded raw Solana transaction bytes.
+    Icon:
+      type: object
+      description: Icon related to object.
+      properties:
+        url:
+          type: string
+          nullable: true
+          format: url
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
+    Flags:
+      type: object
+      required:
+      - verified
+      properties:
+        verified:
+          type: boolean
+          description: Whether this fungible verified or not
+          example: true
+    QuoteContainer:
+      type: object
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+      properties:
+        type:
+          type: string
+          example: swap_quotes
+        id:
+          type: string
+          description: Quote's unique id.
+          example: 589a0095e2111df5276ebf073fff9a8bfb821f34
+        attributes:
+          $ref: '#/components/schemas/QuoteAttributes'
+        relationships:
+          $ref: '#/components/schemas/QuoteRelationships'
+    ImplementationMarketData:
+      type: object
+      properties:
+        trading_volumes:
+          $ref: '#/components/schemas/TradingVolumes'
+    EVMCustomData:
+      type: object
+      description: Chain-specific transaction extras. Currently used for zkSync Era paymaster parameters.
+      properties:
+        paymaster_params:
+          type: object
+          description: Paymaster sponsorship parameters. Absent on transactions that do not use a paymaster.
+          required:
+          - paymaster
+          - paymaster_input
+          properties:
+            paymaster:
+              type: string
+              description: Address of the paymaster contract.
+            paymaster_input:
+              type: string
+              description: Calldata for the paymaster.
+        gas_per_pubdata_byte:
+          type: string
+          description: Gas per pubdata byte (zkSync-specific). Absent when the source did not provide it.
+    FungiblesResponse:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/FungiblesResponseLinks'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container-12'
+    MultichainTransaction:
+      type: object
+      description: Transaction payload in a chain-agnostic envelope. Exactly one of `evm` or `solana` is present, depending on the chain on which the transaction must be sent.
+      properties:
+        evm:
+          type: object
+          description: EVM transaction payload. Present only for EVM-chain transactions.
+          allOf:
+          - $ref: '#/components/schemas/EVMTransaction'
+        solana:
+          type: object
+          description: Solana transaction payload. Present only for Solana transactions.
+          allOf:
+          - $ref: '#/components/schemas/SolanaTransaction'
+    MarketData:
+      type: object
+      required:
+      - price
+      properties:
+        total_supply:
+          type: number
+          format: double
+          description: Total market supply of fungible
+          example: 29905.762448515918
+        circulating_supply:
+          type: number
+          format: double
+          description: Circulating value of fungible
+          example: 29905.762448515918
+        fully_diluted_valuation:
+          type: number
+          format: double
+          description: Total market capitalization of fungible in selected currency
+          example: 3196313.736038149
+        market_cap:
+          type: number
+          format: double
+          description: Circulating market capitalization of fungible in selected currency
+          example: 3196313.736038149
+        price:
+          type: number
+          nullable: true
+          format: double
+          description: Latest fungible price
+          example: 106.87952669793131
+        changes:
+          $ref: '#/components/schemas/MarketDataChanges'
+        trading_volumes:
+          $ref: '#/components/schemas/TradingVolumes'
+    QuoteAmount:
+      type: object
+      properties:
+        quantity:
+          type: string
+          description: Human-readable amount as a decimal string. Absent for `output_amount_after_fees` of a cross-chain bridge when the fees are denominated in different tokens and a single-token quantity is not well-defined; in that case the fiat fields (`value`/`usd_value`) still carry the net amount.
+          example: '0.001'
+        value:
+          type: number
+          format: float
+          description: Fiat value of the amount in the requested `currency`. Absent when no price is known for the asset.
+          example: 2.2830463441233997
+        usd_value:
+          type: number
+          format: float
+          description: Fiat value of the amount in USD. Absent when no price is known for the asset.
+          example: 2.2830463441233997
+        currency:
+          type: string
+          description: Currency code that `value` is expressed in, in upper case (matches the requested `currency` query parameter). Present only when `value` is present.
+          example: USD
+    RelationshipLinks-2:
+      type: object
+      required:
+      - related
+      properties:
+        related:
+          type: string
+          format: url
+          description: URL to the current fungible.
+          example: https://api.zerion.io/v1/fungibles/eth
+    Attributes-10:
+      type: object
+      required:
+      - name
+      - symbol
+      - flags
+      - external_links
+      - implementations
+      - market_data
+      properties:
+        name:
+          type: string
+          description: Displayable name of the fungible.
+          example: Bankless BED Index
+        symbol:
+          type: string
+          description: Displayable symbol of the fungible.
+          example: BED
+        description:
+          type: string
+          nullable: true
+          description: Brief description of the fungible.
+          example: The BED index is meant to track crypto's top 3 investab.
+        icon:
+          $ref: '#/components/schemas/Icon'
+        flags:
+          $ref: '#/components/schemas/Flags'
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+        implementations:
+          type: array
+          description: Implementation details of the fungible on various chains.
+          items:
+            $ref: '#/components/schemas/AttributesImplementation'
+        market_data:
+          $ref: '#/components/schemas/MarketData'
+    Container-12:
+      type: object
+      description: Object, representing fungible asset.
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Fungible resource type
+          example: fungibles
+        id:
+          type: string
+          description: Fungible unique identifier
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+        attributes:
+          $ref: '#/components/schemas/Attributes-10'
+        relationships:
+          $ref: '#/components/schemas/Relationships-6'
+  responses:
+    SwapQuotesResponse:
+      description: Response for the requested swap quotes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/QuotesResponse'
+    UnauthenticatedError:
+      description: Unathenticated request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Unauthorized Error
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: The API key is invalid, please, make sure that you are using a valid key
+    SwapFungiblesResponse:
+      description: Response for requested list available for bridge fungibles.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FungiblesResponse'
+    MalformedParameters:
+      description: Parameters are malformed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Parameter is malformed
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Some validation errors will be described here
+    TooManyRequests:
+      description: Too many requests error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Too many requests
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Your request had been throttled
+  securitySchemes:
+    APIKeyBasicAuth:
+      type: http
+      scheme: basic
+      description: To test endpoints here, paste your API key from the [dashboard](https://dashboard.zerion.io/) into the username field and leave the password empty.
+x-readme:
+  samples-languages:
+  - curl
+  - javascript
+  - python
+  - kotlin
+  - swift
+  - go

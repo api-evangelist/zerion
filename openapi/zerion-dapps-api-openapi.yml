@@ -1,0 +1,293 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: REST chains dapps API
+  description: REST-like API provides access to rich Zerion ecosystem.
+  contact:
+    name: Zerion API
+    url: https://developers.zerion.io/
+    email: api@zerion.io
+servers:
+- description: Production API
+  url: https://api.zerion.io
+security:
+- APIKeyBasicAuth: []
+tags:
+- name: dapps
+  description: Operations related to decentralized applications, such as list them all, search or get by ID.
+paths:
+  /v1/dapps:
+    get:
+      operationId: listDApps
+      summary: Get list of DApps
+      description: 'This endpoint returns list of DApps by using different parameters.
+
+
+        > NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.
+
+        '
+      tags:
+      - dapps
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          $ref: '#/components/responses/DAppsResponse'
+        '400':
+          $ref: '#/components/responses/MalformedParameters'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /v1/dapps/{dapp_id}:
+    get:
+      operationId: getDAppByID
+      summary: Get DApp by ID
+      description: 'This endpoint returns single DApp by its unique identifier.
+
+        '
+      tags:
+      - dapps
+      parameters:
+      - name: dapp_id
+        in: path
+        required: true
+        description: DApp's unique identifier
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/DAppResponse'
+        '400':
+          $ref: '#/components/responses/MalformedParameters'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    MalformedParameters:
+      description: Parameters are malformed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Parameter is malformed
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Some validation errors will be described here
+    UnauthenticatedError:
+      description: Unathenticated request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Unauthorized Error
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: The API key is invalid, please, make sure that you are using a valid key
+    DAppResponse:
+      description: Requested DApp
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-19'
+    DAppsResponse:
+      description: Response for requested list of DApps
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-18'
+    TooManyRequests:
+      description: Too many requests error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Too many requests
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Your request had been throttled
+  schemas:
+    Response-19:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-19'
+        data:
+          $ref: '#/components/schemas/Container-16'
+    Container-16:
+      type: object
+      description: Represents a decentralized application (DApp).
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: DApps resource type.
+          example: dapps
+        id:
+          type: string
+          description: Unique identifier of the DApp.
+        attributes:
+          $ref: '#/components/schemas/Attributes-14'
+    Icon:
+      type: object
+      description: Icon related to object.
+      properties:
+        url:
+          type: string
+          nullable: true
+          format: url
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
+    Attributes-14:
+      type: object
+      description: Represents attributes of a decentralized application (DApp) corresponding to JSON API specification.
+      properties:
+        name:
+          type: string
+          description: The name of the decentralized application.
+          example: AAVE V3
+        description:
+          type: string
+          description: A brief summary or details about the decentralized application.
+          example: Earn interest, borrow assets, and build applications.
+        icon:
+          allOf:
+          - description: The URL for the application's icon.
+          - $ref: '#/components/schemas/Icon'
+        url:
+          type: string
+          format: url
+          description: Link to the DApp
+          example: https://aave.com/
+        manage_positions_url:
+          type: string
+          format: url
+          description: A link to the page for managing application positions or configurations.
+          example: https://app.aave.com/
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+    ExternalLinks:
+      type: array
+      description: A list of relevant URLs.
+      items:
+        $ref: '#/components/schemas/ExternalLink'
+    ResponseData-2:
+      type: array
+      items:
+        $ref: '#/components/schemas/Container-16'
+    ExternalLink:
+      type: object
+      required:
+      - url
+      properties:
+        type:
+          type: string
+          description: Type of the link
+          example: website
+        name:
+          type: string
+          description: Displayable name of the link
+          example: Website
+        url:
+          type: string
+          format: url
+          description: Link to the external resource
+          example: https://www.indexcoop.com
+    ResponseLinks-19:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          description: Link to the current response
+    Response-18:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-19'
+        data:
+          $ref: '#/components/schemas/ResponseData-2'
+  parameters:
+    Page:
+      name: page
+      in: query
+      required: false
+      description: Pagination parameters
+      style: deepObject
+      explode: true
+      schema:
+        type: object
+        properties:
+          after:
+            type: string
+            nullable: true
+            minLength: 1
+            maxLength: 64
+            description: 'This field is used for result pagination. You SHOULD NOT use this parameter directly.
+
+              To get the next page of the results you should use `links.next` field.
+
+              Omit it to return the first page.
+
+              '
+          size:
+            type: integer
+            format: uint8
+            description: Set maximum number of items per a page in the pagination.
+            default: 100
+            minimum: 1
+            maximum: 100
+  securitySchemes:
+    APIKeyBasicAuth:
+      type: http
+      scheme: basic
+      description: To test endpoints here, paste your API key from the [dashboard](https://dashboard.zerion.io/) into the username field and leave the password empty.
+x-readme:
+  samples-languages:
+  - curl
+  - javascript
+  - python
+  - kotlin
+  - swift
+  - go

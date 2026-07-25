@@ -1,0 +1,387 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: REST chains API
+  description: REST-like API provides access to rich Zerion ecosystem.
+  contact:
+    name: Zerion API
+    url: https://developers.zerion.io/
+    email: api@zerion.io
+servers:
+- description: Production API
+  url: https://api.zerion.io
+security:
+- APIKeyBasicAuth: []
+tags:
+- name: chains
+  description: Operations related to chains, such as list all chains.
+paths:
+  /v1/chains/:
+    get:
+      operationId: listChains
+      summary: Get list of all chains
+      description: 'This endpoint returns list of all chains supported by Zerion.
+
+
+        This endpoint supports testnets. To get data for testnets use `X-Env` header.
+
+        '
+      tags:
+      - chains
+      parameters:
+      - name: X-Env
+        in: header
+        description: Custom header that allows you to get data for testnets.
+        required: false
+        schema:
+          type: string
+          enum:
+          - testnet
+      responses:
+        '200':
+          $ref: '#/components/responses/ChainsListResponse'
+        '400':
+          $ref: '#/components/responses/MalformedParameters'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /v1/chains/{chain_id}:
+    get:
+      operationId: getChainById
+      summary: Get chain by ID
+      description: 'This endpoint returns chain by unique chain identifier.
+
+
+        This endpoint supports testnets. To get data for testnets use `X-Env` header.
+
+        '
+      tags:
+      - chains
+      parameters:
+      - name: chain_id
+        in: path
+        required: true
+        description: Unique chain ID
+        schema:
+          type: string
+      - name: X-Env
+        in: header
+        description: Custom header that allows you to get data for testnets.
+        required: false
+        schema:
+          type: string
+          enum:
+          - testnet
+      responses:
+        '200':
+          $ref: '#/components/responses/SingleChainResponse'
+        '400':
+          $ref: '#/components/responses/MalformedParameters'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    ResponseLinks-12:
+      type: object
+      properties:
+        related:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6
+    RPC:
+      type: object
+      description: Chain RPC servers data
+      properties:
+        internal_server_url_format:
+          type: string
+          format: url
+          description: URL with placeholders of RPC server which can be used for project purposes
+          example: https://mainnet.polygon.dev/{polygon_API_KEY}
+        public_servers_url:
+          type: array
+          description: List of URL of public RPC servers which can be used by everyone
+          items:
+            type: string
+            format: url
+            example: https://mainnet.polygon.dev
+    ResponseShort:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-12'
+        data:
+          $ref: '#/components/schemas/ContainerShort-5'
+    ResponseLinks-14:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          description: URL of current resource
+          example: https://api.zerion.io/v1/chains/
+    Flags-5:
+      type: object
+      description: Various chain related boolean flags
+      required:
+      - supports_trading
+      - supports_sending
+      - supports_bridge
+      properties:
+        supports_trading:
+          type: boolean
+          description: Whether trading is supported on Zerion for this chain or not
+          example: true
+        supports_sending:
+          type: boolean
+          description: Whether sending is supported on Zerion for this chain or not
+          example: true
+        supports_bridge:
+          type: boolean
+          description: Whether bridges are supported on Zerion for this chain or not
+          example: true
+    Explorer:
+      type: object
+      required:
+      - name
+      description: Chain explorer data
+      properties:
+        name:
+          type: string
+          description: Human readable explorer name
+          example: polygonScan
+        token_url_format:
+          type: string
+          format: url
+          description: URL with placeholders that leads to a token page
+          example: https://explorer.mainnet.polygon.dev/token/{ADDRESS}
+        tx_url_format:
+          type: string
+          format: url
+          description: URL with placeholders that points to a transaction page
+          example: https://explorer.mainnet.polygon.dev/tx/{HASH}
+        home_url:
+          type: string
+          format: url
+          description: URL leads to the explorer homepage
+          example: https://explorer.mainnet.polygon.dev
+    ResponseLinks-15:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          description: URL of the current chain.
+          example: https://api.zerion.io/v1/chains/polygon
+    Container-14:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Chain resource type
+          example: chains
+        id:
+          type: string
+          description: Chain unique identifier
+          example: polygon
+        attributes:
+          $ref: '#/components/schemas/Attributes-12'
+        relationships:
+          $ref: '#/components/schemas/Relationships-7'
+    Icon:
+      type: object
+      description: Icon related to object.
+      properties:
+        url:
+          type: string
+          nullable: true
+          format: url
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
+    Attributes-12:
+      type: object
+      description: Attributes of chain resource
+      required:
+      - name
+      properties:
+        external_id:
+          type: string
+          description: Community used chain ID
+          example: '0x4e454152'
+        name:
+          type: string
+          description: Human readable chain name
+          example: polygon
+        icon:
+          $ref: '#/components/schemas/Icon'
+        explorer:
+          $ref: '#/components/schemas/Explorer'
+        rpc:
+          $ref: '#/components/schemas/RPC'
+        flags:
+          $ref: '#/components/schemas/Flags-5'
+    ContainerShort-5:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Fungible resource type
+          example: fungibles
+        id:
+          type: string
+          description: Fungible unique identifier
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+    ChainResponse:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-15'
+        data:
+          $ref: '#/components/schemas/Container-14'
+    Relationships-7:
+      type: object
+      required:
+      - native_fungible
+      properties:
+        native_fungible:
+          $ref: '#/components/schemas/ResponseShort'
+        wrapped_native_fungible:
+          $ref: '#/components/schemas/ResponseShort'
+    Response-14:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-14'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container-14'
+  responses:
+    UnauthenticatedError:
+      description: Unathenticated request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Unauthorized Error
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: The API key is invalid, please, make sure that you are using a valid key
+    SingleChainResponse:
+      description: Response for requested chain
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ChainResponse'
+    NotFoundResponse:
+      description: Resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Resource was not found
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Requested resource was not found, try later
+    MalformedParameters:
+      description: Parameters are malformed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Parameter is malformed
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Some validation errors will be described here
+    ChainsListResponse:
+      description: Response for requested list of chains
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-14'
+    TooManyRequests:
+      description: Too many requests error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Too many requests
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Your request had been throttled
+  securitySchemes:
+    APIKeyBasicAuth:
+      type: http
+      scheme: basic
+      description: To test endpoints here, paste your API key from the [dashboard](https://dashboard.zerion.io/) into the username field and leave the password empty.
+x-readme:
+  samples-languages:
+  - curl
+  - javascript
+  - python
+  - kotlin
+  - swift
+  - go
