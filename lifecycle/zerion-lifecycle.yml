@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.zerion.io/changelog
+versioning:
+  scheme: uri-path
+  current: v1
+  base: https://api.zerion.io/v1
+  notes: >-
+    All endpoints are served under the /v1 path prefix. The published OpenAPI is
+    titled "REST API" version 1.0.0. No dated or header-based version negotiation
+    is documented.
+deprecation:
+  policy_url: https://developers.zerion.io/changelog
+  sunset_header: false
+  notes: >-
+    Zerion communicates changes (including breaking changes) via the dated
+    changelog rather than a formal Sunset/Deprecation (RFC 8594) header policy.
+    Recent breaking change example: 2026-06-01 Token-2022 ScaledUiAmount raw
+    amounts (quantity.int semantics). No formal SLA/uptime-target page is
+    published; rate-limit tiers are documented per plan.
+status_page: null
+sla:
+  url: null
+  uptime_target: null
+deprecated_operations: []
+notes: >-
+  No dedicated status page (status.zerion.io) was found. The pipeline did not
+  emit a StatusPage pointer because no status page is published. A Deprecation
+  pointer is wired to the changelog, which is where deprecations/breaking changes
+  are announced.

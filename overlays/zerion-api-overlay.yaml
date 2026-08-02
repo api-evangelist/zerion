@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Zerion API
+  version: 1.0.0
+extends: openapi/zerion-openapi-original.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: zerion
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-auth: HTTP Basic (API key as username, empty password)
+    x-apievangelist-pagination: cursor (page[size] max 100, follow links.next)
+    x-apievangelist-error-format: JSON:API errors[] array (title, detail)
+    x-apievangelist-webhooks: >-
+      Transaction subscriptions push JSON:API callbacks signed RSA-SHA256
+      (X-Signature / X-Timestamp / X-Certificate-URL); see
+      asyncapi/zerion-transactions-webhooks.yml
+    x-apievangelist-alt-auth:
+    - x402 (USDC on Base/Solana, PAYMENT-SIGNATURE header)
+    - MPP (USDC on Tempo, Authorization: Payment header)
+- target: $.info
+  update:
+    x-agentic-access: agentic-access/zerion-agentic-access.yml
+    x-data-model: data-model/zerion-data-model.yml
+    x-conventions: conventions/zerion-conventions.yml

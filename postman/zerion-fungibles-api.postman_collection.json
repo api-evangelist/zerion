@@ -1,0 +1,2077 @@
+{
+  "info": {
+    "_postman_id": "a3906a1f-69a6-42a8-a2a3-9cf7322b2090",
+    "name": "REST chains fungibles API",
+    "description": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:37:35.000Z",
+    "updatedAt": "2026-07-28T03:37:35.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-a3906a1f-69a6-42a8-a2a3-9cf7322b2090"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "fungibles",
+          "item": [
+            {
+              "name": "{fungible_id}",
+              "item": [
+                {
+                  "name": "charts",
+                  "item": [
+                    {
+                      "name": "{chart_period}",
+                      "item": [
+                        {
+                          "name": "Get a chart for a fungible asset",
+                          "id": "90a15e64-25d0-40a3-9c43-139ffa0f55d8",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/fungibles/:fungible_id/charts/:chart_period?currency=usd",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "fungibles",
+                                ":fungible_id",
+                                "charts",
+                                ":chart_period"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Denominated currency value of returned prices",
+                                  "key": "currency",
+                                  "value": "usd"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "76021c25-e2d7-4c9a-a17c-a3d78379842b",
+                                  "key": "fungible_id",
+                                  "value": "<string>",
+                                  "description": "(Required) Unique fungible ID"
+                                },
+                                {
+                                  "id": "cc0f4465-bd9c-477a-9ae3-5b2110122e2f",
+                                  "key": "chart_period",
+                                  "value": "day",
+                                  "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290\u2013460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                                }
+                              ]
+                            },
+                            "description": "This endpoint returns the chart for the fungible asset for a selected period"
+                          },
+                          "response": [
+                            {
+                              "id": "4ee88d69-766e-4fed-8b9f-941cc4dd8f34",
+                              "name": "Resource for the requested fungible chart",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/:fungible_id/charts/:chart_period?currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    ":fungible_id",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "fungible_id"
+                                    },
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"begin_at\": \"<string>\",\n      \"end_at\": \"<string>\",\n      \"stats\": {\n        \"first\": \"<double>\",\n        \"min\": \"<double>\",\n        \"avg\": \"<double>\",\n        \"max\": \"<double>\",\n        \"last\": \"<double>\"\n      },\n      \"points\": [\n        [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        [\n          \"<integer>\",\n          \"<integer>\"\n        ]\n      ]\n    }\n  }\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-4ee88d69-766e-4fed-8b9f-941cc4dd8f34"
+                            },
+                            {
+                              "id": "151769fa-0178-4c10-b6a2-50414412f34b",
+                              "name": "Parameters are malformed",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/:fungible_id/charts/:chart_period?currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    ":fungible_id",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "fungible_id"
+                                    },
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-151769fa-0178-4c10-b6a2-50414412f34b"
+                            },
+                            {
+                              "id": "8fd5dfc0-78b5-4163-9283-ec60a9053705",
+                              "name": "Unathenticated request",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/:fungible_id/charts/:chart_period?currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    ":fungible_id",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "fungible_id"
+                                    },
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-8fd5dfc0-78b5-4163-9283-ec60a9053705"
+                            },
+                            {
+                              "id": "98e3e7f8-848d-4258-943b-00400deda7bf",
+                              "name": "Resource was not found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/:fungible_id/charts/:chart_period?currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    ":fungible_id",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "fungible_id"
+                                    },
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-98e3e7f8-848d-4258-943b-00400deda7bf"
+                            },
+                            {
+                              "id": "ce5fc150-9a60-4911-8be0-f7b90e2d6bb9",
+                              "name": "Too many requests error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/:fungible_id/charts/:chart_period?currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    ":fungible_id",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "fungible_id"
+                                    },
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-ce5fc150-9a60-4911-8be0-f7b90e2d6bb9"
+                            },
+                            {
+                              "id": "fdf5bb8a-1d4e-4bee-8d00-c33ce19a8c47",
+                              "name": "Service is temporarily unavailable",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/:fungible_id/charts/:chart_period?currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    ":fungible_id",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "fungible_id"
+                                    },
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Service Unavailable",
+                              "code": 503,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Indicates how long the client should wait before making a follow-up request.\n",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Retry-After",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-fdf5bb8a-1d4e-4bee-8d00-c33ce19a8c47"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T03:37:35.000Z",
+                          "updatedAt": "2026-07-28T03:37:35.000Z",
+                          "uid": "35240-90a15e64-25d0-40a3-9c43-139ffa0f55d8"
+                        }
+                      ],
+                      "id": "d4d9b1ff-0682-420c-b0f4-461081971544",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-d4d9b1ff-0682-420c-b0f4-461081971544"
+                    }
+                  ],
+                  "id": "c0469817-30c8-4a4e-a153-f2d4888ef5d2",
+                  "createdAt": "2026-07-28T03:37:35.000Z",
+                  "updatedAt": "2026-07-28T03:37:35.000Z",
+                  "uid": "35240-c0469817-30c8-4a4e-a153-f2d4888ef5d2"
+                },
+                {
+                  "name": "Get fungible asset by ID",
+                  "id": "f932e611-fcf9-4647-aff0-60673f2e8737",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/fungibles/:fungible_id?currency=usd",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "fungibles",
+                        ":fungible_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "2ae24d74-f946-492b-b864-10062364d89b",
+                          "key": "fungible_id",
+                          "value": "<string>",
+                          "description": "(Required) Unique fungible ID"
+                        }
+                      ]
+                    },
+                    "description": "This endpoint returns a fungible asset by unique identifier"
+                  },
+                  "response": [
+                    {
+                      "id": "0160a66d-0573-4759-ac40-b3e7ee5f4fc4",
+                      "name": "Resource for requested fungible",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/:fungible_id?currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            ":fungible_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "fungible_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"links\": {\n    \"related\": \"<string>\"\n  },\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"symbol\": \"<string>\",\n      \"flags\": {\n        \"verified\": \"<boolean>\"\n      },\n      \"external_links\": [\n        {\n          \"url\": \"<string>\",\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"url\": \"<string>\",\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"implementations\": [\n        {\n          \"chain_id\": \"<string>\",\n          \"address\": \"<string>\",\n          \"decimals\": \"<integer>\",\n          \"market_data\": {\n            \"trading_volumes\": {\n              \"volume_1d\": \"<double>\"\n            }\n          },\n          \"deployment_date\": \"<dateTime>\"\n        },\n        {\n          \"chain_id\": \"<string>\",\n          \"address\": \"<string>\",\n          \"decimals\": \"<integer>\",\n          \"market_data\": {\n            \"trading_volumes\": {\n              \"volume_1d\": \"<double>\"\n            }\n          },\n          \"deployment_date\": \"<dateTime>\"\n        }\n      ],\n      \"market_data\": {\n        \"price\": \"<double>\",\n        \"total_supply\": \"<double>\",\n        \"circulating_supply\": \"<double>\",\n        \"fully_diluted_valuation\": \"<double>\",\n        \"market_cap\": \"<double>\",\n        \"changes\": {\n          \"percent_1d\": \"<double>\",\n          \"percent_30d\": \"<double>\",\n          \"percent_90d\": \"<double>\",\n          \"percent_365d\": \"<double>\"\n        },\n        \"trading_volumes\": {\n          \"volume_1d\": \"<double>\"\n        }\n      },\n      \"description\": \"<string>\",\n      \"icon\": {\n        \"url\": \"<string>\"\n      }\n    },\n    \"relationships\": {\n      \"chart_hour\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_day\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_week\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_month\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_year\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_max\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-0160a66d-0573-4759-ac40-b3e7ee5f4fc4"
+                    },
+                    {
+                      "id": "f76cacb0-6850-48e4-b514-351d2d2a9857",
+                      "name": "Parameters are malformed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/:fungible_id?currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            ":fungible_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "fungible_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-f76cacb0-6850-48e4-b514-351d2d2a9857"
+                    },
+                    {
+                      "id": "882d8865-5908-4283-81a2-0061290fec5a",
+                      "name": "Unathenticated request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/:fungible_id?currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            ":fungible_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "fungible_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-882d8865-5908-4283-81a2-0061290fec5a"
+                    },
+                    {
+                      "id": "0ec7a536-c235-49ac-b6ff-2c347c1dc2f0",
+                      "name": "Resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/:fungible_id?currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            ":fungible_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "fungible_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-0ec7a536-c235-49ac-b6ff-2c347c1dc2f0"
+                    },
+                    {
+                      "id": "98573df4-a8ee-4907-8041-fe23e81cd84d",
+                      "name": "Too many requests error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/:fungible_id?currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            ":fungible_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "fungible_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-98573df4-a8ee-4907-8041-fe23e81cd84d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:37:35.000Z",
+                  "updatedAt": "2026-07-28T03:37:35.000Z",
+                  "uid": "35240-f932e611-fcf9-4647-aff0-60673f2e8737"
+                }
+              ],
+              "id": "5a5cd9ed-5ba8-4892-aa21-e711b376691f",
+              "createdAt": "2026-07-28T03:37:35.000Z",
+              "updatedAt": "2026-07-28T03:37:35.000Z",
+              "uid": "35240-5a5cd9ed-5ba8-4892-aa21-e711b376691f"
+            },
+            {
+              "name": "by-implementation",
+              "item": [
+                {
+                  "name": "charts",
+                  "item": [
+                    {
+                      "name": "{chart_period}",
+                      "item": [
+                        {
+                          "name": "Get a chart for a fungible asset by implementation",
+                          "id": "fbea7130-9e08-44f9-9ef8-ee18426aeae3",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/fungibles/by-implementation/charts/:chart_period?implementation=<string>&currency=usd",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "fungibles",
+                                "by-implementation",
+                                "charts",
+                                ":chart_period"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n",
+                                  "key": "implementation",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Denominated currency value of returned prices",
+                                  "key": "currency",
+                                  "value": "usd"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "831fc47c-38a9-42a4-b575-14a904bf7766",
+                                  "key": "chart_period",
+                                  "value": "day",
+                                  "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290\u2013460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                                }
+                              ]
+                            },
+                            "description": "This endpoint returns the chart for a fungible asset for a selected period, identified by its implementation.\nThe implementation is a chain:address pair (e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n"
+                          },
+                          "response": [
+                            {
+                              "id": "8c9c37a1-8723-4579-bdbd-723a4119e1fd",
+                              "name": "Resource for the requested fungible chart",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/by-implementation/charts/:chart_period?implementation=<string>&currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    "by-implementation",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n",
+                                      "key": "implementation",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"begin_at\": \"<string>\",\n      \"end_at\": \"<string>\",\n      \"stats\": {\n        \"first\": \"<double>\",\n        \"min\": \"<double>\",\n        \"avg\": \"<double>\",\n        \"max\": \"<double>\",\n        \"last\": \"<double>\"\n      },\n      \"points\": [\n        [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        [\n          \"<integer>\",\n          \"<integer>\"\n        ]\n      ]\n    }\n  }\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-8c9c37a1-8723-4579-bdbd-723a4119e1fd"
+                            },
+                            {
+                              "id": "f6478977-7401-4ce6-8e27-da96dc966f70",
+                              "name": "Parameters are malformed",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/by-implementation/charts/:chart_period?implementation=<string>&currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    "by-implementation",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n",
+                                      "key": "implementation",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-f6478977-7401-4ce6-8e27-da96dc966f70"
+                            },
+                            {
+                              "id": "2aee8789-a50b-4f95-8a72-56f074ecd4e0",
+                              "name": "Unathenticated request",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/by-implementation/charts/:chart_period?implementation=<string>&currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    "by-implementation",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n",
+                                      "key": "implementation",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-2aee8789-a50b-4f95-8a72-56f074ecd4e0"
+                            },
+                            {
+                              "id": "0e15694c-87df-49f4-86fa-3f42e101af01",
+                              "name": "Resource was not found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/by-implementation/charts/:chart_period?implementation=<string>&currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    "by-implementation",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n",
+                                      "key": "implementation",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-0e15694c-87df-49f4-86fa-3f42e101af01"
+                            },
+                            {
+                              "id": "0a2e9ddd-9978-4a3e-b1aa-d73d41cdadea",
+                              "name": "Too many requests error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/by-implementation/charts/:chart_period?implementation=<string>&currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    "by-implementation",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n",
+                                      "key": "implementation",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-0a2e9ddd-9978-4a3e-b1aa-d73d41cdadea"
+                            },
+                            {
+                              "id": "59b852ea-66a4-4a27-b53f-204ab6fbaef1",
+                              "name": "Service is temporarily unavailable",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/fungibles/by-implementation/charts/:chart_period?implementation=<string>&currency=usd",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "fungibles",
+                                    "by-implementation",
+                                    "charts",
+                                    ":chart_period"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n",
+                                      "key": "implementation",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Denominated currency value of returned prices",
+                                      "key": "currency",
+                                      "value": "usd"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "chart_period"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Service Unavailable",
+                              "code": 503,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Indicates how long the client should wait before making a follow-up request.\n",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Retry-After",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T03:37:35.000Z",
+                              "updatedAt": "2026-07-28T03:37:35.000Z",
+                              "uid": "35240-59b852ea-66a4-4a27-b53f-204ab6fbaef1"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T03:37:35.000Z",
+                          "updatedAt": "2026-07-28T03:37:35.000Z",
+                          "uid": "35240-fbea7130-9e08-44f9-9ef8-ee18426aeae3"
+                        }
+                      ],
+                      "id": "62002e1d-7ae1-4b3a-af92-9af42a8c112b",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-62002e1d-7ae1-4b3a-af92-9af42a8c112b"
+                    }
+                  ],
+                  "id": "6f08527e-a0e6-4cea-94b0-2ee03789dbc0",
+                  "createdAt": "2026-07-28T03:37:35.000Z",
+                  "updatedAt": "2026-07-28T03:37:35.000Z",
+                  "uid": "35240-6f08527e-a0e6-4cea-94b0-2ee03789dbc0"
+                },
+                {
+                  "name": "Get fungible asset by implementation",
+                  "id": "807397aa-3335-4695-bedd-24168af418c9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/fungibles/by-implementation?implementation=<string>&currency=usd",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "fungibles",
+                        "by-implementation"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Fungible implementation in the format `chain` or `chain:address`\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the base asset of that chain.\n",
+                          "key": "implementation",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        }
+                      ]
+                    },
+                    "description": "This endpoint returns a fungible asset by its implementation.\nThe implementation is a `chain` (for base asset) or `chain:address` pair (e.g., \"ethereum\", ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n"
+                  },
+                  "response": [
+                    {
+                      "id": "27534bb1-86e2-4dd4-bdfa-0d7dd7d1ac09",
+                      "name": "Resource for requested fungible",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/by-implementation?implementation=<string>&currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            "by-implementation"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Fungible implementation in the format `chain` or `chain:address`\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the base asset of that chain.\n",
+                              "key": "implementation",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"links\": {\n    \"related\": \"<string>\"\n  },\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"symbol\": \"<string>\",\n      \"flags\": {\n        \"verified\": \"<boolean>\"\n      },\n      \"external_links\": [\n        {\n          \"url\": \"<string>\",\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"url\": \"<string>\",\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"implementations\": [\n        {\n          \"chain_id\": \"<string>\",\n          \"address\": \"<string>\",\n          \"decimals\": \"<integer>\",\n          \"market_data\": {\n            \"trading_volumes\": {\n              \"volume_1d\": \"<double>\"\n            }\n          },\n          \"deployment_date\": \"<dateTime>\"\n        },\n        {\n          \"chain_id\": \"<string>\",\n          \"address\": \"<string>\",\n          \"decimals\": \"<integer>\",\n          \"market_data\": {\n            \"trading_volumes\": {\n              \"volume_1d\": \"<double>\"\n            }\n          },\n          \"deployment_date\": \"<dateTime>\"\n        }\n      ],\n      \"market_data\": {\n        \"price\": \"<double>\",\n        \"total_supply\": \"<double>\",\n        \"circulating_supply\": \"<double>\",\n        \"fully_diluted_valuation\": \"<double>\",\n        \"market_cap\": \"<double>\",\n        \"changes\": {\n          \"percent_1d\": \"<double>\",\n          \"percent_30d\": \"<double>\",\n          \"percent_90d\": \"<double>\",\n          \"percent_365d\": \"<double>\"\n        },\n        \"trading_volumes\": {\n          \"volume_1d\": \"<double>\"\n        }\n      },\n      \"description\": \"<string>\",\n      \"icon\": {\n        \"url\": \"<string>\"\n      }\n    },\n    \"relationships\": {\n      \"chart_hour\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_day\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_week\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_month\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_year\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"chart_max\": {\n        \"links\": {\n          \"related\": {\n            \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max\"\n          }\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-27534bb1-86e2-4dd4-bdfa-0d7dd7d1ac09"
+                    },
+                    {
+                      "id": "4bed4133-ca91-4a92-a485-a54698be3f23",
+                      "name": "Parameters are malformed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/by-implementation?implementation=<string>&currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            "by-implementation"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Fungible implementation in the format `chain` or `chain:address`\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the base asset of that chain.\n",
+                              "key": "implementation",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-4bed4133-ca91-4a92-a485-a54698be3f23"
+                    },
+                    {
+                      "id": "fa5bebe9-70df-402e-b324-9d22bfbaccf4",
+                      "name": "Unathenticated request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/by-implementation?implementation=<string>&currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            "by-implementation"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Fungible implementation in the format `chain` or `chain:address`\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the base asset of that chain.\n",
+                              "key": "implementation",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-fa5bebe9-70df-402e-b324-9d22bfbaccf4"
+                    },
+                    {
+                      "id": "1556be91-0743-4b8e-9893-17bd63b0faee",
+                      "name": "Resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/by-implementation?implementation=<string>&currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            "by-implementation"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Fungible implementation in the format `chain` or `chain:address`\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the base asset of that chain.\n",
+                              "key": "implementation",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-1556be91-0743-4b8e-9893-17bd63b0faee"
+                    },
+                    {
+                      "id": "4471ee8c-fb5b-47c4-9463-75bba36ab5e2",
+                      "name": "Too many requests error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/fungibles/by-implementation?implementation=<string>&currency=usd",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "fungibles",
+                            "by-implementation"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Fungible implementation in the format `chain` or `chain:address`\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the base asset of that chain.\n",
+                              "key": "implementation",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:35.000Z",
+                      "updatedAt": "2026-07-28T03:37:35.000Z",
+                      "uid": "35240-4471ee8c-fb5b-47c4-9463-75bba36ab5e2"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:37:35.000Z",
+                  "updatedAt": "2026-07-28T03:37:35.000Z",
+                  "uid": "35240-807397aa-3335-4695-bedd-24168af418c9"
+                }
+              ],
+              "id": "00926ba6-bd3b-4386-9013-57f6a0e64fb5",
+              "createdAt": "2026-07-28T03:37:35.000Z",
+              "updatedAt": "2026-07-28T03:37:35.000Z",
+              "uid": "35240-00926ba6-bd3b-4386-9013-57f6a0e64fb5"
+            },
+            {
+              "name": "Get list of fungible assets",
+              "id": "e607eee3-f322-4dd9-93ef-bec316f13e3a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/fungibles/?currency=usd&page[after]=<string>&page[size]=100&filter[search_query]=<string>&filter[implementation_chain_id]=<string>&filter[implementation_address]=<string>&filter[fungible_implementations]=<string>,<string>&filter[fungible_ids]=<string>,<string>&sort=-market_data.price.percent_change_30d",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "Denominated currency value of returned prices",
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "description": "Pagination parameters",
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Pagination parameters",
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Query for a full-text search.",
+                      "key": "filter[search_query]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Keep only fungibles from this chain. Available chain ids can be found in chains endpoints.",
+                      "key": "filter[implementation_chain_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Keep only fungibles deployed at given address. Is it possible that different fungibles are deployed at the same address on different chains.",
+                      "key": "filter[implementation_address]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Keep only fungibles with given implementations (comma-separated list of chain:address pairs). Maximum of 25 implementations allowed.\nexample: \"base,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nThis filter is mutually exclusive with `filter[implementation_chain_id]` and `filter[implementation_address]`.\n",
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Keep only fungibles with the given ids (comma-separated list)",
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Choose how the result should be ordered",
+                      "key": "sort",
+                      "value": "-market_data.price.percent_change_30d"
+                    }
+                  ]
+                },
+                "description": "This endpoint returns a paginated list of fungible assets supported by Zerion. It also provides the ability to search for fungibles.\nIf no fungible assets are found for given filters, the empty list with 200 status is returned.\n\n> NOTE: This endpoint supports a lot of filters, sorting, and pagination parameters. Ensure your request URL length is within a safe range for your platform. Usually, 2000 characters are the safe limit in virtually any combination of client and server software.\n\n> NOTE: The `filter[implementation_address]` parameter ignores `filter[search_query]`. It may be changed in the future.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+              },
+              "response": [
+                {
+                  "id": "62c02cf2-b2a5-4c6f-b8a9-31ae1c9f6c2f",
+                  "name": "Response for requested list of fungibles",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/fungibles/?currency=usd&page[after]=<string>&page[size]=100&filter[search_query]=<string>&filter[implementation_chain_id]=<string>&filter[implementation_address]=<string>&filter[fungible_implementations]=<string>,<string>&filter[fungible_ids]=<string>,<string>&sort=-market_data.price.percent_change_30d",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "fungibles",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[after]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[size]",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Query for a full-text search.",
+                          "key": "filter[search_query]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles from this chain. Available chain ids can be found in chains endpoints.",
+                          "key": "filter[implementation_chain_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles deployed at given address. Is it possible that different fungibles are deployed at the same address on different chains.",
+                          "key": "filter[implementation_address]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles with given implementations (comma-separated list of chain:address pairs). Maximum of 25 implementations allowed.\nexample: \"base,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nThis filter is mutually exclusive with `filter[implementation_chain_id]` and `filter[implementation_address]`.\n",
+                          "key": "filter[fungible_implementations]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles with the given ids (comma-separated list)",
+                          "key": "filter[fungible_ids]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Choose how the result should be ordered",
+                          "key": "sort",
+                          "value": "-market_data.price.percent_change_30d"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"links\": {\n    \"self\": \"<string>\",\n    \"first\": \"<string>\",\n    \"next\": \"<string>\",\n    \"prev\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"symbol\": \"<string>\",\n        \"flags\": {\n          \"verified\": \"<boolean>\"\n        },\n        \"external_links\": [\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          },\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          }\n        ],\n        \"implementations\": [\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"market_data\": {\n              \"trading_volumes\": {\n                \"volume_1d\": \"<double>\"\n              }\n            },\n            \"deployment_date\": \"<dateTime>\"\n          },\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"market_data\": {\n              \"trading_volumes\": {\n                \"volume_1d\": \"<double>\"\n              }\n            },\n            \"deployment_date\": \"<dateTime>\"\n          }\n        ],\n        \"market_data\": {\n          \"price\": \"<double>\",\n          \"total_supply\": \"<double>\",\n          \"circulating_supply\": \"<double>\",\n          \"fully_diluted_valuation\": \"<double>\",\n          \"market_cap\": \"<double>\",\n          \"changes\": {\n            \"percent_1d\": \"<double>\",\n            \"percent_30d\": \"<double>\",\n            \"percent_90d\": \"<double>\",\n            \"percent_365d\": \"<double>\"\n          },\n          \"trading_volumes\": {\n            \"volume_1d\": \"<double>\"\n          }\n        },\n        \"description\": \"<string>\",\n        \"icon\": {\n          \"url\": \"<string>\"\n        }\n      },\n      \"relationships\": {\n        \"chart_hour\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_day\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_week\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_month\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_year\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_max\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"symbol\": \"<string>\",\n        \"flags\": {\n          \"verified\": \"<boolean>\"\n        },\n        \"external_links\": [\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          },\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          }\n        ],\n        \"implementations\": [\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"market_data\": {\n              \"trading_volumes\": {\n                \"volume_1d\": \"<double>\"\n              }\n            },\n            \"deployment_date\": \"<dateTime>\"\n          },\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"market_data\": {\n              \"trading_volumes\": {\n                \"volume_1d\": \"<double>\"\n              }\n            },\n            \"deployment_date\": \"<dateTime>\"\n          }\n        ],\n        \"market_data\": {\n          \"price\": \"<double>\",\n          \"total_supply\": \"<double>\",\n          \"circulating_supply\": \"<double>\",\n          \"fully_diluted_valuation\": \"<double>\",\n          \"market_cap\": \"<double>\",\n          \"changes\": {\n            \"percent_1d\": \"<double>\",\n            \"percent_30d\": \"<double>\",\n            \"percent_90d\": \"<double>\",\n            \"percent_365d\": \"<double>\"\n          },\n          \"trading_volumes\": {\n            \"volume_1d\": \"<double>\"\n          }\n        },\n        \"description\": \"<string>\",\n        \"icon\": {\n          \"url\": \"<string>\"\n        }\n      },\n      \"relationships\": {\n        \"chart_hour\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_day\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_week\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_month\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_year\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_max\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:35.000Z",
+                  "updatedAt": "2026-07-28T03:37:35.000Z",
+                  "uid": "35240-62c02cf2-b2a5-4c6f-b8a9-31ae1c9f6c2f"
+                },
+                {
+                  "id": "c1e0c242-9661-466e-9179-85e9867e7777",
+                  "name": "Parameters are malformed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/fungibles/?currency=usd&page[after]=<string>&page[size]=100&filter[search_query]=<string>&filter[implementation_chain_id]=<string>&filter[implementation_address]=<string>&filter[fungible_implementations]=<string>,<string>&filter[fungible_ids]=<string>,<string>&sort=-market_data.price.percent_change_30d",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "fungibles",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[after]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[size]",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Query for a full-text search.",
+                          "key": "filter[search_query]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles from this chain. Available chain ids can be found in chains endpoints.",
+                          "key": "filter[implementation_chain_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles deployed at given address. Is it possible that different fungibles are deployed at the same address on different chains.",
+                          "key": "filter[implementation_address]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles with given implementations (comma-separated list of chain:address pairs). Maximum of 25 implementations allowed.\nexample: \"base,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nThis filter is mutually exclusive with `filter[implementation_chain_id]` and `filter[implementation_address]`.\n",
+                          "key": "filter[fungible_implementations]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles with the given ids (comma-separated list)",
+                          "key": "filter[fungible_ids]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Choose how the result should be ordered",
+                          "key": "sort",
+                          "value": "-market_data.price.percent_change_30d"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:35.000Z",
+                  "updatedAt": "2026-07-28T03:37:35.000Z",
+                  "uid": "35240-c1e0c242-9661-466e-9179-85e9867e7777"
+                },
+                {
+                  "id": "3d37faf8-fdf6-4fe3-8c6a-ec3efcdcefa6",
+                  "name": "Unathenticated request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/fungibles/?currency=usd&page[after]=<string>&page[size]=100&filter[search_query]=<string>&filter[implementation_chain_id]=<string>&filter[implementation_address]=<string>&filter[fungible_implementations]=<string>,<string>&filter[fungible_ids]=<string>,<string>&sort=-market_data.price.percent_change_30d",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "fungibles",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[after]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[size]",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Query for a full-text search.",
+                          "key": "filter[search_query]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles from this chain. Available chain ids can be found in chains endpoints.",
+                          "key": "filter[implementation_chain_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles deployed at given address. Is it possible that different fungibles are deployed at the same address on different chains.",
+                          "key": "filter[implementation_address]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles with given implementations (comma-separated list of chain:address pairs). Maximum of 25 implementations allowed.\nexample: \"base,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nThis filter is mutually exclusive with `filter[implementation_chain_id]` and `filter[implementation_address]`.\n",
+                          "key": "filter[fungible_implementations]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles with the given ids (comma-separated list)",
+                          "key": "filter[fungible_ids]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Choose how the result should be ordered",
+                          "key": "sort",
+                          "value": "-market_data.price.percent_change_30d"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:35.000Z",
+                  "updatedAt": "2026-07-28T03:37:35.000Z",
+                  "uid": "35240-3d37faf8-fdf6-4fe3-8c6a-ec3efcdcefa6"
+                },
+                {
+                  "id": "82ef8580-7a46-42c4-a51a-ad0c86ca73dc",
+                  "name": "Too many requests error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/fungibles/?currency=usd&page[after]=<string>&page[size]=100&filter[search_query]=<string>&filter[implementation_chain_id]=<string>&filter[implementation_address]=<string>&filter[fungible_implementations]=<string>,<string>&filter[fungible_ids]=<string>,<string>&sort=-market_data.price.percent_change_30d",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "fungibles",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[after]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[size]",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Query for a full-text search.",
+                          "key": "filter[search_query]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles from this chain. Available chain ids can be found in chains endpoints.",
+                          "key": "filter[implementation_chain_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles deployed at given address. Is it possible that different fungibles are deployed at the same address on different chains.",
+                          "key": "filter[implementation_address]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles with given implementations (comma-separated list of chain:address pairs). Maximum of 25 implementations allowed.\nexample: \"base,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nThis filter is mutually exclusive with `filter[implementation_chain_id]` and `filter[implementation_address]`.\n",
+                          "key": "filter[fungible_implementations]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Keep only fungibles with the given ids (comma-separated list)",
+                          "key": "filter[fungible_ids]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Choose how the result should be ordered",
+                          "key": "sort",
+                          "value": "-market_data.price.percent_change_30d"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:35.000Z",
+                  "updatedAt": "2026-07-28T03:37:35.000Z",
+                  "uid": "35240-82ef8580-7a46-42c4-a51a-ad0c86ca73dc"
+                }
+              ],
+              "createdAt": "2026-07-28T03:37:35.000Z",
+              "updatedAt": "2026-07-28T03:37:35.000Z",
+              "uid": "35240-e607eee3-f322-4dd9-93ef-bec316f13e3a"
+            }
+          ],
+          "id": "c5d02d24-7025-4c82-b442-6e22b0a2dff8",
+          "createdAt": "2026-07-28T03:37:35.000Z",
+          "updatedAt": "2026-07-28T03:37:35.000Z",
+          "uid": "35240-c5d02d24-7025-4c82-b442-6e22b0a2dff8"
+        }
+      ],
+      "id": "d4e4206f-b76c-419d-9609-78ecb131a4df",
+      "createdAt": "2026-07-28T03:37:35.000Z",
+      "updatedAt": "2026-07-28T03:37:35.000Z",
+      "uid": "35240-d4e4206f-b76c-419d-9609-78ecb131a4df"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.zerion.io"
+    }
+  ]
+}

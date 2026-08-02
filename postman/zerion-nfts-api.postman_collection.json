@@ -1,0 +1,703 @@
+{
+  "info": {
+    "_postman_id": "33e20d7c-3165-41a1-8624-f9fd60a86413",
+    "name": "REST chains nfts API",
+    "description": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:37:37.000Z",
+    "updatedAt": "2026-07-28T03:37:37.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-33e20d7c-3165-41a1-8624-f9fd60a86413"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "nfts",
+          "item": [
+            {
+              "name": "{nft_id}",
+              "item": [
+                {
+                  "name": "Get single NFT by ID",
+                  "id": "1c2b3156-6678-4230-8ab5-5eaf63977881",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nfts/:nft_id?currency=usd&include=nft_collections,nft_collections",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nfts",
+                        ":nft_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                          "key": "include",
+                          "value": "nft_collections,nft_collections"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "950f1233-1832-4368-a2a3-0aed14016065",
+                          "key": "nft_id",
+                          "value": "<string>",
+                          "description": "(Required) NFT unique identifier"
+                        }
+                      ]
+                    },
+                    "description": "This endpoint returns single NFT by its unique identifier.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "03d50362-fa03-4984-8b1b-b2aac9d7879b",
+                      "name": "Requested NFT",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nfts/:nft_id?currency=usd&include=nft_collections,nft_collections",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nfts",
+                            ":nft_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            },
+                            {
+                              "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                              "key": "include",
+                              "value": "nft_collections,nft_collections"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "nft_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"contract_address\": \"<string>\",\n      \"token_id\": \"<string>\",\n      \"interface\": \"erc721\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"tags\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"content\": {\n          \"preview\": {\n            \"url\": \"<string>\",\n            \"content_type\": \"<string>\"\n          },\n          \"detail\": {\n            \"url\": \"<string>\",\n            \"content_type\": \"<string>\"\n          },\n          \"audio\": {\n            \"url\": \"<string>\",\n            \"content_type\": \"<string>\"\n          },\n          \"video\": {\n            \"url\": \"<string>\",\n            \"content_type\": \"<string>\"\n          }\n        },\n        \"attributes\": [\n          {\n            \"key\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"key\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      },\n      \"market_data\": {\n        \"prices\": {\n          \"floor\": \"<float>\"\n        },\n        \"last_sale\": {\n          \"price\": \"<float>\",\n          \"quantity\": {\n            \"int\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"float\": \"<float>\",\n            \"numeric\": \"<string>\"\n          }\n        }\n      },\n      \"external_links\": [\n        {\n          \"url\": \"<string>\",\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"url\": \"<string>\",\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"flags\": {\n        \"is_spam\": \"<boolean>\"\n      }\n    },\n    \"relationships\": {\n      \"chain\": {\n        \"links\": {\n          \"related\": \"<string>\"\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"nft_collection\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<integer>\"\n        }\n      }\n    }\n  },\n  \"included\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"attributes\": {\n        \"metadata\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"content\": {\n            \"icon\": {\n              \"url\": \"<string>\"\n            },\n            \"banner\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            }\n          },\n          \"payment_token_symbol\": \"<string>\"\n        },\n        \"implementations\": [\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\"\n          },\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\"\n          }\n        ]\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"attributes\": {\n        \"metadata\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"content\": {\n            \"icon\": {\n              \"url\": \"<string>\"\n            },\n            \"banner\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            }\n          },\n          \"payment_token_symbol\": \"<string>\"\n        },\n        \"implementations\": [\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\"\n          },\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:37.000Z",
+                      "updatedAt": "2026-07-28T03:37:37.000Z",
+                      "uid": "35240-03d50362-fa03-4984-8b1b-b2aac9d7879b"
+                    },
+                    {
+                      "id": "94065dc1-718f-4c95-ad4e-8bc66c678787",
+                      "name": "Parameters are malformed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nfts/:nft_id?currency=usd&include=nft_collections,nft_collections",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nfts",
+                            ":nft_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            },
+                            {
+                              "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                              "key": "include",
+                              "value": "nft_collections,nft_collections"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "nft_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:37.000Z",
+                      "updatedAt": "2026-07-28T03:37:37.000Z",
+                      "uid": "35240-94065dc1-718f-4c95-ad4e-8bc66c678787"
+                    },
+                    {
+                      "id": "01041134-b96c-4ab7-83d5-c38f10bf6a5e",
+                      "name": "Unathenticated request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nfts/:nft_id?currency=usd&include=nft_collections,nft_collections",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nfts",
+                            ":nft_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            },
+                            {
+                              "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                              "key": "include",
+                              "value": "nft_collections,nft_collections"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "nft_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:37.000Z",
+                      "updatedAt": "2026-07-28T03:37:37.000Z",
+                      "uid": "35240-01041134-b96c-4ab7-83d5-c38f10bf6a5e"
+                    },
+                    {
+                      "id": "25204331-71a6-423b-b6a5-bbe5aa9e3c31",
+                      "name": "Too many requests error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/nfts/:nft_id?currency=usd&include=nft_collections,nft_collections",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "nfts",
+                            ":nft_id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Denominated currency value of returned prices",
+                              "key": "currency",
+                              "value": "usd"
+                            },
+                            {
+                              "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                              "key": "include",
+                              "value": "nft_collections,nft_collections"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "nft_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:37.000Z",
+                      "updatedAt": "2026-07-28T03:37:37.000Z",
+                      "uid": "35240-25204331-71a6-423b-b6a5-bbe5aa9e3c31"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:37:37.000Z",
+                  "updatedAt": "2026-07-28T03:37:37.000Z",
+                  "uid": "35240-1c2b3156-6678-4230-8ab5-5eaf63977881"
+                }
+              ],
+              "id": "3aabea11-4025-4538-bc6c-4ea90670d67c",
+              "createdAt": "2026-07-28T03:37:37.000Z",
+              "updatedAt": "2026-07-28T03:37:37.000Z",
+              "uid": "35240-3aabea11-4025-4538-bc6c-4ea90670d67c"
+            },
+            {
+              "name": "Get list of NFTs",
+              "id": "4d4ce8cb-ec19-46bf-bd58-e3d70127f7f9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "testnet"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/nfts/?filter[references]=<string>&currency=usd&include=nft_collections,nft_collections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "nfts",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "Keep only NFTs matching specified references.\n\nReference format is `chain_id:contract_address:token_id`.\n\nReferences should be separated by comma `,`.\n\n`chain_id`- ID of the chain where NFT exists, can be found in /chains endpoint.\n\n`contract_address` address of the deployed contract which NFT belongs to.\n\n`token_id` id of the NFT withing specified `contract_address`.\n\nNOTE: parameter currently is mandatory and can not be omitted.\n",
+                      "key": "filter[references]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Denominated currency value of returned prices",
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                      "key": "include",
+                      "value": "nft_collections,nft_collections"
+                    }
+                  ]
+                },
+                "description": "This endpoint returns list of NFTs by using different parameters.\n\nIt returns NFTs of both types - ERC721 and ERC1155.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+              },
+              "response": [
+                {
+                  "id": "87802eec-db9f-4385-974d-bc0d47c1cd69",
+                  "name": "Response for requested list of NFTs",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nfts/?filter[references]=<string>&currency=usd&include=nft_collections,nft_collections",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nfts",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Keep only NFTs matching specified references.\n\nReference format is `chain_id:contract_address:token_id`.\n\nReferences should be separated by comma `,`.\n\n`chain_id`- ID of the chain where NFT exists, can be found in /chains endpoint.\n\n`contract_address` address of the deployed contract which NFT belongs to.\n\n`token_id` id of the NFT withing specified `contract_address`.\n\nNOTE: parameter currently is mandatory and can not be omitted.\n",
+                          "key": "filter[references]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                          "key": "include",
+                          "value": "nft_collections,nft_collections"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"contract_address\": \"<string>\",\n        \"token_id\": \"<string>\",\n        \"interface\": \"erc721\",\n        \"metadata\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"content\": {\n            \"preview\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            },\n            \"detail\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            },\n            \"audio\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            },\n            \"video\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            }\n          },\n          \"attributes\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ]\n        },\n        \"market_data\": {\n          \"prices\": {\n            \"floor\": \"<float>\"\n          },\n          \"last_sale\": {\n            \"price\": \"<float>\",\n            \"quantity\": {\n              \"int\": \"<string>\",\n              \"decimals\": \"<integer>\",\n              \"float\": \"<float>\",\n              \"numeric\": \"<string>\"\n            }\n          }\n        },\n        \"external_links\": [\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          },\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          }\n        ],\n        \"flags\": {\n          \"is_spam\": \"<boolean>\"\n        }\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"nft_collection\": {\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<integer>\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"contract_address\": \"<string>\",\n        \"token_id\": \"<string>\",\n        \"interface\": \"erc1155\",\n        \"metadata\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"content\": {\n            \"preview\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            },\n            \"detail\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            },\n            \"audio\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            },\n            \"video\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            }\n          },\n          \"attributes\": [\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            },\n            {\n              \"key\": \"<string>\",\n              \"value\": \"<string>\"\n            }\n          ]\n        },\n        \"market_data\": {\n          \"prices\": {\n            \"floor\": \"<float>\"\n          },\n          \"last_sale\": {\n            \"price\": \"<float>\",\n            \"quantity\": {\n              \"int\": \"<string>\",\n              \"decimals\": \"<integer>\",\n              \"float\": \"<float>\",\n              \"numeric\": \"<string>\"\n            }\n          }\n        },\n        \"external_links\": [\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          },\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          }\n        ],\n        \"flags\": {\n          \"is_spam\": \"<boolean>\"\n        }\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"nft_collection\": {\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<integer>\"\n          }\n        }\n      }\n    }\n  ],\n  \"included\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"attributes\": {\n        \"metadata\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"content\": {\n            \"icon\": {\n              \"url\": \"<string>\"\n            },\n            \"banner\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            }\n          },\n          \"payment_token_symbol\": \"<string>\"\n        },\n        \"implementations\": [\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\"\n          },\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\"\n          }\n        ]\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"attributes\": {\n        \"metadata\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"content\": {\n            \"icon\": {\n              \"url\": \"<string>\"\n            },\n            \"banner\": {\n              \"url\": \"<string>\",\n              \"content_type\": \"<string>\"\n            }\n          },\n          \"payment_token_symbol\": \"<string>\"\n        },\n        \"implementations\": [\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\"\n          },\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:37.000Z",
+                  "updatedAt": "2026-07-28T03:37:37.000Z",
+                  "uid": "35240-87802eec-db9f-4385-974d-bc0d47c1cd69"
+                },
+                {
+                  "id": "47d4992b-be4b-4a75-9a26-17d8a9720c9c",
+                  "name": "Parameters are malformed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nfts/?filter[references]=<string>&currency=usd&include=nft_collections,nft_collections",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nfts",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Keep only NFTs matching specified references.\n\nReference format is `chain_id:contract_address:token_id`.\n\nReferences should be separated by comma `,`.\n\n`chain_id`- ID of the chain where NFT exists, can be found in /chains endpoint.\n\n`contract_address` address of the deployed contract which NFT belongs to.\n\n`token_id` id of the NFT withing specified `contract_address`.\n\nNOTE: parameter currently is mandatory and can not be omitted.\n",
+                          "key": "filter[references]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                          "key": "include",
+                          "value": "nft_collections,nft_collections"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:37.000Z",
+                  "updatedAt": "2026-07-28T03:37:37.000Z",
+                  "uid": "35240-47d4992b-be4b-4a75-9a26-17d8a9720c9c"
+                },
+                {
+                  "id": "ae3cd178-cd03-41bf-9547-cce9bf5a3206",
+                  "name": "Unathenticated request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nfts/?filter[references]=<string>&currency=usd&include=nft_collections,nft_collections",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nfts",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Keep only NFTs matching specified references.\n\nReference format is `chain_id:contract_address:token_id`.\n\nReferences should be separated by comma `,`.\n\n`chain_id`- ID of the chain where NFT exists, can be found in /chains endpoint.\n\n`contract_address` address of the deployed contract which NFT belongs to.\n\n`token_id` id of the NFT withing specified `contract_address`.\n\nNOTE: parameter currently is mandatory and can not be omitted.\n",
+                          "key": "filter[references]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                          "key": "include",
+                          "value": "nft_collections,nft_collections"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:37.000Z",
+                  "updatedAt": "2026-07-28T03:37:37.000Z",
+                  "uid": "35240-ae3cd178-cd03-41bf-9547-cce9bf5a3206"
+                },
+                {
+                  "id": "8d0dcc94-63a6-4d06-aade-7bf9477ca726",
+                  "name": "Too many requests error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/nfts/?filter[references]=<string>&currency=usd&include=nft_collections,nft_collections",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "nfts",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Keep only NFTs matching specified references.\n\nReference format is `chain_id:contract_address:token_id`.\n\nReferences should be separated by comma `,`.\n\n`chain_id`- ID of the chain where NFT exists, can be found in /chains endpoint.\n\n`contract_address` address of the deployed contract which NFT belongs to.\n\n`token_id` id of the NFT withing specified `contract_address`.\n\nNOTE: parameter currently is mandatory and can not be omitted.\n",
+                          "key": "filter[references]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Denominated currency value of returned prices",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema.",
+                          "key": "include",
+                          "value": "nft_collections,nft_collections"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:37.000Z",
+                  "updatedAt": "2026-07-28T03:37:37.000Z",
+                  "uid": "35240-8d0dcc94-63a6-4d06-aade-7bf9477ca726"
+                }
+              ],
+              "createdAt": "2026-07-28T03:37:37.000Z",
+              "updatedAt": "2026-07-28T03:37:37.000Z",
+              "uid": "35240-4d4ce8cb-ec19-46bf-bd58-e3d70127f7f9"
+            }
+          ],
+          "id": "1da9a5fd-e04d-4fba-b872-dfb18209a263",
+          "createdAt": "2026-07-28T03:37:37.000Z",
+          "updatedAt": "2026-07-28T03:37:37.000Z",
+          "uid": "35240-1da9a5fd-e04d-4fba-b872-dfb18209a263"
+        }
+      ],
+      "id": "71b2a0ff-ce08-4b0e-bdd7-48f66f20e1ce",
+      "createdAt": "2026-07-28T03:37:37.000Z",
+      "updatedAt": "2026-07-28T03:37:37.000Z",
+      "uid": "35240-71b2a0ff-ce08-4b0e-bdd7-48f66f20e1ce"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.zerion.io"
+    }
+  ]
+}

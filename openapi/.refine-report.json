@@ -1,0 +1,30 @@
+{
+  "provider": "zerion",
+  "sources": [
+    "zerion-chains-api-openapi.yml",
+    "zerion-dapps-api-openapi.yml",
+    "zerion-fungibles-api-openapi.yml",
+    "zerion-gas-api-openapi.yml",
+    "zerion-nfts-api-openapi.yml",
+    "zerion-subscriptions-to-transactions-api-openapi.yml",
+    "zerion-swap-api-openapi.yml",
+    "zerion-wallet-sets-api-openapi.yml",
+    "zerion-wallets-api-openapi.yml"
+  ],
+  "outputs": [
+    "zerion-chains-api-openapi.yml",
+    "zerion-dapps-api-openapi.yml",
+    "zerion-fungibles-api-openapi.yml",
+    "zerion-gas-api-openapi.yml",
+    "zerion-nfts-api-openapi.yml",
+    "zerion-subscriptions-to-transactions-api-openapi.yml",
+    "zerion-swap-api-openapi.yml",
+    "zerion-wallet-sets-api-openapi.yml",
+    "zerion-wallets-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.zerion.io/changelog
+scheme: dated
+current_version: v1
+entries:
+- date: '2026-07-17'
+  type: feature
+  breaking: false
+  title: Pool filtering for balance charts
+  highlights: >-
+    New query parameters filter[pool_addresses] and filter[exclude_pool_addresses]
+    scope balance charts to specific liquidity pools or vault positions (up to 25
+    addresses).
+- date: '2026-07-17'
+  type: feature
+  breaking: false
+  title: DeFi position receipt tokens
+  highlights: >-
+    Wallet and wallet-set position responses can optionally include receipt
+    tokens representing DeFi positions.
+- date: '2026-06-08'
+  type: documentation
+  breaking: false
+  title: Chart point granularity documentation
+  highlights: >-
+    Documented sampling intervals per chart period (e.g. hour -> 10s, day -> 5m).
+    No API changes.
+- date: '2026-06-04'
+  type: feature
+  breaking: false
+  title: DeFi protocol positions in balance charts
+  highlights: >-
+    Added filter[positions] parameter (only_simple default, only_complex,
+    no_filter) to include/exclude complex DeFi positions alongside token balances.
+- date: '2026-06-01'
+  type: feature
+  breaking: true
+  title: Token-2022 ScaledUiAmount raw amounts
+  highlights: >-
+    Breaking: for rebasing assets like SPYx, quantity.int now returns the raw
+    on-chain amount instead of the scaled display amount. Use quantity.float or
+    quantity.numeric for display values.
+- date: '2026-05-29'
+  type: improvement
+  breaking: false
+  title: NFT positions page size increase
+  highlights: Maximum page[size] for wallet NFT endpoints raised from 100 to 500.

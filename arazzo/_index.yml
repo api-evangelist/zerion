@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: derived
+source: arazzo/*.arazzo.yml
+workflows:
+- file: zerion-wallet-overview.arazzo.yml
+  workflowId: wallet-overview
+  title: Zerion wallet overview
+  summary: Fetch portfolio, positions, recent transactions, and PnL for a wallet.
+- file: zerion-wallet-activity-subscription.arazzo.yml
+  workflowId: create-and-confirm-subscription
+  title: Zerion wallet activity subscription
+  summary: Create a transaction webhook subscription for wallets, confirm it, and verify the watched-wallet count.

@@ -1,0 +1,41 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/zerion-openapi-original.yml
+notes: >-
+  API-grounded Agent Skills generated from the Zerion OpenAPI operations and the
+  captured conventions/errors/webhooks artifacts. Every step references a real
+  operationId verified against openapi/zerion-openapi-original.yml. Zerion also
+  publishes six CLI-oriented agent skills (zerion, zerion-analyze, zerion-trading,
+  zerion-sign, zerion-wallet, zerion-agent-management) that ship from
+  github.com/zeriontech/zerion-ai — see provider_published below and cli/.
+skills:
+- file: zerion-wallet-portfolio.md
+  name: Read a wallet portfolio and PnL
+  api: openapi/zerion-openapi-original.yml
+  operations: [getWalletPortfolio, listWalletPositions, getWalletPNL]
+- file: zerion-transaction-history.md
+  name: Fetch and interpret wallet transaction history
+  api: openapi/zerion-openapi-original.yml
+  operations: [listWalletTransactions]
+- file: zerion-wallet-activity-webhooks.md
+  name: Subscribe to real-time wallet activity webhooks
+  api: openapi/zerion-openapi-original.yml
+  operations: [createSubscriptionWalletTransactions, GetWalletTransactionsSubscription, PatchSubscribedWalletsInSubscription, UpdateCallbackUrlInSubscription, DisableSubscription]
+- file: zerion-swap-and-bridge.md
+  name: Get swap and bridge quotes
+  api: openapi/zerion-openapi-original.yml
+  operations: [swapFungibles, swapQuotes]
+- file: zerion-nft-portfolio.md
+  name: Read a wallet NFT portfolio
+  api: openapi/zerion-openapi-original.yml
+  operations: [getWalletNftPortfolio, listWalletNFTPositions, listWalletNFTCollections]
+provider_published:
+  repository: https://github.com/zeriontech/zerion-ai
+  host: agentskills.io + Claude Code / Cursor / Windsurf / Codex / Gemini / OpenCode
+  skills:
+  - zerion
+  - zerion-analyze
+  - zerion-trading
+  - zerion-sign
+  - zerion-wallet
+  - zerion-agent-management

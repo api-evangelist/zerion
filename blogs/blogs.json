@@ -1,0 +1,21 @@
+{
+  "repo": "zerion",
+  "feeds": [
+    {
+      "source": "https://zerion.io/blog/rss/",
+      "feed_url": "https://zerion.io/blog/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://zerion.io/blog/tag/zerion-api/",
+      "feed_url": "https://zerion.io/blog/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 15,
+  "fetched": "2026-08-01T15:49:00Z"
+}

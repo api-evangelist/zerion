@@ -1,0 +1,66 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.zerion.io/webhooks
+spec_type: Webhooks
+summary: >-
+  Zerion delivers real-time transaction webhooks via the Subscriptions to
+  Transactions API. You create a subscription with a callback_url and a list of
+  wallet addresses (optionally scoped by chain_ids); Zerion POSTs a JSON:API
+  callback for every new transaction on a watched wallet across EVM chains and
+  Solana. No published AsyncAPI document exists; a Kafka streaming surface is
+  also offered for high-throughput pipelines.
+management_api:
+  base: https://api.zerion.io/v1/tx-subscriptions
+  operations:
+  - createSubscriptionWalletTransactions
+  - findWalletTransactionsSubscription
+  - GetWalletTransactionsSubscription
+  - DeleteWalletTransactionsSubscription
+  - GetSubscribedWalletsInSubscription
+  - PatchSubscribedWalletsInSubscription
+  - ReplaceSubscribedWalletsInSubscription
+  - GetSubscribedWalletsCountInSubscription
+  - UpdateCallbackUrlInSubscription
+  - EnableSubscription
+  - DisableSubscription
+  - UpdateChainIdsInSubscription
+delivery:
+  transport: HTTPS POST to callback_url
+  payload_format: 'JSON:API (data.type=callback, transaction in included[])'
+  guarantees: best-effort (not guaranteed, order not guaranteed, duplicates possible)
+  retries: up to 3 attempts ~20s apart (~60s window) on 5xx/timeout; 4xx treated as acknowledged (no retry)
+  idempotency_guidance: deduplicate on transaction hash + chain; handle rollback (deleted:true) events
+signature:
+  algorithm: RSA-SHA256 (PKCS1v15)
+  headers:
+  - name: X-Timestamp
+    description: ISO 8601 timestamp of the request
+  - name: X-Signature
+    description: Base64-encoded RSA-SHA256 signature
+  - name: X-Certificate-URL
+    description: URL to download the public certificate
+  signing_string: '${X-Timestamp}\n${request_body}\n'
+events:
+- name: transaction.confirmed
+  trigger: A watched wallet sends or receives a transaction
+  operation_types: [send, receive, trade, execute]
+  fields:
+  - data.attributes.address
+  - included[].attributes.operation_type
+  - included[].attributes.status
+  - included[].attributes.transfers
+  - included[].attributes.flags.is_trash
+  - included[].relationships.chain.id
+- name: transaction.rollback
+  trigger: A transaction is removed from the canonical chain (reorg)
+  marker: 'included[0].attributes.deleted == true'
+notes: >-
+  Token prices are always null in webhook payloads (computed asynchronously);
+  fetch prices separately via the Fungibles API. Spam is labeled (flags.is_trash)
+  not dropped. Free plan: 5 wallets per subscription; paid: unlimited; up to 100
+  wallets per request. Callback URLs must be whitelisted via the dashboard for
+  production.
+streaming:
+  kafka:
+    docs: https://developers.zerion.io/streaming
+    description: Real-time event streams for high-throughput data pipelines.

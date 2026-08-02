@@ -1,0 +1,563 @@
+{
+  "info": {
+    "_postman_id": "ca226447-cffd-46d4-b24e-ffc9c197e1c0",
+    "name": "REST chains dapps API",
+    "description": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:37:34.000Z",
+    "updatedAt": "2026-07-28T03:37:34.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ca226447-cffd-46d4-b24e-ffc9c197e1c0"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "dapps",
+          "item": [
+            {
+              "name": "{dapp_id}",
+              "item": [
+                {
+                  "name": "Get DApp by ID",
+                  "id": "58c1cc7c-bb7e-4541-8cf7-1eb560cb78dd",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/dapps/:dapp_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "dapps",
+                        ":dapp_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b8ce381b-5bdd-4c9b-ae97-b3c5a8f56cc7",
+                          "key": "dapp_id",
+                          "value": "<string>",
+                          "description": "(Required) DApp's unique identifier"
+                        }
+                      ]
+                    },
+                    "description": "This endpoint returns single DApp by its unique identifier.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "75634f10-82fc-46e5-9a72-edaa0291fb09",
+                      "name": "Requested DApp",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/dapps/:dapp_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "dapps",
+                            ":dapp_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "dapp_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"icon\": {\n        \"url\": \"<string>\"\n      },\n      \"url\": \"<string>\",\n      \"manage_positions_url\": \"<string>\",\n      \"external_links\": [\n        {\n          \"url\": \"<string>\",\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"url\": \"<string>\",\n          \"type\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T03:37:34.000Z",
+                      "updatedAt": "2026-07-28T03:37:34.000Z",
+                      "uid": "35240-75634f10-82fc-46e5-9a72-edaa0291fb09"
+                    },
+                    {
+                      "id": "3139aa70-7bb1-42f4-8b82-4997eaf35cd5",
+                      "name": "Parameters are malformed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/dapps/:dapp_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "dapps",
+                            ":dapp_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "dapp_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:34.000Z",
+                      "updatedAt": "2026-07-28T03:37:34.000Z",
+                      "uid": "35240-3139aa70-7bb1-42f4-8b82-4997eaf35cd5"
+                    },
+                    {
+                      "id": "405d0b35-6bac-41a1-b277-07260faadae7",
+                      "name": "Unathenticated request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/dapps/:dapp_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "dapps",
+                            ":dapp_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "dapp_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:34.000Z",
+                      "updatedAt": "2026-07-28T03:37:34.000Z",
+                      "uid": "35240-405d0b35-6bac-41a1-b277-07260faadae7"
+                    },
+                    {
+                      "id": "5225194e-f2aa-406b-9105-d594479d1e43",
+                      "name": "Too many requests error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/dapps/:dapp_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "dapps",
+                            ":dapp_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "dapp_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:34.000Z",
+                      "updatedAt": "2026-07-28T03:37:34.000Z",
+                      "uid": "35240-5225194e-f2aa-406b-9105-d594479d1e43"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:37:34.000Z",
+                  "updatedAt": "2026-07-28T03:37:34.000Z",
+                  "uid": "35240-58c1cc7c-bb7e-4541-8cf7-1eb560cb78dd"
+                }
+              ],
+              "id": "8948ca2a-4d4a-44f5-b5b0-c2d9d66baa1a",
+              "createdAt": "2026-07-28T03:37:34.000Z",
+              "updatedAt": "2026-07-28T03:37:34.000Z",
+              "uid": "35240-8948ca2a-4d4a-44f5-b5b0-c2d9d66baa1a"
+            },
+            {
+              "name": "Get list of DApps",
+              "id": "629f7603-1562-49df-9ab1-f51f4980777e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/dapps?page[after]=<string>&page[size]=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "dapps"
+                  ],
+                  "query": [
+                    {
+                      "description": "Pagination parameters",
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Pagination parameters",
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ]
+                },
+                "description": "This endpoint returns list of DApps by using different parameters.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+              },
+              "response": [
+                {
+                  "id": "5803e27a-aa1f-483e-94fb-db5547e8c7ba",
+                  "name": "Response for requested list of DApps",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/dapps?page[after]=<string>&page[size]=100",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "dapps"
+                      ],
+                      "query": [
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[after]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[size]",
+                          "value": "100"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"icon\": {\n          \"url\": \"<string>\"\n        },\n        \"url\": \"<string>\",\n        \"manage_positions_url\": \"<string>\",\n        \"external_links\": [\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          },\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          }\n        ]\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"icon\": {\n          \"url\": \"<string>\"\n        },\n        \"url\": \"<string>\",\n        \"manage_positions_url\": \"<string>\",\n        \"external_links\": [\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          },\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:34.000Z",
+                  "updatedAt": "2026-07-28T03:37:34.000Z",
+                  "uid": "35240-5803e27a-aa1f-483e-94fb-db5547e8c7ba"
+                },
+                {
+                  "id": "623460e0-e074-4a4b-a5f2-bef9319004ea",
+                  "name": "Parameters are malformed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/dapps?page[after]=<string>&page[size]=100",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "dapps"
+                      ],
+                      "query": [
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[after]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[size]",
+                          "value": "100"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:34.000Z",
+                  "updatedAt": "2026-07-28T03:37:34.000Z",
+                  "uid": "35240-623460e0-e074-4a4b-a5f2-bef9319004ea"
+                },
+                {
+                  "id": "a025f7dc-7f90-4c40-8b79-20dde8ae0218",
+                  "name": "Unathenticated request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/dapps?page[after]=<string>&page[size]=100",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "dapps"
+                      ],
+                      "query": [
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[after]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[size]",
+                          "value": "100"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:34.000Z",
+                  "updatedAt": "2026-07-28T03:37:34.000Z",
+                  "uid": "35240-a025f7dc-7f90-4c40-8b79-20dde8ae0218"
+                },
+                {
+                  "id": "14ab90b9-1e86-4735-9bba-629caa0d72ad",
+                  "name": "Too many requests error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/dapps?page[after]=<string>&page[size]=100",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "dapps"
+                      ],
+                      "query": [
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[after]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Pagination parameters",
+                          "key": "page[size]",
+                          "value": "100"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:34.000Z",
+                  "updatedAt": "2026-07-28T03:37:34.000Z",
+                  "uid": "35240-14ab90b9-1e86-4735-9bba-629caa0d72ad"
+                }
+              ],
+              "createdAt": "2026-07-28T03:37:34.000Z",
+              "updatedAt": "2026-07-28T03:37:34.000Z",
+              "uid": "35240-629f7603-1562-49df-9ab1-f51f4980777e"
+            }
+          ],
+          "id": "6db494ff-2297-4d5e-93e9-516d6bdc5300",
+          "createdAt": "2026-07-28T03:37:34.000Z",
+          "updatedAt": "2026-07-28T03:37:34.000Z",
+          "uid": "35240-6db494ff-2297-4d5e-93e9-516d6bdc5300"
+        }
+      ],
+      "id": "be2adb0c-c527-4fbb-8165-d1f7462ac870",
+      "createdAt": "2026-07-28T03:37:34.000Z",
+      "updatedAt": "2026-07-28T03:37:34.000Z",
+      "uid": "35240-be2adb0c-c527-4fbb-8165-d1f7462ac870"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.zerion.io"
+    }
+  ]
+}

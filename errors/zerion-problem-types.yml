@@ -1,0 +1,58 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.zerion.io/error-handling
+format: json-api-errors
+envelope:
+  field: errors
+  shape: >-
+    All errors return a JSON object with an `errors` array; each item carries a
+    `title` (short description) and `detail` (longer explanation). This is the
+    JSON:API error object shape, not RFC 9457 application/problem+json.
+  example: |
+    {"errors":[{"title":"Short error description","detail":"A longer explanation of what went wrong"}]}
+problems:
+- status: 400
+  title: Bad Request / Malformed parameter
+  detail: >-
+    Malformed or invalid query parameters. Common causes: invalid
+    filter[chain_ids] value, page[size] outside the allowed range, missing
+    required parameters (e.g. filter[references] on NFTs), or a
+    filter[min_mined_at] timestamp that is not exactly 13-digit milliseconds.
+  retry: false
+- status: 401
+  title: Unauthorized Error
+  detail: >-
+    Missing, invalid, or incorrectly encoded API key. Remember to append a colon
+    before Base64-encoding: base64("your_key:"). Also raised for expired or
+    revoked keys.
+  retry: false
+- status: 404
+  title: Not Found
+  detail: >-
+    Single-resource endpoints only (e.g. /v1/fungibles/{fungible_id},
+    /v1/nfts/{nft_id}) when the ID matches no record. List endpoints return an
+    empty data[] array with 200 instead of 404.
+  retry: false
+- status: 429
+  title: Too Many Requests
+  detail: >-
+    Rate limit exceeded ("Your request had been throttled"). Use the
+    RateLimit-Org-Second-Reset header and exponential backoff. If the day/month
+    quota is exhausted, retrying will not help — check RateLimit-Org-Day-Remaining
+    and RateLimit-Org-Month-Remaining.
+  retry: true
+- status: 500
+  title: Internal Server Error
+  detail: >-
+    Unexpected error on Zerion's side ("An unexpected error occurred"). Safe to
+    retry with exponential backoff (e.g. 1s, 2s, 4s) and a retry cap.
+  retry: true
+- status: 503
+  title: Service Unavailable
+  detail: Declared in the OpenAPI responses; transient upstream unavailability.
+  retry: true
+best_practices:
+- Retry on 429 and 500 only; never retry 400 or 401 (fix the request).
+- Use exponential backoff on retries.
+- Validate parameters before sending (page[size] range, 13-digit ms timestamps, supported chain IDs).
+- Prefer transaction subscriptions (webhooks) over polling.

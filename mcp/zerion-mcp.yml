@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://developers.zerion.io/build-with-ai/mcp
+server:
+  name: zerion-api
+  transport: http
+  url: https://developers.zerion.io/mcp
+  scope: documentation
+  description: >-
+    Official hosted Model Context Protocol server exposing the full Zerion API
+    documentation and OpenAPI spec to AI tools. Once connected, an assistant can
+    search the docs and spec in real time while generating integration code.
+    This is a docs/spec-search MCP server (not a live wallet-data execution
+    server); for onchain reads and trades from an agent, Zerion ships the
+    open-source zerion-cli plus six packaged agent skills (see cli/ and skills/).
+install:
+- client: Claude Code
+  command: claude mcp add --transport http zerion-api https://developers.zerion.io/mcp
+- client: Cursor
+  config: '{"mcpServers":{"zerion-api":{"url":"https://developers.zerion.io/mcp"}}}'
+- client: VS Code
+  config: '{"servers":{"zerion-api":{"type":"http","url":"https://developers.zerion.io/mcp"}}}'
+- client: Claude Web
+  note: Settings -> Connectors -> Add custom connector; URL https://developers.zerion.io/mcp
+tools:
+- name: search_docs
+  description: Search the full Zerion API documentation and OpenAPI spec in real time.
+  note: >-
+    The hosted server exposes documentation-search tooling (exact tool names are
+    provided by the remote MCP endpoint at connect time). Example prompts the
+    docs advertise: "How do I get a wallet's token positions on Ethereum?",
+    "What filters are available on the positions endpoint?".

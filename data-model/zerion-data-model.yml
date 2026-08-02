@@ -1,0 +1,105 @@
+generated: '2026-07-21'
+method: derived
+source:
+- openapi/zerion-openapi-original.yml
+- https://developers.zerion.io/endpoints-and-schema
+- https://developers.zerion.io/webhooks
+notes: >-
+  Derived from the documented JSON:API resource types and endpoint surface. The
+  published OpenAPI uses generically named component schemas (Container/Attributes),
+  so relationships below are grounded in the JSON:API `relationships` blocks shown
+  in the docs (transaction -> chain/dapp, callback -> subscription) and the
+  endpoint hierarchy rather than raw $ref graph walking.
+entities:
+- name: wallet
+  key: address (EVM 0x... or Solana base58)
+  description: A web3 wallet addressed by chain address; root of portfolio/positions/transactions/pnl.
+- name: wallet-set
+  key: one or both of an EVM address and a Solana address
+  description: An aggregate of addresses treated as a single portfolio.
+- name: position
+  resource_type: positions
+  description: A fungible token or DeFi position held by a wallet (deposit, staked, loan, etc.).
+- name: transaction
+  resource_type: transactions
+  description: A decoded onchain transaction with transfers, fee, approvals, flags, and optional application_metadata.
+- name: fungible
+  description: A fungible asset with market data, price charts, and per-chain implementations.
+- name: nft-position
+  description: An NFT held by a wallet, grouped into collections.
+- name: nft
+  description: A single NFT identified by nft_id, with metadata and media.
+- name: chain
+  resource_type: chains
+  description: A supported blockchain (EVM chains and Solana).
+- name: dapp
+  resource_type: dapps
+  description: A recognized decentralized application / protocol.
+- name: gas-price
+  description: Real-time gas price per supported chain.
+- name: swap-quote
+  description: Same-chain swap or cross-chain bridge quote from multiple liquidity sources.
+- name: tx-subscription
+  resource_type: tx-subscriptions
+  key: subscription_id (uuid)
+  description: A webhook subscription watching wallet addresses across chains, delivering transaction callbacks.
+- name: callback
+  resource_type: callback
+  description: A webhook notification for a transaction on a watched wallet.
+relationships:
+- from: transaction
+  type: belongs_to
+  to: chain
+  via: relationships.chain
+- from: transaction
+  type: belongs_to
+  to: dapp
+  via: relationships.dapp
+- from: position
+  type: belongs_to
+  to: fungible
+  via: fungible_info
+- from: position
+  type: belongs_to
+  to: chain
+  via: relationships.chain
+- from: position
+  type: belongs_to
+  to: dapp
+  via: relationships.dapp
+- from: fungible
+  type: has_many
+  to: implementation
+  via: implementations (chain:address pairs)
+- from: wallet
+  type: has_many
+  to: position
+  via: /v1/wallets/{address}/positions
+- from: wallet
+  type: has_many
+  to: transaction
+  via: /v1/wallets/{address}/transactions
+- from: wallet
+  type: has_many
+  to: nft-position
+  via: /v1/wallets/{address}/nft-positions
+- from: wallet-set
+  type: has_many
+  to: wallet
+  via: address set (EVM + Solana)
+- from: tx-subscription
+  type: has_many
+  to: wallet
+  via: /v1/tx-subscriptions/{subscription_id}/wallets
+- from: tx-subscription
+  type: has_many
+  to: chain
+  via: chain_ids
+- from: callback
+  type: belongs_to
+  to: tx-subscription
+  via: relationships.subscription
+- from: callback
+  type: has_one
+  to: transaction
+  via: included[]

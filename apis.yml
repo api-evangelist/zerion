@@ -1,23 +1,261 @@
 aid: zerion
 name: Zerion
-description: Zerion is a company surfaced as a portfolio company of lightspeed-venture-partners and added
-  to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Zerion is an Ethereum and Solana wallet and developer platform focused on
+  making onchain data easy to use. The Zerion API delivers clean, normalized
+  wallet data, token analytics, DeFi positions, transaction history, PnL, NFTs,
+  gas prices, swap and bridge quotes, and real-time transaction webhooks across
+  EVM chains and Solana. The same infrastructure powers the Zerion wallet app
+  used by millions. It is a JSON:API REST service with HTTP Basic (API key)
+  authentication plus pay-per-request x402 (Base/Solana USDC) and MPP (Tempo
+  USDC) options aimed at AI agents, an open-source CLI, six packaged agent
+  skills, a hosted MCP server, and Kafka streaming for high-throughput
+  pipelines.
 url: https://raw.githubusercontent.com/api-evangelist/zerion/refs/heads/main/apis.yml
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://developers.zerion.io/logo/dark.svg
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - lightspeed-venture-partners
-x-tier: stub
+x-tier: profiled
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- Web3
+- Blockchain
+- Cryptocurrency
+- DeFi
+- Wallet
+- NFT
+- Ethereum
+- Solana
+- Portfolio
+- Onchain Data
+- Transactions
+apis:
+- aid: zerion:zerion-chains-api
+  name: Zerion chains API
+  description: Operations related to chains, such as list all chains.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - chains
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-chains-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-dapps-api
+  name: Zerion dapps API
+  description: >-
+    Operations related to decentralized applications, such as list them all, search or get by ID.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - dapps
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-dapps-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-fungibles-api
+  name: Zerion fungibles API
+  description: Operations related to fungible assets, such as list them all, search or get by ID.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - fungibles
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-fungibles-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-gas-api
+  name: Zerion gas API
+  description: Operations related to gas.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - gas
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-gas-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-nfts-api
+  name: Zerion nfts API
+  description: Operations related to non fungible assets, such list them, search or get by ID.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - nfts
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-nfts-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-subscriptions-to-transactions-api
+  name: Zerion subscriptions to transactions API
+  description: Operations related to subscriptions to transactions.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - subscriptions to transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-subscriptions-to-transactions-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-swap-api
+  name: Zerion swap API
+  description: Operations related to swapping and bridging assets.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - swap
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-swap-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-wallet-sets-api
+  name: Zerion wallet sets API
+  description: >-
+    Operations on a wallet set — aggregated portfolio data across at most one EVM address and one Solana
+    address queried together.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - wallet sets
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-wallet-sets-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-wallets-api
+  name: Zerion wallets API
+  description: Operations related to wallets, such as portfolio charts, positions, and transactions.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - wallets
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-wallets-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/zerion/overview
+- url: https://developers.zerion.io/
+  type: DeveloperPortal
+- url: https://developers.zerion.io/
+  type: Documentation
+- url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  type: APIReference
+- url: https://developers.zerion.io/quickstart
+  type: GettingStarted
+- url: https://developers.zerion.io/pricing
+  type: Pricing
+- url: https://dashboard.zerion.io
+  type: SignUp
+- url: https://zerion.io/blog/tag/zerion-api/
+  type: Blog
+- url: https://github.com/zeriontech
+  type: GitHubOrganization
+- url: https://zerion.io/terms
+  type: TermsOfService
+- url: https://zerion.io/privacy
+  type: PrivacyPolicy
+- url: authentication/zerion-authentication.yml
+  type: Authentication
+- url: packages/zerion-packages.yml
+  type: Packages
+- url: packages/zerion-packages.yml
+  type: SDKs
+- url: cli/zerion-cli.yml
+  type: CLI
+- url: mcp/zerion-mcp.yml
+  type: MCPServer
+- url: skills/_index.yml
+  type: AgentSkill
+- url: llms/zerion-llms.txt
+  type: LLMsTxt
+- url: well-known/zerion-well-known.yml
+  type: WellKnown
+- url: conventions/zerion-conventions.yml
+  type: Conventions
+- url: errors/zerion-problem-types.yml
+  type: ErrorCatalog
+- url: lifecycle/zerion-lifecycle.yml
+  type: Lifecycle
+- url: changelog/zerion-changelog.yml
+  type: ChangeLog
+- url: https://developers.zerion.io/changelog
+  type: Deprecation
+- url: conformance/zerion-conformance.yml
+  type: Conformance
+- url: data-model/zerion-data-model.yml
+  type: DataModel
+- url: security/zerion-domain-security.yml
+  type: DomainSecurity
+- url: asyncapi/zerion-transactions-webhooks.yml
+  type: Webhooks
+- url: agentic-access/zerion-agentic-access.yml
+  type: AgenticAccess
+- url: overlays/zerion-api-overlay.yaml
+  type: Overlay
+- url: rate-limits/zerion-rate-limits.yml
+  type: RateLimits
+- url: plans/zerion-plans.yml
+  type: Plans
+- url: arazzo/zerion-wallet-overview.arazzo.yml
+  type: Arazzo
+  name: Zerion wallet overview
+- url: arazzo/zerion-wallet-activity-subscription.arazzo.yml
+  type: Arazzo
+  name: Zerion wallet activity subscription
+x-enrichment:
+  date: 2026-07-21
+  status: enriched
+  artifacts_added: 28
+  pass: local-v1

@@ -1,0 +1,70 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.zerion.io/build-with-ai/zerion-cli
+name: zerion-cli
+status: alpha-preview
+license: MIT
+repository: https://github.com/zeriontech/zerion-ai
+package: packages/zerion-packages.yml
+description: >-
+  Open-source CLI that wraps the Zerion API plus a local encrypted wallet vault.
+  The same binary powers humans and AI agents; any agent that can run shell
+  commands can analyze wallets, sign messages, and execute swaps without writing
+  API integration code. Wallet management is built on the Open Wallet Standard.
+  Ships six agent skills (see skills/). Requires Node.js 20+.
+install:
+- method: npx-oneshot
+  command: npx -y zerion-cli init -y --browser
+  note: Installs CLI globally, configures API key, installs agent skills into detected coding agents.
+- method: npm
+  command: npm install -g zerion-cli
+authentication:
+- type: api-key
+  detail: Get a free key at dashboard.zerion.io (keys begin `zk_`). export ZERION_API_KEY or `zerion config set apiKey zk_...`. Required for trading.
+- type: x402
+  detail: Pay $0.01 USDC/request on Base or Solana; analytics commands only. --x402 flag or ZERION_X402=true.
+- type: mpp
+  detail: Pay $0.01 USDC/request on Tempo (EVM only); analytics commands only. --mpp flag or ZERION_MPP=true.
+command_groups:
+- group: analyze
+  agent_surface: true
+  commands: [analyze, portfolio, positions, history, pnl, search, chains]
+- group: trade
+  agent_surface: true
+  requires: api key + agent token
+  commands: [swap, "swap tokens", bridge, send]
+- group: sign
+  agent_surface: true
+  requires: agent token
+  commands: [sign-message, sign-typed-data]
+- group: wallet
+  agent_surface: false
+  note: Manual; passphrase required for destructive ops.
+  commands: [create, import, list, fund, backup, delete, sync]
+- group: agent
+  note: Scoped tokens + policies for unattended trading.
+  commands: [create-token, list-tokens, use-token, revoke-token, create-policy, list-policies, show-policy, delete-policy]
+  policy_flags: ["--chains", "--expires", "--deny-transfers", "--deny-approvals", "--allowlist"]
+- group: watch
+  commands: [watch, "watch list", "watch remove"]
+- group: setup
+  commands: [init, "setup skills"]
+- group: config
+  commands: [set, unset, list]
+supported_chains:
+- ethereum
+- base
+- arbitrum
+- optimism
+- polygon
+- binance-smart-chain
+- avalanche
+- gnosis
+- scroll
+- linea
+- zksync-era
+- zora
+- blast
+- monad
+- solana
+output: JSON to stdout (default); structured error JSON with a code field to stderr. --pretty / --quiet.

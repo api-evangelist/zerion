@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: live probes of /.well-known/ paths
+hosts:
+- host: https://api.zerion.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://developers.zerion.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /llms.txt
+    status: 200
+    file: ../llms/zerion-llms.txt
+    note: llms.txt documentation index (not under /.well-known/ but a discovery surface)
+- host: https://zerion.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+notes: >-
+  No /.well-known/ discovery documents are published on the API, docs, or root
+  hosts. Authentication is HTTP Basic (API key), so there is no OIDC or OAuth
+  authorization-server metadata to advertise. The provider does publish a
+  machine-readable documentation index at https://developers.zerion.io/llms.txt.

@@ -1,0 +1,54 @@
+arazzo: 1.0.1
+info:
+  title: Zerion wallet activity subscription
+  version: 1.0.0
+  summary: Create a transaction webhook subscription for a set of wallets, confirm it, then verify the watched-wallet count.
+sourceDescriptions:
+- name: zerion
+  url: ../openapi/zerion-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: create-and-confirm-subscription
+  summary: Subscribe to wallet transactions and verify the subscription.
+  inputs:
+    type: object
+    required: [callback_url, addresses]
+    properties:
+      callback_url:
+        type: string
+        example: https://example.com/callback
+      addresses:
+        type: array
+        items:
+          type: string
+        example: ['0x42b9df65b219b3dd36ff330a4dd8f327a6ada990']
+  steps:
+  - stepId: create-subscription
+    operationId: createSubscriptionWalletTransactions
+    requestBody:
+      contentType: application/json
+      payload:
+        callback_url: $inputs.callback_url
+        addresses: $inputs.addresses
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscription_id: $response.body#/data/id
+  - stepId: get-subscription
+    operationId: GetWalletTransactionsSubscription
+    parameters:
+    - name: subscription_id
+      in: path
+      value: $steps.create-subscription.outputs.subscription_id
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: count-wallets
+    operationId: GetSubscribedWalletsCountInSubscription
+    parameters:
+    - name: subscription_id
+      in: path
+      value: $steps.create-subscription.outputs.subscription_id
+    successCriteria:
+    - condition: $statusCode == 200
+  outputs:
+    subscription_id: $steps.create-subscription.outputs.subscription_id

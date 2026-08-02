@@ -1,0 +1,322 @@
+{
+  "info": {
+    "_postman_id": "21b9818f-0b0d-4b1c-b6f0-445387e56f48",
+    "name": "REST chains gas API",
+    "description": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:37:36.000Z",
+    "updatedAt": "2026-07-28T03:37:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-21b9818f-0b0d-4b1c-b6f0-445387e56f48"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "gas-prices",
+          "item": [
+            {
+              "name": "Get list of all available gas prices",
+              "id": "69b1d6fa-c1be-48be-983d-3b82bf88aaf7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/gas-prices/?filter[chain_ids]=<string>,<string>&filter[gas_types]=classic,eip1559",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "gas-prices",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "Return only gas prices from specified chains (comma-separated list). You can find available chain ids in chain endpoints.",
+                      "key": "filter[chain_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Return only gas prices with specified gas-type (comma-separated list).",
+                      "key": "filter[gas_types]",
+                      "value": "classic,eip1559"
+                    }
+                  ]
+                },
+                "description": "This endpoint provides real-time information on the current gas prices across all supported blockchain networks. Gas prices play a crucial role in the speed and cost of executing transactions on a blockchain, and fluctuate frequently based on network demand and usage. By using this endpoint, developers can stay up-to-date with the latest gas prices and adjust their application's transaction parameters accordingly to ensure optimal speed and cost efficiency."
+              },
+              "response": [
+                {
+                  "id": "08fb3e33-9667-49d2-86c7-17f3787b9483",
+                  "name": "List of gas prices",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/gas-prices/?filter[chain_ids]=<string>,<string>&filter[gas_types]=classic,eip1559",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "gas-prices",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Return only gas prices from specified chains (comma-separated list). You can find available chain ids in chain endpoints.",
+                          "key": "filter[chain_ids]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Return only gas prices with specified gas-type (comma-separated list).",
+                          "key": "filter[gas_types]",
+                          "value": "classic,eip1559"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"updated_at\": \"<string>\",\n        \"gas_type\": \"optimistic\",\n        \"info\": {\n          \"slow\": \"<integer>\",\n          \"standard\": \"<integer>\",\n          \"fast\": \"<integer>\",\n          \"rapid\": \"<integer>\"\n        }\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"updated_at\": \"<string>\",\n        \"gas_type\": \"optimistic\",\n        \"info\": {\n          \"slow\": \"<integer>\",\n          \"standard\": \"<integer>\",\n          \"fast\": \"<integer>\",\n          \"rapid\": \"<integer>\"\n        }\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    }\n  ],\n  \"links\": {\n    \"self\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:37:36.000Z",
+                  "updatedAt": "2026-07-28T03:37:36.000Z",
+                  "uid": "35240-08fb3e33-9667-49d2-86c7-17f3787b9483"
+                },
+                {
+                  "id": "2d137e0b-873e-4633-bcbf-45827bb3837b",
+                  "name": "Parameters are malformed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/gas-prices/?filter[chain_ids]=<string>,<string>&filter[gas_types]=classic,eip1559",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "gas-prices",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Return only gas prices from specified chains (comma-separated list). You can find available chain ids in chain endpoints.",
+                          "key": "filter[chain_ids]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Return only gas prices with specified gas-type (comma-separated list).",
+                          "key": "filter[gas_types]",
+                          "value": "classic,eip1559"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:36.000Z",
+                  "updatedAt": "2026-07-28T03:37:36.000Z",
+                  "uid": "35240-2d137e0b-873e-4633-bcbf-45827bb3837b"
+                },
+                {
+                  "id": "500a927a-0b64-46f5-a716-7aa1f615eee5",
+                  "name": "Unathenticated request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/gas-prices/?filter[chain_ids]=<string>,<string>&filter[gas_types]=classic,eip1559",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "gas-prices",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Return only gas prices from specified chains (comma-separated list). You can find available chain ids in chain endpoints.",
+                          "key": "filter[chain_ids]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Return only gas prices with specified gas-type (comma-separated list).",
+                          "key": "filter[gas_types]",
+                          "value": "classic,eip1559"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:36.000Z",
+                  "updatedAt": "2026-07-28T03:37:36.000Z",
+                  "uid": "35240-500a927a-0b64-46f5-a716-7aa1f615eee5"
+                },
+                {
+                  "id": "c7e084ff-f415-414c-9b8a-33a8c194411c",
+                  "name": "Too many requests error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/gas-prices/?filter[chain_ids]=<string>,<string>&filter[gas_types]=classic,eip1559",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "gas-prices",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Return only gas prices from specified chains (comma-separated list). You can find available chain ids in chain endpoints.",
+                          "key": "filter[chain_ids]",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Return only gas prices with specified gas-type (comma-separated list).",
+                          "key": "filter[gas_types]",
+                          "value": "classic,eip1559"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:36.000Z",
+                  "updatedAt": "2026-07-28T03:37:36.000Z",
+                  "uid": "35240-c7e084ff-f415-414c-9b8a-33a8c194411c"
+                }
+              ],
+              "createdAt": "2026-07-28T03:37:36.000Z",
+              "updatedAt": "2026-07-28T03:37:36.000Z",
+              "uid": "35240-69b1d6fa-c1be-48be-983d-3b82bf88aaf7"
+            }
+          ],
+          "id": "33b7c043-4d86-4c5b-9511-a208a58b3d44",
+          "createdAt": "2026-07-28T03:37:36.000Z",
+          "updatedAt": "2026-07-28T03:37:36.000Z",
+          "uid": "35240-33b7c043-4d86-4c5b-9511-a208a58b3d44"
+        }
+      ],
+      "id": "f37ff7bf-5ca5-4698-a92d-695cacfec73b",
+      "createdAt": "2026-07-28T03:37:36.000Z",
+      "updatedAt": "2026-07-28T03:37:36.000Z",
+      "uid": "35240-f37ff7bf-5ca5-4698-a92d-695cacfec73b"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.zerion.io"
+    }
+  ]
+}

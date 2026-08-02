@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.zerion.io/pricing
+currency: USD
+billing: monthly-subscription
+plans:
+- name: Developer
+  price: 0
+  monthly_calls: 60000
+  daily_calls: 2000
+  rps: 10
+  description: For early prototypes and proofs of concept
+- name: Builder
+  price: 149
+  monthly_calls: 250000
+  rps: 50
+  description: For shipping MVPs without running any infra
+- name: Startup
+  price: 499
+  monthly_calls: 1000000
+  rps: 150
+  description: For apps preparing for launch or in production
+- name: Growth
+  price: 999
+  monthly_calls: 2500000
+  rps: 300
+  description: For scaling products with growing traffic demands
+- name: Enterprise
+  price: null
+  monthly_calls: null
+  rps: 1000
+  description: For scale-ups and enterprises with high volume or custom needs (custom pricing)
+notes: >-
+  Pay-per-request alternatives (x402 on Base/Solana, MPP on Tempo) charge ~$0.01
+  USDC per request with no plan/rate-limit sizing.

@@ -1,0 +1,809 @@
+{
+  "info": {
+    "_postman_id": "045a3f7e-8623-4f5d-84f6-91c0f82dfb45",
+    "name": "REST chains swap API",
+    "description": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:37:39.000Z",
+    "updatedAt": "2026-07-28T03:37:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-045a3f7e-8623-4f5d-84f6-91c0f82dfb45"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "swap",
+          "item": [
+            {
+              "name": "quotes",
+              "item": [
+                {
+                  "name": "Get swap and bridge quotes",
+                  "id": "fc34e98b-819d-4376-b454-c63f8bfdcd82",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/swap/quotes/?currency=usd&from=<string>&to=<string>&input[chain_id]=<string>&input[fungible_id]=<string>&input[amount]=<string>&output[fungible_id]=<string>&output[chain_id]=<string>&slippage_percent=<float>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "swap",
+                        "quotes",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "Currency in which fiat values of amounts and fees in the response are expressed.",
+                          "key": "currency",
+                          "value": "usd"
+                        },
+                        {
+                          "description": "(Required) Address of the wallet performing the swap. Must match the chain type of `input[chain_id]` (EVM hex or Solana base58).",
+                          "key": "from",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) Recipient of the output asset. Must match the chain type of `output[chain_id]`. For a same-chain swap to the same wallet, set `to` equal to `from`.",
+                          "key": "to",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The asset being sent.",
+                          "key": "input[chain_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The asset being sent.",
+                          "key": "input[fungible_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The asset being sent.",
+                          "key": "input[amount]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The asset being received.",
+                          "key": "output[fungible_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The asset being received.",
+                          "key": "output[chain_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum acceptable slippage in percent. When omitted, an auto-slippage value is chosen.",
+                          "key": "slippage_percent",
+                          "value": "<float>"
+                        }
+                      ]
+                    },
+                    "description": "Returns quotes from multiple liquidity sources for a same-chain swap or a cross-chain bridge between two fungible assets. Supports EVM chains and Solana, including EVM \u2194 Solana bridges.\n\nQuotes are returned best-first: sorted in descending order by the fiat value of `output_amount_after_fees` (output amount minus network, protocol and bridge fees that are not already included in the rate). Quotes with the same score are tied-broken alphabetically by `liquidity_source.id`, so identical requests always return quotes in the same order.\n\nThe `input` and `output` parameters are objects encoded with bracket notation in the URL \u2014 the request is sent as a flat query string. For example:\n\n```\nGET /v1/swap/quotes/?currency=usd&input[chain_id]=base&input[fungible_id]=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&input[amount]=0.001&output[fungible_id]=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&from=0xd8da6bf26964af9d7eed9e03e53415d37aa96045&to=0xd8da6bf26964af9d7eed9e03e53415d37aa96045\n```\n"
+                  },
+                  "response": [
+                    {
+                      "id": "c31cf701-02f8-44c5-8df5-19e75582d703",
+                      "name": "Response for the requested swap quotes.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/swap/quotes/?currency=usd&from=<string>&to=<string>&input[chain_id]=<string>&input[fungible_id]=<string>&input[amount]=<string>&output[fungible_id]=<string>&output[chain_id]=<string>&slippage_percent=<float>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "swap",
+                            "quotes",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Currency in which fiat values of amounts and fees in the response are expressed.",
+                              "key": "currency",
+                              "value": "usd"
+                            },
+                            {
+                              "description": "(Required) Address of the wallet performing the swap. Must match the chain type of `input[chain_id]` (EVM hex or Solana base58).",
+                              "key": "from",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) Recipient of the output asset. Must match the chain type of `output[chain_id]`. For a same-chain swap to the same wallet, set `to` equal to `from`.",
+                              "key": "to",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[fungible_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[amount]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being received.",
+                              "key": "output[fungible_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being received.",
+                              "key": "output[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum acceptable slippage in percent. When omitted, an auto-slippage value is chosen.",
+                              "key": "slippage_percent",
+                              "value": "<float>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"liquidity_source\": {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"icon\": {\n            \"url\": \"<string>\"\n          }\n        },\n        \"input_amount\": {\n          \"quantity\": \"<string>\",\n          \"value\": \"<float>\",\n          \"usd_value\": \"<float>\",\n          \"currency\": \"<string>\"\n        },\n        \"output_amount\": {\n          \"quantity\": \"<string>\",\n          \"value\": \"<float>\",\n          \"usd_value\": \"<float>\",\n          \"currency\": \"<string>\"\n        },\n        \"minimum_output_amount\": {\n          \"quantity\": \"<string>\",\n          \"value\": \"<float>\",\n          \"usd_value\": \"<float>\",\n          \"currency\": \"<string>\"\n        },\n        \"output_amount_after_fees\": {\n          \"quantity\": \"<string>\",\n          \"value\": \"<float>\",\n          \"usd_value\": \"<float>\",\n          \"currency\": \"<string>\"\n        },\n        \"slippage_percent\": \"<float>\",\n        \"rate\": [\n          {\n            \"value\": \"<double>\",\n            \"symbol\": \"<string>\"\n          },\n          {\n            \"value\": \"<double>\",\n            \"symbol\": \"<string>\"\n          }\n        ],\n        \"protocol_fee\": {\n          \"amount\": {\n            \"quantity\": \"<string>\",\n            \"value\": \"<float>\",\n            \"usd_value\": \"<float>\",\n            \"currency\": \"<string>\"\n          },\n          \"base_percentage\": \"<float>\",\n          \"percentage\": \"<float>\",\n          \"included_in_rate\": \"<boolean>\",\n          \"fungible\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"bridge_fee\": {\n          \"amount\": {\n            \"quantity\": \"<string>\",\n            \"value\": \"<float>\",\n            \"usd_value\": \"<float>\",\n            \"currency\": \"<string>\"\n          },\n          \"included_in_rate\": \"<boolean>\",\n          \"fungible\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"network_fee\": {\n          \"amount\": {\n            \"quantity\": \"<string>\",\n            \"value\": \"<float>\",\n            \"usd_value\": \"<float>\",\n            \"currency\": \"<string>\"\n          },\n          \"free\": \"<boolean>\",\n          \"fungible\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"transaction_approve\": {\n          \"evm\": {\n            \"type\": \"<string>\",\n            \"from\": \"<string>\",\n            \"to\": \"<string>\",\n            \"nonce\": \"<string>\",\n            \"chain_id\": \"<string>\",\n            \"gas\": \"<string>\",\n            \"value\": \"<string>\",\n            \"data\": \"<string>\",\n            \"gas_price\": \"<string>\",\n            \"max_fee\": \"<string>\",\n            \"max_priority_fee\": \"<string>\",\n            \"custom_data\": {\n              \"paymaster_params\": {\n                \"paymaster\": \"<string>\",\n                \"paymaster_input\": \"<string>\"\n              },\n              \"gas_per_pubdata_byte\": \"<string>\"\n            }\n          },\n          \"solana\": {\n            \"raw\": \"<string>\"\n          }\n        },\n        \"transaction_swap\": {\n          \"evm\": {\n            \"type\": \"<string>\",\n            \"from\": \"<string>\",\n            \"to\": \"<string>\",\n            \"nonce\": \"<string>\",\n            \"chain_id\": \"<string>\",\n            \"gas\": \"<string>\",\n            \"value\": \"<string>\",\n            \"data\": \"<string>\",\n            \"gas_price\": \"<string>\",\n            \"max_fee\": \"<string>\",\n            \"max_priority_fee\": \"<string>\",\n            \"custom_data\": {\n              \"paymaster_params\": {\n                \"paymaster\": \"<string>\",\n                \"paymaster_input\": \"<string>\"\n              },\n              \"gas_per_pubdata_byte\": \"<string>\"\n            }\n          },\n          \"solana\": {\n            \"raw\": \"<string>\"\n          }\n        },\n        \"error\": {\n          \"code\": \"not_enough_input_asset_balance\",\n          \"hint\": \"topup\",\n          \"message\": \"<string>\"\n        },\n        \"estimated_time_seconds\": \"<float>\"\n      },\n      \"relationships\": {\n        \"input_chain\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"output_chain\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"input_fungible\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"output_fungible\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"liquidity_source\": {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"icon\": {\n            \"url\": \"<string>\"\n          }\n        },\n        \"input_amount\": {\n          \"quantity\": \"<string>\",\n          \"value\": \"<float>\",\n          \"usd_value\": \"<float>\",\n          \"currency\": \"<string>\"\n        },\n        \"output_amount\": {\n          \"quantity\": \"<string>\",\n          \"value\": \"<float>\",\n          \"usd_value\": \"<float>\",\n          \"currency\": \"<string>\"\n        },\n        \"minimum_output_amount\": {\n          \"quantity\": \"<string>\",\n          \"value\": \"<float>\",\n          \"usd_value\": \"<float>\",\n          \"currency\": \"<string>\"\n        },\n        \"output_amount_after_fees\": {\n          \"quantity\": \"<string>\",\n          \"value\": \"<float>\",\n          \"usd_value\": \"<float>\",\n          \"currency\": \"<string>\"\n        },\n        \"slippage_percent\": \"<float>\",\n        \"rate\": [\n          {\n            \"value\": \"<double>\",\n            \"symbol\": \"<string>\"\n          },\n          {\n            \"value\": \"<double>\",\n            \"symbol\": \"<string>\"\n          }\n        ],\n        \"protocol_fee\": {\n          \"amount\": {\n            \"quantity\": \"<string>\",\n            \"value\": \"<float>\",\n            \"usd_value\": \"<float>\",\n            \"currency\": \"<string>\"\n          },\n          \"base_percentage\": \"<float>\",\n          \"percentage\": \"<float>\",\n          \"included_in_rate\": \"<boolean>\",\n          \"fungible\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"bridge_fee\": {\n          \"amount\": {\n            \"quantity\": \"<string>\",\n            \"value\": \"<float>\",\n            \"usd_value\": \"<float>\",\n            \"currency\": \"<string>\"\n          },\n          \"included_in_rate\": \"<boolean>\",\n          \"fungible\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"network_fee\": {\n          \"amount\": {\n            \"quantity\": \"<string>\",\n            \"value\": \"<float>\",\n            \"usd_value\": \"<float>\",\n            \"currency\": \"<string>\"\n          },\n          \"free\": \"<boolean>\",\n          \"fungible\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"transaction_approve\": {\n          \"evm\": {\n            \"type\": \"<string>\",\n            \"from\": \"<string>\",\n            \"to\": \"<string>\",\n            \"nonce\": \"<string>\",\n            \"chain_id\": \"<string>\",\n            \"gas\": \"<string>\",\n            \"value\": \"<string>\",\n            \"data\": \"<string>\",\n            \"gas_price\": \"<string>\",\n            \"max_fee\": \"<string>\",\n            \"max_priority_fee\": \"<string>\",\n            \"custom_data\": {\n              \"paymaster_params\": {\n                \"paymaster\": \"<string>\",\n                \"paymaster_input\": \"<string>\"\n              },\n              \"gas_per_pubdata_byte\": \"<string>\"\n            }\n          },\n          \"solana\": {\n            \"raw\": \"<string>\"\n          }\n        },\n        \"transaction_swap\": {\n          \"evm\": {\n            \"type\": \"<string>\",\n            \"from\": \"<string>\",\n            \"to\": \"<string>\",\n            \"nonce\": \"<string>\",\n            \"chain_id\": \"<string>\",\n            \"gas\": \"<string>\",\n            \"value\": \"<string>\",\n            \"data\": \"<string>\",\n            \"gas_price\": \"<string>\",\n            \"max_fee\": \"<string>\",\n            \"max_priority_fee\": \"<string>\",\n            \"custom_data\": {\n              \"paymaster_params\": {\n                \"paymaster\": \"<string>\",\n                \"paymaster_input\": \"<string>\"\n              },\n              \"gas_per_pubdata_byte\": \"<string>\"\n            }\n          },\n          \"solana\": {\n            \"raw\": \"<string>\"\n          }\n        },\n        \"error\": {\n          \"code\": \"not_enough_input_asset_balance\",\n          \"hint\": \"increase_input_amount\",\n          \"message\": \"<string>\"\n        },\n        \"estimated_time_seconds\": \"<float>\"\n      },\n      \"relationships\": {\n        \"input_chain\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"output_chain\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"input_fungible\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"output_fungible\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:40.000Z",
+                      "updatedAt": "2026-07-28T03:37:40.000Z",
+                      "uid": "35240-c31cf701-02f8-44c5-8df5-19e75582d703"
+                    },
+                    {
+                      "id": "068b0bd6-be70-4d28-8ada-6d730f6d7c44",
+                      "name": "Parameters are malformed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/swap/quotes/?currency=usd&from=<string>&to=<string>&input[chain_id]=<string>&input[fungible_id]=<string>&input[amount]=<string>&output[fungible_id]=<string>&output[chain_id]=<string>&slippage_percent=<float>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "swap",
+                            "quotes",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Currency in which fiat values of amounts and fees in the response are expressed.",
+                              "key": "currency",
+                              "value": "usd"
+                            },
+                            {
+                              "description": "(Required) Address of the wallet performing the swap. Must match the chain type of `input[chain_id]` (EVM hex or Solana base58).",
+                              "key": "from",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) Recipient of the output asset. Must match the chain type of `output[chain_id]`. For a same-chain swap to the same wallet, set `to` equal to `from`.",
+                              "key": "to",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[fungible_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[amount]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being received.",
+                              "key": "output[fungible_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being received.",
+                              "key": "output[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum acceptable slippage in percent. When omitted, an auto-slippage value is chosen.",
+                              "key": "slippage_percent",
+                              "value": "<float>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:40.000Z",
+                      "updatedAt": "2026-07-28T03:37:40.000Z",
+                      "uid": "35240-068b0bd6-be70-4d28-8ada-6d730f6d7c44"
+                    },
+                    {
+                      "id": "a6c674f8-245f-4cfb-88c1-b6b5ab6d0f57",
+                      "name": "Unathenticated request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/swap/quotes/?currency=usd&from=<string>&to=<string>&input[chain_id]=<string>&input[fungible_id]=<string>&input[amount]=<string>&output[fungible_id]=<string>&output[chain_id]=<string>&slippage_percent=<float>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "swap",
+                            "quotes",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Currency in which fiat values of amounts and fees in the response are expressed.",
+                              "key": "currency",
+                              "value": "usd"
+                            },
+                            {
+                              "description": "(Required) Address of the wallet performing the swap. Must match the chain type of `input[chain_id]` (EVM hex or Solana base58).",
+                              "key": "from",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) Recipient of the output asset. Must match the chain type of `output[chain_id]`. For a same-chain swap to the same wallet, set `to` equal to `from`.",
+                              "key": "to",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[fungible_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[amount]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being received.",
+                              "key": "output[fungible_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being received.",
+                              "key": "output[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum acceptable slippage in percent. When omitted, an auto-slippage value is chosen.",
+                              "key": "slippage_percent",
+                              "value": "<float>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:40.000Z",
+                      "updatedAt": "2026-07-28T03:37:40.000Z",
+                      "uid": "35240-a6c674f8-245f-4cfb-88c1-b6b5ab6d0f57"
+                    },
+                    {
+                      "id": "7a8fb153-0f5a-4353-b529-44146838a797",
+                      "name": "Too many requests error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/swap/quotes/?currency=usd&from=<string>&to=<string>&input[chain_id]=<string>&input[fungible_id]=<string>&input[amount]=<string>&output[fungible_id]=<string>&output[chain_id]=<string>&slippage_percent=<float>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "swap",
+                            "quotes",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "description": "Currency in which fiat values of amounts and fees in the response are expressed.",
+                              "key": "currency",
+                              "value": "usd"
+                            },
+                            {
+                              "description": "(Required) Address of the wallet performing the swap. Must match the chain type of `input[chain_id]` (EVM hex or Solana base58).",
+                              "key": "from",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) Recipient of the output asset. Must match the chain type of `output[chain_id]`. For a same-chain swap to the same wallet, set `to` equal to `from`.",
+                              "key": "to",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[fungible_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being sent.",
+                              "key": "input[amount]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being received.",
+                              "key": "output[fungible_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The asset being received.",
+                              "key": "output[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum acceptable slippage in percent. When omitted, an auto-slippage value is chosen.",
+                              "key": "slippage_percent",
+                              "value": "<float>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:40.000Z",
+                      "updatedAt": "2026-07-28T03:37:40.000Z",
+                      "uid": "35240-7a8fb153-0f5a-4353-b529-44146838a797"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:37:40.000Z",
+                  "updatedAt": "2026-07-28T03:37:40.000Z",
+                  "uid": "35240-fc34e98b-819d-4376-b454-c63f8bfdcd82"
+                }
+              ],
+              "id": "7c9cb9f6-d43b-4ce4-97c8-6b5159b93d60",
+              "createdAt": "2026-07-28T03:37:40.000Z",
+              "updatedAt": "2026-07-28T03:37:40.000Z",
+              "uid": "35240-7c9cb9f6-d43b-4ce4-97c8-6b5159b93d60"
+            },
+            {
+              "name": "fungibles",
+              "item": [
+                {
+                  "name": "List fungibles available for bridging",
+                  "id": "d3eb9734-7fde-4e24-983d-a80aac217e3c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/swap/fungibles/?input[chain_id]=<string>&output[chain_id]=<string>&direction=input",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "swap",
+                        "fungibles",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "key": "input[chain_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "output[chain_id]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The direction parameter is a parameter that determines the flow of fungibles involved in the transaction. It can have three possible values: 'input', 'output', or 'both'. The value 'input' indicates that the API endpoint will only return fungibles that the user can send. The value 'output' indicates that the API endpoint will only return fungibles that the user can receive. The value 'both' means that the API endpoint will return fungibles which are 'input' and 'output' at the same time. In other words - intersection for 'input' and output'. If nothing specified then `both` is used.",
+                          "key": "direction",
+                          "value": "input"
+                        }
+                      ]
+                    },
+                    "description": "Returns the list of tokens available for bridging between two chains. Use this to populate a token picker UI. Only relevant for cross-chain swaps, same-chain swaps don't require this step."
+                  },
+                  "response": [
+                    {
+                      "id": "c9ed307b-aafa-4d25-8f26-5eb0f9c434ed",
+                      "name": "Response for requested list available for bridge fungibles.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/swap/fungibles/?input[chain_id]=<string>&output[chain_id]=<string>&direction=input",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "swap",
+                            "fungibles",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "key": "input[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "output[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The direction parameter is a parameter that determines the flow of fungibles involved in the transaction. It can have three possible values: 'input', 'output', or 'both'. The value 'input' indicates that the API endpoint will only return fungibles that the user can send. The value 'output' indicates that the API endpoint will only return fungibles that the user can receive. The value 'both' means that the API endpoint will return fungibles which are 'input' and 'output' at the same time. In other words - intersection for 'input' and output'. If nothing specified then `both` is used.",
+                              "key": "direction",
+                              "value": "input"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"symbol\": \"<string>\",\n        \"flags\": {\n          \"verified\": \"<boolean>\"\n        },\n        \"external_links\": [\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          },\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          }\n        ],\n        \"implementations\": [\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"market_data\": {\n              \"trading_volumes\": {\n                \"volume_1d\": \"<double>\"\n              }\n            },\n            \"deployment_date\": \"<dateTime>\"\n          },\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"market_data\": {\n              \"trading_volumes\": {\n                \"volume_1d\": \"<double>\"\n              }\n            },\n            \"deployment_date\": \"<dateTime>\"\n          }\n        ],\n        \"market_data\": {\n          \"price\": \"<double>\",\n          \"total_supply\": \"<double>\",\n          \"circulating_supply\": \"<double>\",\n          \"fully_diluted_valuation\": \"<double>\",\n          \"market_cap\": \"<double>\",\n          \"changes\": {\n            \"percent_1d\": \"<double>\",\n            \"percent_30d\": \"<double>\",\n            \"percent_90d\": \"<double>\",\n            \"percent_365d\": \"<double>\"\n          },\n          \"trading_volumes\": {\n            \"volume_1d\": \"<double>\"\n          }\n        },\n        \"description\": \"<string>\",\n        \"icon\": {\n          \"url\": \"<string>\"\n        }\n      },\n      \"relationships\": {\n        \"chart_hour\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_day\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_week\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_month\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_year\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_max\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"symbol\": \"<string>\",\n        \"flags\": {\n          \"verified\": \"<boolean>\"\n        },\n        \"external_links\": [\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          },\n          {\n            \"url\": \"<string>\",\n            \"type\": \"<string>\",\n            \"name\": \"<string>\"\n          }\n        ],\n        \"implementations\": [\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"market_data\": {\n              \"trading_volumes\": {\n                \"volume_1d\": \"<double>\"\n              }\n            },\n            \"deployment_date\": \"<dateTime>\"\n          },\n          {\n            \"chain_id\": \"<string>\",\n            \"address\": \"<string>\",\n            \"decimals\": \"<integer>\",\n            \"market_data\": {\n              \"trading_volumes\": {\n                \"volume_1d\": \"<double>\"\n              }\n            },\n            \"deployment_date\": \"<dateTime>\"\n          }\n        ],\n        \"market_data\": {\n          \"price\": \"<double>\",\n          \"total_supply\": \"<double>\",\n          \"circulating_supply\": \"<double>\",\n          \"fully_diluted_valuation\": \"<double>\",\n          \"market_cap\": \"<double>\",\n          \"changes\": {\n            \"percent_1d\": \"<double>\",\n            \"percent_30d\": \"<double>\",\n            \"percent_90d\": \"<double>\",\n            \"percent_365d\": \"<double>\"\n          },\n          \"trading_volumes\": {\n            \"volume_1d\": \"<double>\"\n          }\n        },\n        \"description\": \"<string>\",\n        \"icon\": {\n          \"url\": \"<string>\"\n        }\n      },\n      \"relationships\": {\n        \"chart_hour\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_day\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_week\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_month\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_year\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"chart_max\": {\n          \"links\": {\n            \"related\": {\n              \"example\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max\"\n            }\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:40.000Z",
+                      "updatedAt": "2026-07-28T03:37:40.000Z",
+                      "uid": "35240-c9ed307b-aafa-4d25-8f26-5eb0f9c434ed"
+                    },
+                    {
+                      "id": "0ba6ebf8-11b7-4c33-8a94-4d482756906b",
+                      "name": "Parameters are malformed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/swap/fungibles/?input[chain_id]=<string>&output[chain_id]=<string>&direction=input",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "swap",
+                            "fungibles",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "key": "input[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "output[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The direction parameter is a parameter that determines the flow of fungibles involved in the transaction. It can have three possible values: 'input', 'output', or 'both'. The value 'input' indicates that the API endpoint will only return fungibles that the user can send. The value 'output' indicates that the API endpoint will only return fungibles that the user can receive. The value 'both' means that the API endpoint will return fungibles which are 'input' and 'output' at the same time. In other words - intersection for 'input' and output'. If nothing specified then `both` is used.",
+                              "key": "direction",
+                              "value": "input"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:40.000Z",
+                      "updatedAt": "2026-07-28T03:37:40.000Z",
+                      "uid": "35240-0ba6ebf8-11b7-4c33-8a94-4d482756906b"
+                    },
+                    {
+                      "id": "4d67b806-e71b-4123-861e-d56f03239a04",
+                      "name": "Unathenticated request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/swap/fungibles/?input[chain_id]=<string>&output[chain_id]=<string>&direction=input",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "swap",
+                            "fungibles",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "key": "input[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "output[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The direction parameter is a parameter that determines the flow of fungibles involved in the transaction. It can have three possible values: 'input', 'output', or 'both'. The value 'input' indicates that the API endpoint will only return fungibles that the user can send. The value 'output' indicates that the API endpoint will only return fungibles that the user can receive. The value 'both' means that the API endpoint will return fungibles which are 'input' and 'output' at the same time. In other words - intersection for 'input' and output'. If nothing specified then `both` is used.",
+                              "key": "direction",
+                              "value": "input"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:40.000Z",
+                      "updatedAt": "2026-07-28T03:37:40.000Z",
+                      "uid": "35240-4d67b806-e71b-4123-861e-d56f03239a04"
+                    },
+                    {
+                      "id": "ca7fba15-ab68-4e30-982d-2942e16d2b07",
+                      "name": "Too many requests error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/swap/fungibles/?input[chain_id]=<string>&output[chain_id]=<string>&direction=input",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "swap",
+                            "fungibles",
+                            ""
+                          ],
+                          "query": [
+                            {
+                              "key": "input[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "output[chain_id]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The direction parameter is a parameter that determines the flow of fungibles involved in the transaction. It can have three possible values: 'input', 'output', or 'both'. The value 'input' indicates that the API endpoint will only return fungibles that the user can send. The value 'output' indicates that the API endpoint will only return fungibles that the user can receive. The value 'both' means that the API endpoint will return fungibles which are 'input' and 'output' at the same time. In other words - intersection for 'input' and output'. If nothing specified then `both` is used.",
+                              "key": "direction",
+                              "value": "input"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:40.000Z",
+                      "updatedAt": "2026-07-28T03:37:40.000Z",
+                      "uid": "35240-ca7fba15-ab68-4e30-982d-2942e16d2b07"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:37:40.000Z",
+                  "updatedAt": "2026-07-28T03:37:40.000Z",
+                  "uid": "35240-d3eb9734-7fde-4e24-983d-a80aac217e3c"
+                }
+              ],
+              "id": "4e4e3c34-7def-401c-b388-0b368f1445a8",
+              "createdAt": "2026-07-28T03:37:40.000Z",
+              "updatedAt": "2026-07-28T03:37:40.000Z",
+              "uid": "35240-4e4e3c34-7def-401c-b388-0b368f1445a8"
+            }
+          ],
+          "id": "923160b9-444f-4894-9e8f-1eceea67732c",
+          "createdAt": "2026-07-28T03:37:40.000Z",
+          "updatedAt": "2026-07-28T03:37:40.000Z",
+          "uid": "35240-923160b9-444f-4894-9e8f-1eceea67732c"
+        }
+      ],
+      "id": "7bdaabd1-443c-4bc0-8a36-9814600f5d2d",
+      "createdAt": "2026-07-28T03:37:40.000Z",
+      "updatedAt": "2026-07-28T03:37:40.000Z",
+      "uid": "35240-7bdaabd1-443c-4bc0-8a36-9814600f5d2d"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.zerion.io"
+    }
+  ]
+}

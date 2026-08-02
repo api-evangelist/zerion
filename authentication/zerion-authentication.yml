@@ -1,0 +1,14 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/zerion-openapi-original.yml
+summary:
+  types:
+  - http
+schemes:
+- name: APIKeyBasicAuth
+  type: http
+  scheme: basic
+  description: To test endpoints here, paste your API key from the [dashboard](https://dashboard.zerion.io/)
+    into the username field and leave the password empty.
+  sources:
+  - openapi/zerion-openapi-original.yml

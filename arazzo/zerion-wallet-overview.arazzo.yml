@@ -1,0 +1,64 @@
+arazzo: 1.0.1
+info:
+  title: Zerion wallet overview
+  version: 1.0.0
+  summary: Pull a wallet's portfolio, positions, transaction history, and PnL in one flow.
+sourceDescriptions:
+- name: zerion
+  url: ../openapi/zerion-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: wallet-overview
+  summary: Fetch portfolio, positions, recent transactions, and PnL for a wallet.
+  inputs:
+    type: object
+    required: [address]
+    properties:
+      address:
+        type: string
+        description: EVM (0x...) or Solana address, or ENS name.
+        example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+      currency:
+        type: string
+        default: usd
+  steps:
+  - stepId: get-portfolio
+    operationId: getWalletPortfolio
+    parameters:
+    - name: address
+      in: path
+      value: $inputs.address
+    - name: currency
+      in: query
+      value: $inputs.currency
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: list-positions
+    operationId: listWalletPositions
+    parameters:
+    - name: address
+      in: path
+      value: $inputs.address
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: list-transactions
+    operationId: listWalletTransactions
+    parameters:
+    - name: address
+      in: path
+      value: $inputs.address
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: get-pnl
+    operationId: getWalletPNL
+    parameters:
+    - name: address
+      in: path
+      value: $inputs.address
+    successCriteria:
+    - condition: $statusCode == 200
+  outputs:
+    portfolio: $steps.get-portfolio.outputs
+    positions: $steps.list-positions.outputs
+    transactions: $steps.list-transactions.outputs
+    pnl: $steps.get-pnl.outputs

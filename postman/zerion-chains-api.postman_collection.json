@@ -1,0 +1,612 @@
+{
+  "info": {
+    "_postman_id": "1453579a-455d-4ec3-a032-387efdbd5064",
+    "name": "REST chains API",
+    "description": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:37:33.000Z",
+    "updatedAt": "2026-07-28T03:37:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1453579a-455d-4ec3-a032-387efdbd5064"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "chains",
+          "item": [
+            {
+              "name": "{chain_id}",
+              "item": [
+                {
+                  "name": "Get chain by ID",
+                  "id": "13686af5-17aa-450c-9027-d2b0b1074316",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/chains/:chain_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "chains",
+                        ":chain_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b2956ab6-d1fc-415b-b207-0493d2fe2956",
+                          "key": "chain_id",
+                          "value": "<string>",
+                          "description": "(Required) Unique chain ID"
+                        }
+                      ]
+                    },
+                    "description": "This endpoint returns chain by unique chain identifier.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "c5c29957-150d-4e01-880d-d2846fd9e2f1",
+                      "name": "Response for requested chain",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/chains/:chain_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "chains",
+                            ":chain_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "chain_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"external_id\": \"<string>\",\n      \"icon\": {\n        \"url\": \"<string>\"\n      },\n      \"explorer\": {\n        \"name\": \"<string>\",\n        \"token_url_format\": \"<string>\",\n        \"tx_url_format\": \"<string>\",\n        \"home_url\": \"<string>\"\n      },\n      \"rpc\": {\n        \"internal_server_url_format\": \"<string>\",\n        \"public_servers_url\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"flags\": {\n        \"supports_trading\": \"<boolean>\",\n        \"supports_sending\": \"<boolean>\",\n        \"supports_bridge\": \"<boolean>\"\n      }\n    },\n    \"relationships\": {\n      \"native_fungible\": {\n        \"links\": {\n          \"related\": \"<string>\"\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"wrapped_native_fungible\": {\n        \"links\": {\n          \"related\": \"<string>\"\n        },\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T03:37:33.000Z",
+                      "updatedAt": "2026-07-28T03:37:33.000Z",
+                      "uid": "35240-c5c29957-150d-4e01-880d-d2846fd9e2f1"
+                    },
+                    {
+                      "id": "db9a29c9-5491-41fd-a6cf-121d9e5a8b52",
+                      "name": "Parameters are malformed",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/chains/:chain_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "chains",
+                            ":chain_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "chain_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:33.000Z",
+                      "updatedAt": "2026-07-28T03:37:33.000Z",
+                      "uid": "35240-db9a29c9-5491-41fd-a6cf-121d9e5a8b52"
+                    },
+                    {
+                      "id": "eff03d43-5f5e-48ab-ba13-0a2d5d14d29e",
+                      "name": "Unathenticated request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/chains/:chain_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "chains",
+                            ":chain_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "chain_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:33.000Z",
+                      "updatedAt": "2026-07-28T03:37:33.000Z",
+                      "uid": "35240-eff03d43-5f5e-48ab-ba13-0a2d5d14d29e"
+                    },
+                    {
+                      "id": "a9666b64-59e3-413b-889e-9316a75c4513",
+                      "name": "Resource was not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/chains/:chain_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "chains",
+                            ":chain_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "chain_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:33.000Z",
+                      "updatedAt": "2026-07-28T03:37:33.000Z",
+                      "uid": "35240-a9666b64-59e3-413b-889e-9316a75c4513"
+                    },
+                    {
+                      "id": "8f5958ef-a3e2-4bc8-bd9d-aee43bfcea81",
+                      "name": "Too many requests error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Custom header that allows you to get data for testnets.",
+                            "key": "X-Env",
+                            "value": "testnet"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/chains/:chain_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "chains",
+                            ":chain_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "chain_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T03:37:33.000Z",
+                      "updatedAt": "2026-07-28T03:37:33.000Z",
+                      "uid": "35240-8f5958ef-a3e2-4bc8-bd9d-aee43bfcea81"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:37:33.000Z",
+                  "updatedAt": "2026-07-28T03:37:33.000Z",
+                  "uid": "35240-13686af5-17aa-450c-9027-d2b0b1074316"
+                }
+              ],
+              "id": "02a95ac1-1252-4481-bdff-24536208dd9e",
+              "createdAt": "2026-07-28T03:37:33.000Z",
+              "updatedAt": "2026-07-28T03:37:33.000Z",
+              "uid": "35240-02a95ac1-1252-4481-bdff-24536208dd9e"
+            },
+            {
+              "name": "Get list of all chains",
+              "id": "4547226e-ec39-44ec-99a0-66adb3c5e861",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "testnet"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/chains/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "chains",
+                    ""
+                  ]
+                },
+                "description": "This endpoint returns list of all chains supported by Zerion.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n"
+              },
+              "response": [
+                {
+                  "id": "09724c9f-e329-451f-8fc2-61a834095947",
+                  "name": "Response for requested list of chains",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/chains/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "chains",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"links\": {\n    \"self\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"external_id\": \"<string>\",\n        \"icon\": {\n          \"url\": \"<string>\"\n        },\n        \"explorer\": {\n          \"name\": \"<string>\",\n          \"token_url_format\": \"<string>\",\n          \"tx_url_format\": \"<string>\",\n          \"home_url\": \"<string>\"\n        },\n        \"rpc\": {\n          \"internal_server_url_format\": \"<string>\",\n          \"public_servers_url\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"flags\": {\n          \"supports_trading\": \"<boolean>\",\n          \"supports_sending\": \"<boolean>\",\n          \"supports_bridge\": \"<boolean>\"\n        }\n      },\n      \"relationships\": {\n        \"native_fungible\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"wrapped_native_fungible\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"external_id\": \"<string>\",\n        \"icon\": {\n          \"url\": \"<string>\"\n        },\n        \"explorer\": {\n          \"name\": \"<string>\",\n          \"token_url_format\": \"<string>\",\n          \"tx_url_format\": \"<string>\",\n          \"home_url\": \"<string>\"\n        },\n        \"rpc\": {\n          \"internal_server_url_format\": \"<string>\",\n          \"public_servers_url\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"flags\": {\n          \"supports_trading\": \"<boolean>\",\n          \"supports_sending\": \"<boolean>\",\n          \"supports_bridge\": \"<boolean>\"\n        }\n      },\n      \"relationships\": {\n        \"native_fungible\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        },\n        \"wrapped_native_fungible\": {\n          \"links\": {\n            \"related\": \"<string>\"\n          },\n          \"data\": {\n            \"type\": \"<string>\",\n            \"id\": \"<string>\"\n          }\n        }\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:33.000Z",
+                  "updatedAt": "2026-07-28T03:37:33.000Z",
+                  "uid": "35240-09724c9f-e329-451f-8fc2-61a834095947"
+                },
+                {
+                  "id": "ac114056-98bd-4f39-8419-28bdb7d1cc79",
+                  "name": "Parameters are malformed",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/chains/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "chains",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:33.000Z",
+                  "updatedAt": "2026-07-28T03:37:33.000Z",
+                  "uid": "35240-ac114056-98bd-4f39-8419-28bdb7d1cc79"
+                },
+                {
+                  "id": "19d18ab1-d739-4b07-b641-ec4afce0b8a4",
+                  "name": "Unathenticated request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/chains/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "chains",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:33.000Z",
+                  "updatedAt": "2026-07-28T03:37:33.000Z",
+                  "uid": "35240-19d18ab1-d739-4b07-b641-ec4afce0b8a4"
+                },
+                {
+                  "id": "d9b62ead-2e80-4a43-ba23-87b7598ad099",
+                  "name": "Too many requests error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Custom header that allows you to get data for testnets.",
+                        "key": "X-Env",
+                        "value": "testnet"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/chains/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "chains",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:37:33.000Z",
+                  "updatedAt": "2026-07-28T03:37:33.000Z",
+                  "uid": "35240-d9b62ead-2e80-4a43-ba23-87b7598ad099"
+                }
+              ],
+              "createdAt": "2026-07-28T03:37:33.000Z",
+              "updatedAt": "2026-07-28T03:37:33.000Z",
+              "uid": "35240-4547226e-ec39-44ec-99a0-66adb3c5e861"
+            }
+          ],
+          "id": "e111c8fc-8354-446d-85f9-67b44a6f709d",
+          "createdAt": "2026-07-28T03:37:33.000Z",
+          "updatedAt": "2026-07-28T03:37:33.000Z",
+          "uid": "35240-e111c8fc-8354-446d-85f9-67b44a6f709d"
+        }
+      ],
+      "id": "6bcd6a52-7f88-45db-9ca3-7244259738ba",
+      "createdAt": "2026-07-28T03:37:33.000Z",
+      "updatedAt": "2026-07-28T03:37:33.000Z",
+      "uid": "35240-6bcd6a52-7f88-45db-9ca3-7244259738ba"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.zerion.io"
+    }
+  ]
+}

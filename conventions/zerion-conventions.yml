@@ -1,0 +1,83 @@
+generated: '2026-07-21'
+method: searched
+source:
+- https://developers.zerion.io/authentication
+- https://developers.zerion.io/pagination-and-filtering
+- https://developers.zerion.io/error-handling
+- https://developers.zerion.io/rate-limits
+- https://developers.zerion.io/webhooks
+authentication:
+  style: HTTP Basic
+  detail: >-
+    API key is the Basic-Auth username with an empty password; append a colon
+    and Base64-encode: base64("your_key:"). Keys begin with `zk_`. Alternatives
+    for agents/per-call workloads: x402 (USDC on Base/Solana, PAYMENT-SIGNATURE
+    header) and MPP (USDC on Tempo, Authorization: Payment header) — no API key,
+    no rate limits.
+  cross_ref: authentication/zerion-authentication.yml
+serialization:
+  media_type: application/json
+  structure: JSON:API
+  detail: >-
+    Responses follow the JSON:API structure with top-level `data`, `links`, and
+    (for webhooks and compound documents) `included`. Monetary values honor a
+    `currency` query parameter (default `usd`; also supports major fiat plus
+    `eth`/`btc`).
+idempotency:
+  supported: false
+  detail: >-
+    The REST API does not document a request idempotency-key header or parameter.
+    Idempotency guidance applies to webhook CONSUMPTION: deliveries are
+    best-effort, may duplicate, and may arrive out of order, so handlers should
+    deduplicate on transaction `hash` + `chain`. A single transaction can trigger
+    two webhooks (confirmation and rollback via `deleted: true`).
+pagination:
+  style: cursor
+  params:
+    size: page[size]
+  size_default: 100
+  size_min: 1
+  size_max: 100
+  response_fields:
+  - links.self
+  - links.next
+  detail: >-
+    Cursor-based. Follow the opaque `links.next` URL until absent; never
+    construct `page[after]` cursors manually. List endpoints return an empty
+    `data[]` (200) rather than 404.
+filtering:
+  style: filter[field]
+  detail: >-
+    filter[field]=value syntax; multiple values comma-separated. Common filters:
+    chain_ids, position_types, operation_types, trash, search_query,
+    fungible_ids. Sorting via `sort` (prefix `-` for descending).
+versioning:
+  style: uri-path
+  current: v1
+  cross_ref: lifecycle/zerion-lifecycle.yml
+rate_limits:
+  signaling: response headers
+  headers:
+  - RateLimit-Org-Second-Limit
+  - RateLimit-Org-Second-Remaining
+  - RateLimit-Org-Second-Reset
+  - RateLimit-Org-Day-Limit
+  - RateLimit-Org-Day-Remaining
+  - RateLimit-Org-Day-Reset
+  - RateLimit-Org-Month-Limit
+  - RateLimit-Org-Month-Remaining
+  - RateLimit-Org-Month-Reset
+  - RateLimit-Org-Tier
+  cross_ref: https://developers.zerion.io/rate-limits
+error_envelope:
+  field: errors
+  cross_ref: errors/zerion-problem-types.yml
+webhooks:
+  signature:
+    algorithm: RSA-SHA256 (PKCS1v15)
+    headers:
+    - X-Timestamp
+    - X-Signature
+    - X-Certificate-URL
+    signing_string: '${X-Timestamp}\n${request_body}\n'
+  cross_ref: asyncapi/zerion-transactions-webhooks.yml

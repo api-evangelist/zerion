@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: searched
+source:
+- https://developers.zerion.io/rate-limits
+- https://developers.zerion.io/pricing
+scheme: plan-tiered
+signaling:
+  response_headers:
+  - RateLimit-Org-Second-Limit
+  - RateLimit-Org-Second-Remaining
+  - RateLimit-Org-Second-Reset
+  - RateLimit-Org-Day-Limit
+  - RateLimit-Org-Day-Remaining
+  - RateLimit-Org-Day-Reset
+  - RateLimit-Org-Month-Limit
+  - RateLimit-Org-Month-Remaining
+  - RateLimit-Org-Month-Reset
+  - RateLimit-Org-Tier
+  throttled_status: 429
+rate_limits:
+- tier: Developer
+  limit_count: 10
+  interval: second
+  monthly_quota: 60000
+  daily_quota: 2000
+- tier: Builder
+  limit_count: 50
+  interval: second
+  monthly_quota: 250000
+- tier: Startup
+  limit_count: 150
+  interval: second
+  monthly_quota: 1000000
+- tier: Growth
+  limit_count: 300
+  interval: second
+  monthly_quota: 2500000
+- tier: Enterprise
+  limit_count: 1000
+  interval: second
+  monthly_quota: null
+handling: >-
+  On 429, wait per RateLimit-Org-Second-Reset and use exponential backoff. If the
+  day/month quota is exhausted, retrying will not help — check
+  RateLimit-Org-Day-Remaining / RateLimit-Org-Month-Remaining first. Pay-per-call
+  (x402/MPP) has no rate limits.

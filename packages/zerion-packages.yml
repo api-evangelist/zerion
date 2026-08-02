@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.zerion.io/build-with-ai/zerion-cli
+notes: >-
+  Zerion's first-party developer tooling ships from the open-source
+  github.com/zeriontech/zerion-ai repository as the `zerion-cli` npm package.
+  Zerion does not publish per-language REST SDKs; the API is called directly
+  over HTTP (Basic auth) with the documented cURL/JS/Python/Go snippets. The CLI
+  wraps the API plus a local encrypted wallet vault and is the recommended
+  client for agents.
+packages:
+- language: javascript
+  registry: npm
+  name: zerion-cli
+  url: https://www.npmjs.com/package/zerion-cli
+  install: npm install -g zerion-cli
+  official: true
+  kind: cli
+  repository: https://github.com/zeriontech/zerion-ai
+  license: MIT
+  notes: >-
+    Open-source CLI + six agent skills wrapping the Zerion API and a local
+    encrypted wallet vault. Requires Node.js 20+. One-shot setup:
+    `npx -y zerion-cli init -y --browser`.

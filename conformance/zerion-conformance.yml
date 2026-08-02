@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: derived
+source:
+- openapi/zerion-openapi-original.yml
+- https://developers.zerion.io/pagination-and-filtering
+- https://developers.zerion.io/error-handling
+- https://developers.zerion.io/webhooks
+standards:
+- id: json-api
+  conforms: true
+  evidence: >-
+    Responses use the JSON:API structure (data / links / included; relationships
+    objects; errors[] array). Documented explicitly for webhooks and list responses.
+- id: http-basic-auth
+  conforms: true
+  evidence: openapi securityScheme APIKeyBasicAuth (type http, scheme basic)
+- id: cursor-pagination
+  conforms: true
+  evidence: page[size] + opaque links.next cursor navigation
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use JSON:API errors[] (title/detail), not application/problem+json.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 security scheme; auth is API key (HTTP Basic).
+- id: oidc
+  conforms: false
+- id: x402
+  conforms: true
+  evidence: >-
+    Supports Coinbase x402 pay-per-request (USDC on Base/Solana) via
+    PAYMENT-SIGNATURE header as an alternative to API keys.
+- id: mpp
+  conforms: true
+  evidence: >-
+    Supports Machine Payments Protocol (USDC on Tempo) via Authorization: Payment
+    header for per-request settlement.
+- id: webhook-signature-rsa-sha256
+  conforms: true
+  evidence: >-
+    Webhook callbacks signed RSA-SHA256 (PKCS1v15) with X-Signature / X-Timestamp
+    / X-Certificate-URL headers.
+- id: rate-limit-headers
+  conforms: true
+  evidence: RateLimit-Org-* response headers (second/day/month limit-remaining-reset + tier)
