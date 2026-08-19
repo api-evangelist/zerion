@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REST chains swap API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "swap",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get swap and bridge quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/swap/quotes/",
+            "params": [
+              {
+                "name": "currency",
+                "value": "usd",
+                "type": "query",
+                "description": "Currency in which fiat values of amounts and fees in the response are expressed."
+              },
+              {
+                "name": "from",
+                "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990",
+                "type": "query",
+                "description": "Address of the wallet performing the swap. Must match the chain type of `input[chain_id]` (EVM hex or Solana base58)."
+              },
+              {
+                "name": "to",
+                "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+                "type": "query",
+                "description": "Recipient of the output asset. Must match the chain type of `output[chain_id]`. For a same-chain swap to the same wallet, set `to` equal to `from`."
+              },
+              {
+                "name": "input",
+                "value": "",
+                "type": "query",
+                "description": "The asset being sent."
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query",
+                "description": "The asset being received."
+              },
+              {
+                "name": "slippage_percent",
+                "value": "2",
+                "type": "query",
+                "description": "Maximum acceptable slippage in percent. When omitted, an auto-slippage value is chosen."
+              }
+            ]
+          },
+          "docs": "Returns quotes from multiple liquidity sources for a same-chain swap or a cross-chain bridge between two fungible assets. Supports EVM chains and Solana, including EVM ↔ Solana bridges.\n\nQuotes are returned best-first: sorted in descending order by the fiat value of `output_amount_after_fees` (output amount minus network, protocol and bridge fees that are not already included in the rate). Quotes with the same score are tied-broken alphabetically by `liquidity_source.id`, so identical requests a"
+        },
+        {
+          "info": {
+            "name": "List fungibles available for bridging",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/swap/fungibles/",
+            "params": [
+              {
+                "name": "input",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "output",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "direction",
+                "value": "both",
+                "type": "query",
+                "description": "The direction parameter is a parameter that determines the flow of fungibles involved in the transaction. It can have three possible values: 'input', 'output', or 'both'. The value 'input' indicates that the API endpoint will only return fungibles that the user can send. The value 'output' indicates that the API endpoint will only return fungibles that the user can receive. The value 'both' means that the API endpoint will return fungibles which are 'input' and 'output' at the same time. In other words - intersection for 'input' and output'. If nothing specified then `both` is used."
+              }
+            ]
+          },
+          "docs": "Returns the list of tokens available for bridging between two chains. Use this to populate a token picker UI. Only relevant for cross-chain swaps, same-chain swaps don't require this step."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

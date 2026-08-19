@@ -1,0 +1,483 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REST chains wallets API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "wallets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get wallet balance chart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/wallets/:address/charts/:chart_period",
+            "params": [
+              {
+                "name": "chart_period",
+                "value": "",
+                "type": "path",
+                "description": "Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "address",
+                "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990",
+                "type": "path",
+                "description": "The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion."
+              },
+              {
+                "name": "filter[chain_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Account only for balance on these chains (comma-separated list). Available chain ids can be found in chains endpoints."
+              },
+              {
+                "name": "filter[fungible_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Account only for balance of given fungible assets (comma-separated list). Mutually exclusive with `filter[exclude_fungible_ids]` — combining both returns `400`."
+              },
+              {
+                "name": "filter[exclude_fungible_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Exclude balance contributions from the given fungible assets (comma-separated list). Useful when the set you want to keep is large but the set you want to omit is small. Mutually exclusive with `filter[fungible_ids]` — combining both returns `400`."
+              },
+              {
+                "name": "filter[pool_addresses]",
+                "value": "",
+                "type": "query",
+                "description": "Restrict the balance chart to specific liquidity-pool / vault positions, identified by their contract address (comma-separated list) — the Uniswap V2 LP-token or ERC-4626 vault (e.g. Morpho) address. Only the matching protocol positions are charted; simple token and native-coin balances are excluded. These are complex (protocol) positions, so passing `filter[positions]=only_simple` alongside this filter returns `400`. Mutually exclusive with `filter[exclude_pool_addresses]` — combining both returns `400`."
+              },
+              {
+                "name": "filter[exclude_pool_addresses]",
+                "value": "",
+                "type": "query",
+                "description": "Exclude specific liquidity-pool / vault positions from the balance chart, identified by their contract address (comma-separated list) — the Uniswap V2 LP-token or ERC-4626 vault (e.g. Morpho) address. The matching positions are removed; the rest of the portfolio (including simple balances) is kept. These are complex (protocol) positions, so passing `filter[positions]=only_simple` alongside this filter — which would already drop every protocol position, making the exclusion a no-op — returns `400`. Mutually exclusive with `filter[pool_addresses]` — combining both returns `400`."
+              },
+              {
+                "name": "filter[positions]",
+                "value": "",
+                "type": "query",
+                "description": "Which positions to include in the balance chart.\n- `only_simple` (default) — simple positions only: wallet token and native-coin balances.\n- `only_complex` — complex DeFi protocol positions only (e.g. liquidity-pool and vault positions).\n- `no_filter` — include both simple and complex positions.\n\nUniswap V2 LP positions are supported today, and support for more protocols is rolling out over time.\n"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a portfolio balance chart for a wallet.\nThis is over a specified time period, based on the provided start and end timestamps.\nResults can be filtered by blockchain and asset type, offering flexible and detailed visualizations of wallet performance, similar to what you see in the Zerion interface.\n\n**Complex positions.** By default the chart counts only simple positions: token and native-coin balances held directly in the wallet. Set `filter[positions]` to `only_complex` or "
+        },
+        {
+          "info": {
+            "name": "Get wallet PnL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/wallets/:address/pnl",
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "address",
+                "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990",
+                "type": "path",
+                "description": "The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion."
+              },
+              {
+                "name": "filter[chain_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Calculate PnL only for specified chains (comma-separated list)."
+              },
+              {
+                "name": "filter[fungible_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Account only for PnL related to given fungible assets (comma-separated list). Maximum of 100 fungible IDs allowed.\n\nWhen filtering by fungible_ids or fungible_implementations, assets without available prices are automatically excluded from calculations instead of causing an error. Excluded assets are returned in the response metadata for transparency.\n"
+              },
+              {
+                "name": "filter[fungible_implementations]",
+                "value": "",
+                "type": "query",
+                "description": "Account only for PnL related to given fungible asset implementations (comma-separated list of chain:address pairs). Maximum of 100 implementations allowed.\nexample: \"base:0xae16c445d8a4082cecb49a9465e4dd5499df947d,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nWhen filtering by fungible_ids or fungible_implementations, assets without available prices are automatically excluded from calculations instead of causing an error. Excluded assets are returned in the response metadata for transparency.\n"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Only account sales since the given date.\nA unix timestamp in milliseconds.\n**Note:** PnL is pre-computed at standard marks (`now`, `1 day ago`, `1 week ago`, `1 month ago`, `1 year ago`, `beginning of the year`). Other values are supported only if fewer than 3,000 transactions sit between your timestamp and the nearest mark — otherwise the request errors out."
+              },
+              {
+                "name": "till",
+                "value": "",
+                "type": "query",
+                "description": "Only account sales till the given date.\nA unix timestamp in milliseconds.\n**Note:** PnL is pre-computed at standard marks (`now`, `1 day ago`, `1 week ago`, `1 month ago`, `1 year ago`, `beginning of the year`). Other values are supported only if fewer than 3,000 transactions sit between your timestamp and the nearest mark — otherwise the request errors out."
+              }
+            ]
+          },
+          "docs": "This endpoint returns the Profit and Loss (PnL) details of a web3 wallet.\nThis includes Unrealized PnL, Realized PnL, Net Invested amounts and filters for asset categories like Non Fungible Tokens (NFTs).\nIt uses the FIFO (First In, First Out) standard for calculations, providing accurate insights into wallet performance.\nIdeal for tracking and analyzing financial outcomes of wallet activity.\n\nThe very first request for a wallet might result in a 503 which should be retried later.\nWallets with o"
+        },
+        {
+          "info": {
+            "name": "Get wallet portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/wallets/:address/portfolio",
+            "params": [
+              {
+                "name": "filter[positions]",
+                "value": "",
+                "type": "query",
+                "description": "This parameter allows to customize the aggregation of DeFi positions within a portfolio based on their types. The aggregation can include:\n\n  - `only_simple`: Only includes wallet-type positions, which are basic, non-protocol related assets. This is the default selection if the parameter is not specified.\n  - `only_complex`: Aggregates positions associated with DeFi protocols only (e.g., staked assets, liquidity pools), like Uniswap or Aave, excluding simple wallet positions.\n  - `no_filter`: Provides an aggregated view of both protocol-related and simple wallet positions without any filtering.\n\nThe selection of filters affects the composition of the aggregated portfolio results, allowing for tailored analysis and reporting based on the types of positions of interest.\n\n> ⚠️ Note: Enterprise usage of this API may be subject to different pricing models depending on the selected filter type. For detailed pricing information, please contact `api@zerion.io`.\n"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "address",
+                "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990",
+                "type": "path",
+                "description": "The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion."
+              }
+            ]
+          },
+          "docs": "This endpoint returns the portfolio overview of a web3 wallet.\n\n**Temporary limitations for Solana addresses:**\n- Doesn't support protocol positions\n\n> NOTE: Don't forget to stop retries after some reasonable period of time. If the `200` status is not returned within 2 minutes it most probably means that some unexpected error occurred and the client should stop the polling.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumpt"
+        },
+        {
+          "info": {
+            "name": "Get wallet fungible positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/wallets/:address/positions/",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter[positions]",
+                "value": "",
+                "type": "query",
+                "description": "This parameter allows users to filter DeFi positions based on their types. There are three options:\n\n- `only_simple`: Retrieves exclusively wallet-type positions. These are basic, non-protocol related positions. This option is applied if parameter is not specified.\n- `only_complex`: Fetches only positions associated with all DeFi protocols (including staked assets, liquidity pools, etc), like Uniswap or Aave. This option excludes simple wallet positions.\n- `no_filter`: Applies no filtering, thus returning both protocol-related and simple wallet positions.\n\n> ⚠️ Note: Different pricing models are applied for enterprise usage of this API, depending on the filter type selected. For detailed pricing information, please reach out to us at `api@zerion.io`.\n"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "address",
+                "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990",
+                "type": "path",
+                "description": "The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion."
+              },
+              {
+                "name": "filter[position_types]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only positions with these types (comma-separated list).\n\nPossible values:\n- `deposit` - Assets deposited into a DeFi protocol (e.g., supplied to lending pools, deposited in vaults, or provided as liquidity)\n- `loan` - Borrowed assets representing a debt position that needs to be repaid\n- `locked` - Assets locked for a specific period or purpose (e.g., vote-escrowed tokens, time-locked tokens)\n- `staked` - Assets staked in a protocol to earn rewards, participate in consensus, or for governance purposes\n- `reward` - Earned rewards that are claimable or have been distributed but not yet withdrawn\n- `wallet` - Regular assets held directly in the wallet, not actively deposited in any protocol\n- `investment` - Investment positions such as tokenized funds, indices, or structured products\n"
+              },
+              {
+                "name": "filter[chain_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only positions from these chains (comma-separated list). Available chain ids can be found in chains endpoints."
+              },
+              {
+                "name": "filter[fungible_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only positions related to given fungible assets (comma-separated list)."
+              },
+              {
+                "name": "filter[dapp_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only positions related to these decentralized applications (dapps) (comma-separated list)."
+              },
+              {
+                "name": "filter[trash]",
+                "value": "",
+                "type": "query",
+                "description": "Filter positions based on the `is_trash` flag. If no flag is specified, then `only_non_trash` is applied."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Choose how the result should be ordered"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a list of wallet positions.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\n**Understanding Liquidity Pool Positions:**\n\nLiquidity pools (Uniswap, Curve, Balancer, etc.) return **multiple positions** - one for each token in the pool. Positions belonging to the same pool share the same `group_id` value in attributes.\n\nFor example, a Uniswap V2 USDC/WETH pool returns two positions:\n- Position 1: WETH token, `group_id=\"820ee2f1ca8ccb716f6beb5e45"
+        },
+        {
+          "info": {
+            "name": "Get wallet transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/wallets/:address/transactions/",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "Address of the wallet. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion."
+              },
+              {
+                "name": "filter[search_query]",
+                "value": "",
+                "type": "query",
+                "description": "Query for a full-text search."
+              },
+              {
+                "name": "filter[operation_types]",
+                "value": "",
+                "type": "query",
+                "description": "Return only transactions with specified types (comma-separated list). See the operation type schema for the full list of values."
+              },
+              {
+                "name": "filter[asset_types]",
+                "value": "",
+                "type": "query",
+                "description": "Return only transactions that contain specified asset types (comma-separated list)."
+              },
+              {
+                "name": "filter[chain_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Return only transactions from specified chains (comma-separated list). You can find available chain ids in chain endpoints."
+              },
+              {
+                "name": "filter[fungible_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Return only transactions with fungibles with specified ids (comma-separated list)."
+              },
+              {
+                "name": "filter[min_mined_at]",
+                "value": "",
+                "type": "query",
+                "description": "Return only transactions since specific date. Timestamp in milliseconds."
+              },
+              {
+                "name": "filter[max_mined_at]",
+                "value": "",
+                "type": "query",
+                "description": "Return only transactions until specific date. Timestamp in milliseconds."
+              },
+              {
+                "name": "filter[trash]",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions based on the `is_trash` flag. If no flag is specified, then `no_filter` is applied."
+              },
+              {
+                "name": "filter[fungible_implementations]",
+                "value": "",
+                "type": "query",
+                "description": "Specify implementations of fungible tokens as a comma-separated list of `chain:address` pairs.\n\nExample format: `ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,polygon:0x123456789abcdef123456789abcdef123456789`\n\nEach item consists of a blockchain `chain_id` and an `address`, separated by a colon (`:`). Multiple pairs can be provided using commas (`,`).\n"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a list of transactions associated with the wallet.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\n**Temporary limitations for Solana addresses:**\n- Doesn't support NFT transactions\n\n> NOTE: This endpoint supports a lot of filters, sorting, and pagination parameters. Make sure that your request URL length is safe for your platform. Usually, 2000 characters are the safe limit in virtually any combination of client and server software.\n\n> NOTE:"
+        },
+        {
+          "info": {
+            "name": "Get wallet NFT positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/wallets/:address/nft-positions/",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "address",
+                "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990",
+                "type": "path",
+                "description": "The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion."
+              },
+              {
+                "name": "filter[chain_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only positions from the specified chains (comma-separated list). Available chains IDs can be found in chains endpoint."
+              },
+              {
+                "name": "filter[collections_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only positions from collections with specified IDs (comma-separated list). The IDs are returned inside the 'collection' field of each NFT."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The order of NFTs in the result."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema."
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a list of the NFT positions held by a specific wallet.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\nIf the wallet address has not been previously added, this endpoint may return a `202` status code. This indicates that the wallet's positions are not yet available, but will be in the near future. In this case, the client should periodically request this endpoint until a `200` status code is returned.\n\n> NOTE: It is important to stop retryin"
+        },
+        {
+          "info": {
+            "name": "Get wallet NFT collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/wallets/:address/nft-collections/",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "address",
+                "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990",
+                "type": "path",
+                "description": "The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion."
+              },
+              {
+                "name": "filter[chain_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only collections from the specified chains (comma-separated list). Available chain IDs can be found in the chains endpoint."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The order of NFTs in the result."
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema."
+              }
+            ]
+          },
+          "docs": "This endpoint returns a list of the NFT collections held by a specific wallet.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\nIf the wallet address has not been previously added, this endpoint may return a `202` status code. This indicates that the wallet's collections are not yet available, but will be in the near future. In this case, the client should periodically request this endpoint until a `200` status code is returned.\n\n> NOTE: It is important to stop ret"
+        },
+        {
+          "info": {
+            "name": "Get wallet NFT portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/wallets/:address/nft-portfolio",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "address",
+                "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990",
+                "type": "path",
+                "description": "The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion."
+              }
+            ]
+          },
+          "docs": "This endpoint returns the NFT portfolio overview of a web3 wallet.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\nIf the address was not added before it is possible that this endpoint will return `202` status. It means that portfolio for the wallet is not prepared yet, but will be available soon. In that case the client have to request this endpoint periodically, while `200` status wasn't returned.\n\n> NOTE: Don't forget to stop retries after some reasonable perio"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

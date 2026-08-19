@@ -1,0 +1,3422 @@
+{
+  "item": [
+    {
+      "id": "202b7a07-2e25-4925-9860-a34d26a4094c",
+      "name": "subscriptions to transactions",
+      "description": {
+        "content": "Operations related to subscriptions to transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9a946d97-61ff-4b9b-aa6c-4d52bb7e1a5f",
+          "name": "Find subscriptions",
+          "request": {
+            "name": "Find subscriptions",
+            "description": {
+              "content": "This endpoint finds subscriptions to new transactions associated with the wallets and chains. Currently response is limited to 1000 subscriptions in the response.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[chain_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated chain ids. Finds subscriptions on the specified chains. Searches over all chains if omitted."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "abc89860-8740-49a1-81e3-beab2b9396d1",
+              "name": "Response for requested wallet's transactions subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"type\": \"transactions_subscription\",\n      \"id\": \"52d994a173d755e99845e861d534a419\",\n      \"attributes\": {\n        \"callback_url\": \"https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3\",\n        \"created_at\": \"2022-08-15T11:26:31+00:00\",\n        \"updated_at\": \"2022-08-15T11:26:31+00:00\"\n      },\n      \"relationships\": {\n        \"chains\": [\n          {\n            \"links\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"links\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    {\n      \"type\": \"transactions_subscription\",\n      \"id\": \"52d994a173d755e99845e861d534a419\",\n      \"attributes\": {\n        \"callback_url\": \"https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3\",\n        \"created_at\": \"2022-08-15T11:26:31+00:00\",\n        \"updated_at\": \"2022-08-15T11:26:31+00:00\"\n      },\n      \"relationships\": {\n        \"chains\": [\n          {\n            \"links\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"links\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec5b7c8a-e5bd-481c-ae57-5f8f56080e7a",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce5953a9-f2d4-44d3-a48f-b126b161c9d8",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6d7e6e5-460b-4e33-8d3e-4a3af3891047",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ef6815e-279f-4150-b4b3-bafaa7abdc5f",
+          "name": "Create subscription",
+          "request": {
+            "name": "Create subscription",
+            "description": {
+              "content": "This endpoint subscribes to new transactions associated with the wallets.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n\n### Use Case\nThe main use case for the webhooks system is to send notifications, similar to push notifications in the Zerion App.\n\n### Setup Callback URL\nIf you want to use this endpoint to test how it works, you might use your dev key to start. It has limits: one subscription & maximum 5 wallets per subscription.\nYou may use callback URL from webhook.site to start from. If want use your custom - contact us at api@zerion.io, and we will whitelist your URL.\n\nIf you want to use this endpoint in your production environment, you should contact us and provide the following details:\n- Your email associated with the API key\n- The URL that you prefer using as the callback (or host).\n\nAfter we've whitelisted your callback URL (or host), you may start using this endpoint.\n\n### Note\n- **Subscription Validity**: Every subscription is valid for unlimited amount of time for production key, and one week for `dev` keys.\n- **Transaction Prices**: Prices are not attached to webhook notifications and will always be `null`. Prices are added to transactions in the backend after some time. To get prices, query the transactions endpoint by hash.\n- **Delivery Guarantees**: Webhook delivery is not guaranteed. If delivery fails three times, no further attempts will be made.\n- **Order of Dispatch**: The order of webhook dispatch is not guaranteed and may not correspond to the order of transactions occurring on the blockchain.\n\n### Callback Format and Signature Verification\nApproved clients will receive notifications via POST requests to their provided URL. These notifications will include a signed notification object in the body (specified below in the `Callback` section) and a signature in the headers.\n\nClients should verify the signature provided in the headers of the webhook request to ensure the authenticity of the data. The following headers will be included:\n- `X-Signature`: The signature of the request.\n- `X-Timestamp`: The timestamp of the request.\n- `X-Certificate-URL`: The URL to download the public certificate used to verify the signature.\n\n**To verify the signature:**\n1. Concatenate the `X-Timestamp` header value, the request body, and a newline character: `$timestamp + \"\\n\" + $request.body + \"\\n\"`\n2. Use the public certificate downloaded from the `X-Certificate-URL` header to verify the signature in the `X-Signature` header.\n\nExample code in go for message verification:\n\n```go\npackage signature\n\nimport (\n  \"crypto\"\n  \"crypto/rsa\"\n  \"crypto/sha256\"\n  \"crypto/x509\"\n  \"encoding/base64\"\n  \"encoding/pem\"\n  \"errors\"\n  \"github.com/stretchr/testify/assert\"\n  \"testing\"\n)\n\n// FetchCertificate fetches the certificate from the given URL\nfunc FetchCertificate() (*x509.Certificate, error) {\n  certBytes := certificate()\n  block, _ := pem.Decode(certBytes)\n  if block == nil || block.Type != \"CERTIFICATE\" {\n    return nil, errors.New(\"failed to decode PEM block containing the certificate\")\n  }\n\n  return x509.ParseCertificate(block.Bytes)\n}\n\nfunc certificate() []byte {\n  return []byte(`-----BEGIN CERTIFICATE-----\nMIIDMTCCAhmgAwIBAgIUDd3dFMswamyJ5A1bqF0nzS8v2wgwDQYJKoZIhvcNAQEL\nBQAwQTELMAkGA1UEBhMCVVMxFDASBgNVBAoMC1plcmlvbiBJbmMuMRwwGgYJKoZI\nhvcNAQkBFg1hcGlAemVyaW9uLmlvMB4XDTI0MDYyNzE1MzUzM1oXDTI1MDYyNzE1\nMzUzM1owQTELMAkGA1UEBhMCVVMxFDASBgNVBAoMC1plcmlvbiBJbmMuMRwwGgYJ\nKoZIhvcNAQkBFg1hcGlAemVyaW9uLmlvMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A\nMIIBCgKCAQEAwcPVCPLDhS9dLA8s5J6GJ3t0+jWuUCFwI+q6c03xZnhCaz45FepN\nMTiApbvPw1Zm8F8JQB4BRp/F5anokNcDSl/qmNtj3M/z/FrsVvGnSH2FOkZu9TLU\nLTW5i8Q0LAYrpgiBHrTa2qrRXd2DiMrEs3QZVoylFYc9QIGet3SULPrlSsYEKxfB\niBZDoFw619NnV6/kBO8FS34Lc+WH5SNNHNnItRrxMv4DMAFyFajSn1IwV6LSWSNK\naPJHCzP/Omu95550HQKcXaJYNE/d99NrcLaFI2fCuEVd00nApFo5knKs0FiXpGca\nl3cLOQG5SCOzUOjQb6X5CynEV+0QiyYxDwIDAQABoyEwHzAdBgNVHQ4EFgQUVL4m\nu0PcI4nJGUS8syLi5DNL44YwDQYJKoZIhvcNAQELBQADggEBAKaA1oqW0D6KxvIp\nIZxWf02XK/YFYwxKV55Vas0VWlzNemE2IjlIj0tknZt0EiM9um2FC27U9n3u0ApS\nUDrk96dQ+/RY3T3fiuXysa3ZL05OpreRk0aPuFU9rB4iLTgFiv1G/X5XXJ8O7OQb\n48u0vQnYXjT/nt72TMUoakjZ68QsP64FkG8mcK62Tg+FVWB9YWTFc0wOjsOt9RzJ\nmuKCQ7qx7L1GhkxKX4ZhrYItsH1DzXjeP5aniZgLBSPbxt01tUrSjOGN5CLOpdG8\niOnAFP+Nz8S0h2C7hppOHgC+uxY285UrzAZQoMbCREMV+0Mq/aqdF1B6qoKGNGqL\nkFbUhvo=\n-----END CERTIFICATE-----\n`)\n}\n\nfunc VerifySignature(cert *x509.Certificate, message, signature string) error {\n  pubKey := cert.PublicKey.(*rsa.PublicKey)\n\n  hashed := sha256.Sum256([]byte(message))\n  sigBytes, err := base64.StdEncoding.DecodeString(signature)\n  if err != nil {\n    return err\n  }\n\n  return rsa.VerifyPKCS1v15(pubKey, crypto.SHA256, hashed[:], sigBytes)\n}\n\nfunc TestVerifySignature(t *testing.T) {\n  // Example usage\n  x509Cert, err := FetchCertificate()\n  assert.NoError(t, err)\n\n  xTimestamp := \"2024-07-31T00:17:36Z\"\n  xSignature := \"t65gdR8z3NGh/OQRPzGMFmw36JhDNvOe6LxL6K2hCd3SdYQoTGr76dAy1CpsX2G8XVOIYUIctUQvgICQvtDctVjkRZmXuQDvXHOmiJE0ZknORgjVLFoo5JRYKvwt3EPp6SMN7RtedIX17rH1s2Vp3GRQWSjzN7C/cNgInhCQOP0UDjYlaeNT/yW4B2Qt4uY01yK0YhvQJaFHN+NNr7DZAt4FJuDppItqjaYbHTaFNqLlpI1IX7YvQWVhEYTJY6M4T9IdcGYPJKDljckjvmj9mDHZeh/Y6w8eXjLziMSFvlhJeSn1kBIR3nS7lTcwFNv1CPxD3MM7VB++te3mBbFubg==\"\n  messageBody := `{\"data\":{\"attributes\":{\"timestamp\":\"2024-07-31T00:17:36.661896043Z\"},\"id\":\"15daee90-5028-4b4c-bd49-b4d43fa1a89e\",\"type\":\"callback\"},\"included\":[{\"attributes\":{\"application_metadata\":{\"contract_address\":\"0x8286d601a0ed6cf75e067e0614f73a5b9f024151\",\"method\":{\"id\":\"0x7859bb8d\",\"name\":\"\"}},\"approvals\":[],\"fee\":{\"fungible_info\":{\"flags\":{\"verified\":true},\"icon\":{\"url\":\"https://cdn.zerion.io/eth.png\"},\"implementations\":[{\"address\":\"\",\"chain_id\":\"redstone\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"polygon-zkevm\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"optimism\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"zksync-era\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"mode\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"base\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"ethereum\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"aurora\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"scroll\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"rari\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"astar-zkevm\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"arbitrum\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"zora\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"blast\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"linea\",\"decimals\":18},{\"address\":\"\",\"chain_id\":\"manta-pacific\",\"decimals\":18}],\"name\":\"Ethereum\",\"symbol\":\"ETH\"},\"price\":null,\"quantity\":{\"decimals\":18,\"float\":0.0000016785001958,\"int\":\"1678500195825\",\"numeric\":\"0.000001678500195825\"},\"value\":null},\"flags\":{\"is_trash\":false},\"hash\":\"0xbbcfb0ac5e466ded168794a162da334634fee3f95adfdb55392999f91b4c6d41\",\"mined_at\":\"2024-07-31T00:17:35Z\",\"mined_at_block\":7490818,\"nonce\":250,\"operation_type\":\"execute\",\"sent_from\":\"0xfc0f1b3fb88c5ab19e77a6f7d4d637272e71e684\",\"sent_to\":\"0x8286d601a0ed6cf75e067e0614f73a5b9f024151\",\"status\":\"confirmed\",\"transfers\":[]},\"id\":\"a65b2541c58a5908a7333480f0ac6792\",\"relationships\":{\"chain\":{\"id\":\"linea\",\"type\":\"chains\"},\"dapp\":{\"id\":\"\",\"type\":\"dapps\"}},\"type\":\"transactions\"}]}`\n\n  message := xTimestamp + \"\\n\" + messageBody + \"\\n\"\n\n  err = VerifySignature(x509Cert, message, xSignature)\n  assert.NoError(t, err)\n}\n```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"callback_url\": \"<string>\",\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"chain_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c986dc32-d9e9-4168-b2f1-82942db4da05",
+              "name": "Response for requested wallet's transactions subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callback_url\": \"https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3\",\n  \"addresses\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ],\n  \"chain_ids\": [\n    \"polygon\",\n    \"polygon\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"type\": \"transactions_subscription\",\n    \"id\": \"52d994a173d755e99845e861d534a419\",\n    \"attributes\": {\n      \"callback_url\": \"https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3\",\n      \"created_at\": \"2022-08-15T11:26:31+00:00\",\n      \"updated_at\": \"2022-08-15T11:26:31+00:00\"\n    },\n    \"relationships\": {\n      \"chains\": [\n        {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2573611e-b048-42bf-83a8-6a8755298804",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callback_url\": \"https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3\",\n  \"addresses\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ],\n  \"chain_ids\": [\n    \"polygon\",\n    \"polygon\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfd1aad3-b199-43e9-8756-6cbe06de3b60",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callback_url\": \"https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3\",\n  \"addresses\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ],\n  \"chain_ids\": [\n    \"polygon\",\n    \"polygon\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22f96a5a-3586-4228-bb72-3f3dd427cbb8",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callback_url\": \"https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3\",\n  \"addresses\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ],\n  \"chain_ids\": [\n    \"polygon\",\n    \"polygon\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fce919c3-fed3-4ef5-b394-d24b7e173292",
+          "name": "Find subscription by ID",
+          "request": {
+            "name": "Find subscription by ID",
+            "description": {
+              "content": "This endpoint by ID returns subscription to new transactions associated with the wallets and chains.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10ffd69c-e3f7-4c43-ab0d-e857fec589c5",
+              "name": "Response for requested wallet's transactions subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"type\": \"transactions_subscription\",\n    \"id\": \"52d994a173d755e99845e861d534a419\",\n    \"attributes\": {\n      \"callback_url\": \"https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3\",\n      \"created_at\": \"2022-08-15T11:26:31+00:00\",\n      \"updated_at\": \"2022-08-15T11:26:31+00:00\"\n    },\n    \"relationships\": {\n      \"chains\": [\n        {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f74d49e8-5e17-4188-b9e0-da0c6cad0cd6",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ec11633-1d65-4558-9ec9-222fd9a41ec6",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7da7d62f-3b78-4690-88e6-32fbbc0929e8",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2211db51-1698-43f6-b474-565be536c4be",
+          "name": "Delete subscription by ID",
+          "request": {
+            "name": "Delete subscription by ID",
+            "description": {
+              "content": "This endpoint deletes existing subscription\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33da3f77-ab33-4cb7-be91-f988c227edc2",
+              "name": "Successful subscription deletion with no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "53a37e66-2daf-40e6-a46d-6818d4863df7",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "310b6c54-1de6-4455-a725-66e6895a7a93",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a1123a9-a64d-452c-b11b-6ea594d62cbf",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ece6af51-b444-4d7c-a7d4-6acc53d9a80f",
+          "name": "Find wallets within subscription",
+          "request": {
+            "name": "Find wallets within subscription",
+            "description": {
+              "content": "This endpoint by subscription ID returns wallets within specific subscription.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id",
+                "wallets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "Pagination parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "100",
+                  "description": "Pagination parameters"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a7c07769-270f-4b89-a4c4-713099b6c1e9",
+              "name": "Response for wallets within subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/tx-subscriptions/77e77447-1586-40e8-a75b-467ef939a0b1/wallets?page%5Bsize%5D=10\",\n    \"next\": \"https://api.zerion.io/v1/tx-subscriptions/77e77447-1586-40e8-a75b-467ef939a0b1/wallets?page%5Bsize%5D=10&page%5Bafter%5D=MjAyNS0xMC0wMVQxMjowNzo1NlosNjhkZDE5OWMyMDFlODI3ODQzZmZkN2Jl\"\n  },\n  \"data\": {\n    \"type\": \"transactions_subscription_wallets\",\n    \"id\": \"52d994a173d755e99845e861d534a419-wallets\",\n    \"attributes\": {\n      \"addresses\": [\n        \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n        \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n      ]\n    },\n    \"relationships\": {\n      \"subscription\": {\n        \"links\": {\n          \"related\": \"https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d\",\n          \"self\": \"https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d/wallets?page%5Bsize%5D=10\",\n          \"next\": \"https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d/wallets?page%5Bsize%5D=10&page%5Bafter%5D=MjAyNS0xMC0wMVQxMjowNzo1NlosNjhkZDE5OWMyMDFlODI3ODQzZmZkN2Jl\"\n        },\n        \"data\": {\n          \"type\": \"subscription\",\n          \"id\": \"8bf9db31-eb59-4fa9-973c-34e3428acf5d\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df3ffa50-baab-40c6-a6f9-52adf0db14eb",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cb4f1de-9259-4125-bcda-8c91a776a14c",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ced513d9-146c-4cf9-b9a3-9473e8ded5fa",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e88654e-5307-42b5-9db7-b8811205f2d2",
+          "name": "Patch wallets within subscription",
+          "request": {
+            "name": "Patch wallets within subscription",
+            "description": {
+              "content": "This endpoint works by subscription ID. It patches wallets list within specific subscription.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id",
+                "wallets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"add\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"remove\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a9d6aacd-c89f-445b-bc9f-666b255e2069",
+              "name": "Successful callback processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ],\n  \"remove\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a65239cd-a00d-4f55-99ad-e3b420a6d959",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ],\n  \"remove\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4292ffd-732d-4ddc-b31a-78776e1a0c66",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ],\n  \"remove\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6342961b-1c4e-4030-bb84-4f5bd7aba421",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ],\n  \"remove\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf6a604f-7255-4904-9803-eddb51f465e2",
+          "name": "Replace wallets within subscription",
+          "request": {
+            "name": "Replace wallets within subscription",
+            "description": {
+              "content": "This endpoint works by subscription ID. It replaces wallets list within specific subscription.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id",
+                "wallets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallets\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "191b270f-0948-4113-a305-6e455b157564",
+              "name": "Successful callback processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"wallets\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3f35e217-a14f-4d3e-84ce-b77b42b7dc66",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"wallets\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db7fb650-f88d-4889-b717-8c0e52653e37",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"wallets\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8901d74-b81b-4c3b-bba4-900ac9b0e91c",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"wallets\": [\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ee47a619-66fb-4d08-9c90-c89b4c1e0274",
+          "name": "Count wallets within subscription",
+          "request": {
+            "name": "Count wallets within subscription",
+            "description": {
+              "content": "This endpoint returns the count of wallets within a specific subscription by subscription ID.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id",
+                "wallets",
+                "count"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "588a023c-9e8a-448a-a6e7-0210f5250c21",
+              "name": "Response for wallets count within subscription",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets",
+                    "count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/tx-subscriptions/77e77447-1586-40e8-a75b-467ef939a0b1/wallets?page%5Bsize%5D=10\",\n    \"next\": \"https://api.zerion.io/v1/tx-subscriptions/77e77447-1586-40e8-a75b-467ef939a0b1/wallets?page%5Bsize%5D=10&page%5Bafter%5D=MjAyNS0xMC0wMVQxMjowNzo1NlosNjhkZDE5OWMyMDFlODI3ODQzZmZkN2Jl\"\n  },\n  \"data\": {\n    \"type\": \"transactions_subscription_wallets_count\",\n    \"id\": \"52d994a173d755e99845e861d534a419-wallets-count\",\n    \"attributes\": {\n      \"count\": 42\n    },\n    \"relationships\": {\n      \"subscription\": {\n        \"links\": {\n          \"related\": \"https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d\",\n          \"self\": \"https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d/wallets?page%5Bsize%5D=10\",\n          \"next\": \"https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d/wallets?page%5Bsize%5D=10&page%5Bafter%5D=MjAyNS0xMC0wMVQxMjowNzo1NlosNjhkZDE5OWMyMDFlODI3ODQzZmZkN2Jl\"\n        },\n        \"data\": {\n          \"type\": \"subscription\",\n          \"id\": \"8bf9db31-eb59-4fa9-973c-34e3428acf5d\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd1f2ce1-30ce-43dc-8467-75811bddcc89",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets",
+                    "count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "baebf8d0-81ab-475e-8b64-405eeedde0a7",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets",
+                    "count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41066a7d-f91f-48cd-8eb0-7bcb3e364e98",
+              "name": "Resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets",
+                    "count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    },\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "907b9b87-b20f-41d7-9a01-e0afeb67b211",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "wallets",
+                    "count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57bdcf67-e562-478d-9a2f-1cfa7e9908e2",
+          "name": "Update callback URL within subscription",
+          "request": {
+            "name": "Update callback URL within subscription",
+            "description": {
+              "content": "This endpoint updates the callback URL for a specific subscription.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id",
+                "callback_url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"callback_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ce2a13f-58e7-4703-84a0-67ee45dd61fe",
+              "name": "Successfully updated callback URL",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "callback_url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callback_url\": \"https://webhook.site/new-callback-url\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "384397a4-6fd6-4393-95df-1e100d8cc814",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "callback_url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callback_url\": \"https://webhook.site/new-callback-url\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80d14b11-7eef-477a-b50b-98b75c9ff91c",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "callback_url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callback_url\": \"https://webhook.site/new-callback-url\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e175887-c8ac-491d-ad4e-228130904d83",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "callback_url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callback_url\": \"https://webhook.site/new-callback-url\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "021d2b45-0a3b-40fd-a81f-3a73a07fcf34",
+          "name": "Enable a specific subscription",
+          "request": {
+            "name": "Enable a specific subscription",
+            "description": {
+              "content": "This endpoint sets the status of a specific subscription to \"enabled\".\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. This ensures flexibility and future-proofing against ID format changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id",
+                "enable"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb6b04a6-a3ea-4a25-91a5-a4aea85bc6fc",
+              "name": "Successfully updated subscription status to enabled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "enable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "79ff241e-dcb2-47bd-aaed-130bbe4521ae",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "enable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b32bde0-25db-41ea-8541-ed5c7c2f5a8d",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "enable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2bb7be2-f403-44f4-bc6b-736ec3efd4bb",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "enable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eeca26cc-5ce9-40d3-8156-68462a29d9d6",
+          "name": "Disable a specific subscription",
+          "request": {
+            "name": "Disable a specific subscription",
+            "description": {
+              "content": "This endpoint sets the status of a specific subscription to \"disabled\".\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. This ensures flexibility and future-proofing against ID format changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id",
+                "disable"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f1cda646-cc7c-492f-a537-437118b99165",
+              "name": "Successfully updated subscription status to disabled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "disable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7c673f24-28ec-42e0-a6c9-36d2babf2f13",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "disable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e534e45e-667a-47b0-beb6-5aca237c20bf",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "disable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7e40f68-d057-44a5-bf3e-502f94ac221f",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "disable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5c57f0f-66c2-4cda-be0b-47a4d02b680b",
+          "name": "Update chain IDs within subscription",
+          "request": {
+            "name": "Update chain IDs within subscription",
+            "description": {
+              "content": "This endpoint updates the list of chain IDs associated with a specific subscription.\n\n> NOTE:\n> - Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions.\n> - The chain IDs provided will replace the existing chain IDs associated with the subscription.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "tx-subscriptions",
+                ":subscription_id",
+                "chain_ids"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscription_id",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chain_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3081b158-25d8-42e8-8e51-dc9000ce4d6b",
+              "name": "Successfully updated chain IDs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "chain_ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain_ids\": [\n    \"ethereum\",\n    \"ethereum\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "05ba7298-8053-478f-97a3-9656000530ef",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "chain_ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain_ids\": [\n    \"ethereum\",\n    \"ethereum\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0227830f-bea9-46b5-a513-841cc8de6594",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "chain_ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain_ids\": [\n    \"ethereum\",\n    \"ethereum\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa50a3a7-3034-4e23-895a-bee435844e2e",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "tx-subscriptions",
+                    ":subscription_id",
+                    "chain_ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscription_id",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain_ids\": [\n    \"ethereum\",\n    \"ethereum\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.zerion.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e8e56dec-6d52-41b5-9187-72b50cfef6dc",
+    "name": "REST chains subscriptions to transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+      "type": "text/plain"
+    }
+  }
+}

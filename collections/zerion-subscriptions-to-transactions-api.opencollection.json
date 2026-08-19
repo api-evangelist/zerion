@@ -1,0 +1,271 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REST chains subscriptions to transactions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subscriptions to transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/",
+            "params": [
+              {
+                "name": "filter[chain_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated chain ids. Finds subscriptions on the specified chains. Searches over all chains if omitted."
+              }
+            ]
+          },
+          "docs": "This endpoint finds subscriptions to new transactions associated with the wallets and chains. Currently response is limited to 1000 subscriptions in the response.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Create subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint subscribes to new transactions associated with the wallets.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n\n### Use Case\nThe main use case for the webhooks system is to send notifications, similar to push notifications in the Zerion App.\n\n### Setup Callback URL\nIf you want to use this"
+        },
+        {
+          "info": {
+            "name": "Find subscription by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ]
+          },
+          "docs": "This endpoint by ID returns subscription to new transactions associated with the wallets and chains.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Delete subscription by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ]
+          },
+          "docs": "This endpoint deletes existing subscription\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Find wallets within subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id/wallets",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters"
+              },
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ]
+          },
+          "docs": "This endpoint by subscription ID returns wallets within specific subscription.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Replace wallets within subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id/wallets",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint works by subscription ID. It replaces wallets list within specific subscription.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Patch wallets within subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id/wallets",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint works by subscription ID. It patches wallets list within specific subscription.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Count wallets within subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id/wallets/count",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ]
+          },
+          "docs": "This endpoint returns the count of wallets within a specific subscription by subscription ID.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Update callback URL within subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id/callback_url",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint updates the callback URL for a specific subscription.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Enable a specific subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id/enable",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ]
+          },
+          "docs": "This endpoint sets the status of a specific subscription to \"enabled\".\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. This ensures flexibility and future-proofing against ID format changes.\n"
+        },
+        {
+          "info": {
+            "name": "Disable a specific subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id/disable",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ]
+          },
+          "docs": "This endpoint sets the status of a specific subscription to \"disabled\".\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. This ensures flexibility and future-proofing against ID format changes.\n"
+        },
+        {
+          "info": {
+            "name": "Update chain IDs within subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.zerion.io/v1/tx-subscriptions/:subscription_id/chain_ids",
+            "params": [
+              {
+                "name": "subscription_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint updates the list of chain IDs associated with a specific subscription.\n\n> NOTE:\n> - Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions.\n> - The chain IDs provided will replace the existing chain IDs associated with the subscription.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

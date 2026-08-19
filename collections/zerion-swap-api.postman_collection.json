@@ -1,0 +1,761 @@
+{
+  "item": [
+    {
+      "id": "a67e5fbf-7cf6-426e-930e-97b007616962",
+      "name": "swap",
+      "description": {
+        "content": "Operations related to swapping and bridging assets.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "777ad951-f246-4fb4-b5b8-e2a3a1adb2e4",
+          "name": "Get swap and bridge quotes",
+          "request": {
+            "name": "Get swap and bridge quotes",
+            "description": {
+              "content": "Returns quotes from multiple liquidity sources for a same-chain swap or a cross-chain bridge between two fungible assets. Supports EVM chains and Solana, including EVM ↔ Solana bridges.\n\nQuotes are returned best-first: sorted in descending order by the fiat value of `output_amount_after_fees` (output amount minus network, protocol and bridge fees that are not already included in the rate). Quotes with the same score are tied-broken alphabetically by `liquidity_source.id`, so identical requests always return quotes in the same order.\n\nThe `input` and `output` parameters are objects encoded with bracket notation in the URL — the request is sent as a flat query string. For example:\n\n```\nGET /v1/swap/quotes/?currency=usd&input[chain_id]=base&input[fungible_id]=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&input[amount]=0.001&output[fungible_id]=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&from=0xd8da6bf26964af9d7eed9e03e53415d37aa96045&to=0xd8da6bf26964af9d7eed9e03e53415d37aa96045\n```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "swap",
+                "quotes",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Currency in which fiat values of amounts and fees in the response are expressed."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "(Required) Address of the wallet performing the swap. Must match the chain type of `input[chain_id]` (EVM hex or Solana base58)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "(Required) Recipient of the output asset. Must match the chain type of `output[chain_id]`. For a same-chain swap to the same wallet, set `to` equal to `from`."
+                },
+                {
+                  "disabled": false,
+                  "key": "input[chain_id]",
+                  "value": "<string>",
+                  "description": "(Required) The asset being sent."
+                },
+                {
+                  "disabled": false,
+                  "key": "input[fungible_id]",
+                  "value": "<string>",
+                  "description": "(Required) The asset being sent."
+                },
+                {
+                  "disabled": false,
+                  "key": "input[amount]",
+                  "value": "<string>",
+                  "description": "(Required) The asset being sent."
+                },
+                {
+                  "disabled": false,
+                  "key": "output[fungible_id]",
+                  "value": "<string>",
+                  "description": "(Required) The asset being received."
+                },
+                {
+                  "disabled": false,
+                  "key": "output[chain_id]",
+                  "value": "<string>",
+                  "description": "(Required) The asset being received."
+                },
+                {
+                  "disabled": false,
+                  "key": "slippage_percent",
+                  "value": "<float>",
+                  "description": "Maximum acceptable slippage in percent. When omitted, an auto-slippage value is chosen."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fcc734b9-0365-4cae-ab7a-0d7f4ee280be",
+              "name": "Response for the requested swap quotes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "swap",
+                    "quotes",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "from",
+                      "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990"
+                    },
+                    {
+                      "key": "to",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "input[chain_id]",
+                      "value": "base"
+                    },
+                    {
+                      "key": "input[fungible_id]",
+                      "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+                    },
+                    {
+                      "key": "input[amount]",
+                      "value": "0.001"
+                    },
+                    {
+                      "key": "output[fungible_id]",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "output[chain_id]",
+                      "value": "base"
+                    },
+                    {
+                      "key": "slippage_percent",
+                      "value": "2"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/wallet/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/swap-list\"\n  },\n  \"data\": [\n    {\n      \"type\": \"swap_quotes\",\n      \"id\": \"589a0095e2111df5276ebf073fff9a8bfb821f34\",\n      \"attributes\": {\n        \"liquidity_source\": {\n          \"id\": \"relay\",\n          \"name\": \"Relay\",\n          \"icon\": {\n            \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n          }\n        },\n        \"input_amount\": {\n          \"quantity\": \"0.001\",\n          \"value\": 2.2830463441233997,\n          \"usd_value\": 2.2830463441233997,\n          \"currency\": \"USD\"\n        },\n        \"output_amount\": {\n          \"quantity\": \"0.001\",\n          \"value\": 2.2830463441233997,\n          \"usd_value\": 2.2830463441233997,\n          \"currency\": \"USD\"\n        },\n        \"minimum_output_amount\": {\n          \"quantity\": \"0.001\",\n          \"value\": 2.2830463441233997,\n          \"usd_value\": 2.2830463441233997,\n          \"currency\": \"USD\"\n        },\n        \"output_amount_after_fees\": {\n          \"quantity\": \"0.001\",\n          \"value\": 2.2830463441233997,\n          \"usd_value\": 2.2830463441233997,\n          \"currency\": \"USD\"\n        },\n        \"slippage_percent\": 2,\n        \"rate\": [\n          {\n            \"value\": 1,\n            \"symbol\": \"WETH\"\n          },\n          {\n            \"value\": 1,\n            \"symbol\": \"WETH\"\n          }\n        ],\n        \"protocol_fee\": {\n          \"amount\": {\n            \"quantity\": \"0.001\",\n            \"value\": 2.2830463441233997,\n            \"usd_value\": 2.2830463441233997,\n            \"currency\": \"USD\"\n          },\n          \"base_percentage\": 0.67,\n          \"percentage\": 0,\n          \"included_in_rate\": false,\n          \"fungible\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"bridge_fee\": {\n          \"amount\": {\n            \"quantity\": \"0.001\",\n            \"value\": 2.2830463441233997,\n            \"usd_value\": 2.2830463441233997,\n            \"currency\": \"USD\"\n          },\n          \"included_in_rate\": true,\n          \"fungible\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"network_fee\": {\n          \"amount\": {\n            \"quantity\": \"0.001\",\n            \"value\": 2.2830463441233997,\n            \"usd_value\": 2.2830463441233997,\n            \"currency\": \"USD\"\n          },\n          \"free\": true,\n          \"fungible\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"transaction_approve\": {\n          \"evm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"solana\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"transaction_swap\": {\n          \"evm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"solana\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"error\": {\n          \"code\": \"not_enough_input_asset_balance\",\n          \"hint\": \"topup\",\n          \"message\": \"Input asset balance is not enough to execute a swap\"\n        },\n        \"estimated_time_seconds\": 2\n      },\n      \"relationships\": {\n        \"input_chain\": {\n          \"links\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"data\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"output_chain\": {\n          \"links\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"data\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"input_fungible\": {\n          \"links\": {\n            \"related\": \"https://api.zerion.io/v1/fungibles/eth\"\n          },\n          \"data\": {\n            \"type\": \"fungibles\",\n            \"id\": \"eth\"\n          }\n        },\n        \"output_fungible\": {\n          \"links\": {\n            \"related\": \"https://api.zerion.io/v1/fungibles/eth\"\n          },\n          \"data\": {\n            \"type\": \"fungibles\",\n            \"id\": \"eth\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"swap_quotes\",\n      \"id\": \"589a0095e2111df5276ebf073fff9a8bfb821f34\",\n      \"attributes\": {\n        \"liquidity_source\": {\n          \"id\": \"relay\",\n          \"name\": \"Relay\",\n          \"icon\": {\n            \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n          }\n        },\n        \"input_amount\": {\n          \"quantity\": \"0.001\",\n          \"value\": 2.2830463441233997,\n          \"usd_value\": 2.2830463441233997,\n          \"currency\": \"USD\"\n        },\n        \"output_amount\": {\n          \"quantity\": \"0.001\",\n          \"value\": 2.2830463441233997,\n          \"usd_value\": 2.2830463441233997,\n          \"currency\": \"USD\"\n        },\n        \"minimum_output_amount\": {\n          \"quantity\": \"0.001\",\n          \"value\": 2.2830463441233997,\n          \"usd_value\": 2.2830463441233997,\n          \"currency\": \"USD\"\n        },\n        \"output_amount_after_fees\": {\n          \"quantity\": \"0.001\",\n          \"value\": 2.2830463441233997,\n          \"usd_value\": 2.2830463441233997,\n          \"currency\": \"USD\"\n        },\n        \"slippage_percent\": 2,\n        \"rate\": [\n          {\n            \"value\": 1,\n            \"symbol\": \"WETH\"\n          },\n          {\n            \"value\": 1,\n            \"symbol\": \"WETH\"\n          }\n        ],\n        \"protocol_fee\": {\n          \"amount\": {\n            \"quantity\": \"0.001\",\n            \"value\": 2.2830463441233997,\n            \"usd_value\": 2.2830463441233997,\n            \"currency\": \"USD\"\n          },\n          \"base_percentage\": 0.67,\n          \"percentage\": 0,\n          \"included_in_rate\": false,\n          \"fungible\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"bridge_fee\": {\n          \"amount\": {\n            \"quantity\": \"0.001\",\n            \"value\": 2.2830463441233997,\n            \"usd_value\": 2.2830463441233997,\n            \"currency\": \"USD\"\n          },\n          \"included_in_rate\": true,\n          \"fungible\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"network_fee\": {\n          \"amount\": {\n            \"quantity\": \"0.001\",\n            \"value\": 2.2830463441233997,\n            \"usd_value\": 2.2830463441233997,\n            \"currency\": \"USD\"\n          },\n          \"free\": false,\n          \"fungible\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"transaction_approve\": {\n          \"evm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"solana\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"transaction_swap\": {\n          \"evm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"solana\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"error\": {\n          \"code\": \"not_enough_input_asset_balance\",\n          \"hint\": \"topup\",\n          \"message\": \"Input asset balance is not enough to execute a swap\"\n        },\n        \"estimated_time_seconds\": 2\n      },\n      \"relationships\": {\n        \"input_chain\": {\n          \"links\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"data\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"output_chain\": {\n          \"links\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"data\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"input_fungible\": {\n          \"links\": {\n            \"related\": \"https://api.zerion.io/v1/fungibles/eth\"\n          },\n          \"data\": {\n            \"type\": \"fungibles\",\n            \"id\": \"eth\"\n          }\n        },\n        \"output_fungible\": {\n          \"links\": {\n            \"related\": \"https://api.zerion.io/v1/fungibles/eth\"\n          },\n          \"data\": {\n            \"type\": \"fungibles\",\n            \"id\": \"eth\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f97983ea-9df2-4eba-8005-c1bd4e30181a",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "swap",
+                    "quotes",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "from",
+                      "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990"
+                    },
+                    {
+                      "key": "to",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "input[chain_id]",
+                      "value": "base"
+                    },
+                    {
+                      "key": "input[fungible_id]",
+                      "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+                    },
+                    {
+                      "key": "input[amount]",
+                      "value": "0.001"
+                    },
+                    {
+                      "key": "output[fungible_id]",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "output[chain_id]",
+                      "value": "base"
+                    },
+                    {
+                      "key": "slippage_percent",
+                      "value": "2"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32a6be98-93cc-4673-a7da-a73907763f70",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "swap",
+                    "quotes",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "from",
+                      "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990"
+                    },
+                    {
+                      "key": "to",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "input[chain_id]",
+                      "value": "base"
+                    },
+                    {
+                      "key": "input[fungible_id]",
+                      "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+                    },
+                    {
+                      "key": "input[amount]",
+                      "value": "0.001"
+                    },
+                    {
+                      "key": "output[fungible_id]",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "output[chain_id]",
+                      "value": "base"
+                    },
+                    {
+                      "key": "slippage_percent",
+                      "value": "2"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33a88024-e2eb-483f-b180-449564feb606",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "swap",
+                    "quotes",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "from",
+                      "value": "0x42b9df65b219b3dd36ff330a4dd8f327a6ada990"
+                    },
+                    {
+                      "key": "to",
+                      "value": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045"
+                    },
+                    {
+                      "key": "input[chain_id]",
+                      "value": "base"
+                    },
+                    {
+                      "key": "input[fungible_id]",
+                      "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+                    },
+                    {
+                      "key": "input[amount]",
+                      "value": "0.001"
+                    },
+                    {
+                      "key": "output[fungible_id]",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "output[chain_id]",
+                      "value": "base"
+                    },
+                    {
+                      "key": "slippage_percent",
+                      "value": "2"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e4c7bdd-53f5-4ec8-92ed-bffd0a28373a",
+          "name": "List fungibles available for bridging",
+          "request": {
+            "name": "List fungibles available for bridging",
+            "description": {
+              "content": "Returns the list of tokens available for bridging between two chains. Use this to populate a token picker UI. Only relevant for cross-chain swaps, same-chain swaps don't require this step.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "swap",
+                "fungibles",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "input[chain_id]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "output[chain_id]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "direction",
+                  "value": "<string>",
+                  "description": "The direction parameter is a parameter that determines the flow of fungibles involved in the transaction. It can have three possible values: 'input', 'output', or 'both'. The value 'input' indicates that the API endpoint will only return fungibles that the user can send. The value 'output' indicates that the API endpoint will only return fungibles that the user can receive. The value 'both' means that the API endpoint will return fungibles which are 'input' and 'output' at the same time. In other words - intersection for 'input' and output'. If nothing specified then `both` is used."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0a0cc9f4-e5f6-4ba7-8acc-0e48639660ff",
+              "name": "Response for requested list available for bridge fungibles.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "swap",
+                    "fungibles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "input[chain_id]",
+                      "value": "ethereum"
+                    },
+                    {
+                      "key": "output[chain_id]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "both"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/swap/fungibles\"\n  },\n  \"data\": [\n    {\n      \"type\": \"fungibles\",\n      \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n      \"attributes\": {\n        \"name\": \"Bankless BED Index\",\n        \"symbol\": \"BED\",\n        \"flags\": {\n          \"verified\": true\n        },\n        \"external_links\": [\n          {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"implementations\": [\n          {\n            \"chain_id\": \"ethereum\",\n            \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n            \"decimals\": 18,\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deployment_date\": \"2020-09-09T11:11:13Z\"\n          },\n          {\n            \"chain_id\": \"ethereum\",\n            \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n            \"decimals\": 18,\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deployment_date\": \"2020-09-09T11:11:13Z\"\n          }\n        ],\n        \"market_data\": {\n          \"price\": 106.87952669793131,\n          \"total_supply\": 29905.762448515918,\n          \"circulating_supply\": 29905.762448515918,\n          \"fully_diluted_valuation\": 3196313.736038149,\n          \"market_cap\": 3196313.736038149,\n          \"changes\": {\n            \"percent_1d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_30d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_90d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_365d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"trading_volumes\": {\n            \"volume_1d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"description\": \"The BED index is meant to track crypto's top 3 investab.\",\n        \"icon\": {\n          \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n        }\n      },\n      \"relationships\": {\n        \"chart_hour\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour\"\n          }\n        },\n        \"chart_day\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day\"\n          }\n        },\n        \"chart_week\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week\"\n          }\n        },\n        \"chart_month\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month\"\n          }\n        },\n        \"chart_year\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year\"\n          }\n        },\n        \"chart_max\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"fungibles\",\n      \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n      \"attributes\": {\n        \"name\": \"Bankless BED Index\",\n        \"symbol\": \"BED\",\n        \"flags\": {\n          \"verified\": true\n        },\n        \"external_links\": [\n          {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"implementations\": [\n          {\n            \"chain_id\": \"ethereum\",\n            \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n            \"decimals\": 18,\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deployment_date\": \"2020-09-09T11:11:13Z\"\n          },\n          {\n            \"chain_id\": \"ethereum\",\n            \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n            \"decimals\": 18,\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deployment_date\": \"2020-09-09T11:11:13Z\"\n          }\n        ],\n        \"market_data\": {\n          \"price\": 106.87952669793131,\n          \"total_supply\": 29905.762448515918,\n          \"circulating_supply\": 29905.762448515918,\n          \"fully_diluted_valuation\": 3196313.736038149,\n          \"market_cap\": 3196313.736038149,\n          \"changes\": {\n            \"percent_1d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_30d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_90d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_365d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"trading_volumes\": {\n            \"volume_1d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"description\": \"The BED index is meant to track crypto's top 3 investab.\",\n        \"icon\": {\n          \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n        }\n      },\n      \"relationships\": {\n        \"chart_hour\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour\"\n          }\n        },\n        \"chart_day\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day\"\n          }\n        },\n        \"chart_week\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week\"\n          }\n        },\n        \"chart_month\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month\"\n          }\n        },\n        \"chart_year\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year\"\n          }\n        },\n        \"chart_max\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03ea7c8d-587d-4e4d-bd89-91b6b349e186",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "swap",
+                    "fungibles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "input[chain_id]",
+                      "value": "ethereum"
+                    },
+                    {
+                      "key": "output[chain_id]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "both"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aa69a7a-38de-4cb0-9c6c-d4a040790253",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "swap",
+                    "fungibles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "input[chain_id]",
+                      "value": "ethereum"
+                    },
+                    {
+                      "key": "output[chain_id]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "both"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "341e0c67-e9f7-4f4b-89ee-4181c10e63a4",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "swap",
+                    "fungibles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "input[chain_id]",
+                      "value": "ethereum"
+                    },
+                    {
+                      "key": "output[chain_id]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "both"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.zerion.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b191b839-aab3-4de3-9553-dd15317ec4eb",
+    "name": "REST chains swap API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+      "type": "text/plain"
+    }
+  }
+}

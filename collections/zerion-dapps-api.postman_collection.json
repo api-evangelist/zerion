@@ -1,0 +1,563 @@
+{
+  "item": [
+    {
+      "id": "ce044680-8bf6-4f8e-b06d-cd4e5bcbc569",
+      "name": "dapps",
+      "description": {
+        "content": "Operations related to decentralized applications, such as list them all, search or get by ID.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d01fa4c1-5f7e-4212-9e91-f1f4e63caf09",
+          "name": "Get list of DApps",
+          "request": {
+            "name": "Get list of DApps",
+            "description": {
+              "content": "This endpoint returns list of DApps by using different parameters.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "dapps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "Pagination parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "100",
+                  "description": "Pagination parameters"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e4cc6778-e69d-4ce7-9fd0-1cb9f85cf5f3",
+              "name": "Response for requested list of DApps",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dapps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"string\"\n  },\n  \"data\": [\n    {\n      \"type\": \"dapps\",\n      \"id\": \"string\",\n      \"attributes\": {\n        \"name\": \"AAVE V3\",\n        \"description\": \"Earn interest, borrow assets, and build applications.\",\n        \"icon\": {\n          \"url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"url\": \"https://aave.com/\",\n        \"manage_positions_url\": \"https://app.aave.com/\",\n        \"external_links\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    },\n    {\n      \"type\": \"dapps\",\n      \"id\": \"string\",\n      \"attributes\": {\n        \"name\": \"AAVE V3\",\n        \"description\": \"Earn interest, borrow assets, and build applications.\",\n        \"icon\": {\n          \"url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"url\": \"https://aave.com/\",\n        \"manage_positions_url\": \"https://app.aave.com/\",\n        \"external_links\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35622a56-d233-4023-97b5-100545ee391e",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dapps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5681d53a-dbcf-425b-a995-d4a6e8197268",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dapps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e859b47-d016-4bf7-9a92-bfec94c9ece5",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dapps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f82762a-d357-4073-815b-7260d0b369f1",
+          "name": "Get DApp by ID",
+          "request": {
+            "name": "Get DApp by ID",
+            "description": {
+              "content": "This endpoint returns single DApp by its unique identifier.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "dapps",
+                ":dapp_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dapp_id",
+                  "description": "(Required) DApp's unique identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04d210cd-2b48-43b4-b516-e76a3de8c5ea",
+              "name": "Requested DApp",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dapps",
+                    ":dapp_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dapp_id",
+                      "description": "(Required) DApp's unique identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"string\"\n  },\n  \"data\": {\n    \"type\": \"dapps\",\n    \"id\": \"string\",\n    \"attributes\": {\n      \"name\": \"AAVE V3\",\n      \"description\": \"Earn interest, borrow assets, and build applications.\",\n      \"icon\": {\n        \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n      },\n      \"url\": \"https://aave.com/\",\n      \"manage_positions_url\": \"https://app.aave.com/\",\n      \"external_links\": [\n        {\n          \"url\": \"https://www.indexcoop.com\",\n          \"type\": \"website\",\n          \"name\": \"Website\"\n        },\n        {\n          \"url\": \"https://www.indexcoop.com\",\n          \"type\": \"website\",\n          \"name\": \"Website\"\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98ca9066-1810-46ad-96aa-2d4bda49b456",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dapps",
+                    ":dapp_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dapp_id",
+                      "description": "(Required) DApp's unique identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee5645de-0615-44c5-8b12-e7954f95fb77",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dapps",
+                    ":dapp_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dapp_id",
+                      "description": "(Required) DApp's unique identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddc9ddfc-3691-4882-ba55-0b7e0894ecc4",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dapps",
+                    ":dapp_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dapp_id",
+                      "description": "(Required) DApp's unique identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.zerion.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6bbc0e19-55c1-4119-8e35-7af7ff9f30da",
+    "name": "REST chains dapps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+      "type": "text/plain"
+    }
+  }
+}

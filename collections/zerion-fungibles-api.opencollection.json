@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REST chains fungibles API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "fungibles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of fungible assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/fungibles/",
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters"
+              },
+              {
+                "name": "filter[search_query]",
+                "value": "",
+                "type": "query",
+                "description": "Query for a full-text search."
+              },
+              {
+                "name": "filter[implementation_chain_id]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only fungibles from this chain. Available chain ids can be found in chains endpoints."
+              },
+              {
+                "name": "filter[implementation_address]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only fungibles deployed at given address. Is it possible that different fungibles are deployed at the same address on different chains."
+              },
+              {
+                "name": "filter[fungible_implementations]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only fungibles with given implementations (comma-separated list of chain:address pairs). Maximum of 25 implementations allowed.\nexample: \"base,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nThis filter is mutually exclusive with `filter[implementation_chain_id]` and `filter[implementation_address]`.\n"
+              },
+              {
+                "name": "filter[fungible_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only fungibles with the given ids (comma-separated list)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Choose how the result should be ordered"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a paginated list of fungible assets supported by Zerion. It also provides the ability to search for fungibles.\nIf no fungible assets are found for given filters, the empty list with 200 status is returned.\n\n> NOTE: This endpoint supports a lot of filters, sorting, and pagination parameters. Ensure your request URL length is within a safe range for your platform. Usually, 2000 characters are the safe limit in virtually any combination of client and server software.\n\n> NOTE: "
+        },
+        {
+          "info": {
+            "name": "Get fungible asset by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/fungibles/:fungible_id",
+            "params": [
+              {
+                "name": "fungible_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique fungible ID"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a fungible asset by unique identifier"
+        },
+        {
+          "info": {
+            "name": "Get a chart for a fungible asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/fungibles/:fungible_id/charts/:chart_period",
+            "params": [
+              {
+                "name": "fungible_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique fungible ID"
+              },
+              {
+                "name": "chart_period",
+                "value": "",
+                "type": "path",
+                "description": "Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              }
+            ]
+          },
+          "docs": "This endpoint returns the chart for the fungible asset for a selected period"
+        },
+        {
+          "info": {
+            "name": "Get fungible asset by implementation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/fungibles/by-implementation",
+            "params": [
+              {
+                "name": "implementation",
+                "value": "",
+                "type": "query",
+                "description": "Fungible implementation in the format `chain` or `chain:address`\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the base asset of that chain.\n"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a fungible asset by its implementation.\nThe implementation is a `chain` (for base asset) or `chain:address` pair (e.g., \"ethereum\", ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n"
+        },
+        {
+          "info": {
+            "name": "Get a chart for a fungible asset by implementation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/fungibles/by-implementation/charts/:chart_period",
+            "params": [
+              {
+                "name": "implementation",
+                "value": "",
+                "type": "query",
+                "description": "Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n"
+              },
+              {
+                "name": "chart_period",
+                "value": "",
+                "type": "path",
+                "description": "Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              }
+            ]
+          },
+          "docs": "This endpoint returns the chart for a fungible asset for a selected period, identified by its implementation.\nThe implementation is a chain:address pair (e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

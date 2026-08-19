@@ -1,0 +1,2230 @@
+{
+  "item": [
+    {
+      "id": "027114d1-8167-4d8c-bcf1-fb98ddfe5626",
+      "name": "wallet sets",
+      "description": {
+        "content": "Operations on a wallet set — aggregated portfolio data across at most one EVM address and one Solana address queried together.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "679b5ff9-45bd-4c92-9e4d-616d446b5f0f",
+          "name": "Get wallet set balance chart",
+          "request": {
+            "name": "Get wallet set balance chart",
+            "description": {
+              "content": "This endpoint returns a portfolio balance chart for a wallet set.\nA wallet set is represented by an EVM address, a Solana address, or both. At least one address must be provided.\nThis is over a specified time period, based on the provided start and end timestamps.\nResults can be filtered by blockchain and asset type, offering flexible and detailed visualizations of wallet set performance, similar to what you see in the Zerion interface.\n\n**Complex positions.** By default the chart counts only simple positions: token and native-coin balances held directly in the wallet. Set `filter[positions]` to `only_complex` or `no_filter` to also include complex DeFi protocol positions. Uniswap V2 LP positions are supported today, and support for more protocols is rolling out over time. Positions from protocols that aren't yet supported are omitted from the chart.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallet-sets",
+                "charts",
+                ":chart_period"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "(Required) A list of wallet addresses forming a wallet set.\nexample: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990,8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K\n\nThe set must contain at least one address and may include at most one address per supported chain type (currently EVM and Solana).\nThe order of addresses does not matter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[chain_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Account only for balance on these chains (comma-separated list). Available chain ids can be found in chains endpoints."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[fungible_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Account only for balance of given fungible assets (comma-separated list). Mutually exclusive with `filter[exclude_fungible_ids]` — combining both returns `400`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[exclude_fungible_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Exclude balance contributions from the given fungible assets (comma-separated list). Useful when the set you want to keep is large but the set you want to omit is small. Mutually exclusive with `filter[fungible_ids]` — combining both returns `400`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[pool_addresses]",
+                  "value": "<string>,<string>",
+                  "description": "Restrict the balance chart to specific liquidity-pool / vault positions, identified by their contract address (comma-separated list) — the Uniswap V2 LP-token or ERC-4626 vault (e.g. Morpho) address. Only the matching protocol positions are charted; simple token and native-coin balances are excluded. These are complex (protocol) positions, so passing `filter[positions]=only_simple` alongside this filter returns `400`. Mutually exclusive with `filter[exclude_pool_addresses]` — combining both returns `400`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[exclude_pool_addresses]",
+                  "value": "<string>,<string>",
+                  "description": "Exclude specific liquidity-pool / vault positions from the balance chart, identified by their contract address (comma-separated list) — the Uniswap V2 LP-token or ERC-4626 vault (e.g. Morpho) address. The matching positions are removed; the rest of the portfolio (including simple balances) is kept. These are complex (protocol) positions, so passing `filter[positions]=only_simple` alongside this filter — which would already drop every protocol position, making the exclusion a no-op — returns `400`. Mutually exclusive with `filter[pool_addresses]` — combining both returns `400`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[positions]",
+                  "value": "only_simple",
+                  "description": "Which positions to include in the balance chart.\n- `only_simple` (default) — simple positions only: wallet token and native-coin balances.\n- `only_complex` — complex DeFi protocol positions only (e.g. liquidity-pool and vault positions).\n- `no_filter` — include both simple and complex positions.\n\nUniswap V2 LP positions are supported today, and support for more protocols is rolling out over time.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "day",
+                  "key": "chart_period",
+                  "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "31c61638-4bb3-49a9-ae1b-16125b4e4fac",
+              "name": "Resource for the requested wallet set chart",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "aurora"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[exclude_fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[pool_addresses]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[exclude_pool_addresses]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/wallet-sets/charts/week?addresses=0x42b9df65b219b3dd36ff330a4dd8f327a6ada990%2C8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K&currency=eth&filter%5Bchain_ids%5D=ethereum%2Csolana\"\n  },\n  \"data\": {\n    \"type\": \"wallet_chart\",\n    \"id\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990,8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K-week\",\n    \"attributes\": {\n      \"begin_at\": \"2023-01-18T11:00:00Z\",\n      \"end_at\": \"2023-01-25T10:30:00Z\",\n      \"points\": [\n        [\n          9180,\n          8883\n        ],\n        [\n          7119,\n          2830\n        ]\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e30d2c1-99c7-4935-b9dc-02b5c8c424d5",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "aurora"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[exclude_fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[pool_addresses]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[exclude_pool_addresses]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3fb7759-bf61-4311-8630-3073a793ef29",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "aurora"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[exclude_fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[pool_addresses]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[exclude_pool_addresses]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93b28d35-6b9f-491d-a203-e4c1a5afa1fb",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "aurora"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[exclude_fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[pool_addresses]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[exclude_pool_addresses]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30ce5a62-0d9d-4fa3-b911-9ac0f1a83949",
+          "name": "Get wallet set PnL",
+          "request": {
+            "name": "Get wallet set PnL",
+            "description": {
+              "content": "This endpoint returns the Profit and Loss (PnL) details of a wallet set.\nA wallet set is represented by an EVM address, a Solana address, or both. At least one address must be provided.\nThis includes Unrealized PnL, Realized PnL, Net Invested amounts and filters for asset categories like Non Fungible Tokens (NFTs).\nIt uses the FIFO (First In, First Out) standard for calculations, providing accurate insights into wallet set performance.\nIdeal for tracking and analyzing financial outcomes of wallet activity across multiple addresses.\n\nThe very first request for a wallet set might result in a 503 which should be retried later.\nWallet sets with over 1 million transactions are not supported.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallet-sets",
+                "pnl"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "(Required) A list of wallet addresses forming a wallet set.\nexample: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990,8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K\n\nThe set must contain at least one address and may include at most one address per supported chain type (currently EVM and Solana).\nThe order of addresses does not matter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[chain_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Calculate PnL only for specified chains (comma-separated list)."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[fungible_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Account only for PnL related to given fungible assets (comma-separated list). Maximum of 100 fungible IDs allowed.\n\nWhen filtering by fungible_ids or fungible_implementations, assets without available prices are automatically excluded from calculations instead of causing an error. Excluded assets are returned in the response metadata for transparency.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[fungible_implementations]",
+                  "value": "<string>,<string>",
+                  "description": "Account only for PnL related to given fungible asset implementations (comma-separated list of chain:address pairs). Maximum of 100 implementations allowed.\nexample: \"base:0xae16c445d8a4082cecb49a9465e4dd5499df947d,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nWhen filtering by fungible_ids or fungible_implementations, assets without available prices are automatically excluded from calculations instead of causing an error. Excluded assets are returned in the response metadata for transparency.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>",
+                  "description": "Only account sales since the given date.\nA unix timestamp in milliseconds.\n**Note:** PnL is pre-computed at standard marks (`now`, `1 day ago`, `1 week ago`, `1 month ago`, `1 year ago`, `beginning of the year`). Other values are supported only if fewer than 3,000 transactions sit between your timestamp and the nearest mark — otherwise the request errors out."
+                },
+                {
+                  "disabled": false,
+                  "key": "till",
+                  "value": "<string>",
+                  "description": "Only account sales till the given date.\nA unix timestamp in milliseconds.\n**Note:** PnL is pre-computed at standard marks (`now`, `1 day ago`, `1 week ago`, `1 month ago`, `1 year ago`, `beginning of the year`). Other values are supported only if fewer than 3,000 transactions sit between your timestamp and the nearest mark — otherwise the request errors out."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa0b94f4-e2e3-469d-8d7c-eb36d29d1633",
+              "name": "Response for requested wallet set PnL",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "pnl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "ethereum,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "till",
+                      "value": "1688842525735"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/wallet-sets/pnl?addresses=0x42b9df65b219b3dd36ff330a4dd8f327a6ada990%2C8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K&currency=eth&filter%5Bchain_ids%5D=ethereum%2Csolana&filter%5Bfungible_ids%5D=11111111111111111111111111111111%2Ceth\"\n  },\n  \"data\": {\n    \"type\": \"pnl\",\n    \"id\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990,8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K\",\n    \"attributes\": {\n      \"total_gain\": -637.8173517,\n      \"realized_gain\": -655.3618983,\n      \"unrealized_gain\": 17.5445466,\n      \"relative_total_gain_percentage\": -11.38,\n      \"relative_realized_gain_percentage\": -15.15,\n      \"relative_unrealized_gain_percentage\": -0.19,\n      \"total_fee\": 281.9088917,\n      \"total_invested\": 701.2,\n      \"realized_cost_basis\": 655.36,\n      \"net_invested\": 45.84218703,\n      \"received_external\": 133971.2931,\n      \"sent_external\": 133270.089,\n      \"sent_for_nfts\": 133971.2931,\n      \"received_for_nfts\": 133971.2931,\n      \"breakdown\": {\n        \"by_id\": {\n          \"eth\": {\n            \"average_buy_price\": 1258.8,\n            \"average_sell_price\": 1224.96,\n            \"total_gain\": -6900.85,\n            \"realized_gain\": -6871.21,\n            \"unrealized_gain\": -29.64,\n            \"relative_total_gain_percentage\": -11.38,\n            \"relative_realized_gain_percentage\": -15.15,\n            \"relative_unrealized_gain_percentage\": -0.19,\n            \"total_fee\": 4679.93,\n            \"total_invested\": 60643.33,\n            \"realized_cost_basis\": 45363.2,\n            \"net_invested\": 15280.13,\n            \"received_external\": 35402.73,\n            \"sent_external\": 22213.21,\n            \"sent_for_nfts\": 1713.23,\n            \"received_for_nfts\": 1635.05\n          }\n        },\n        \"by_implementation\": {\n          \"ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\": {\n            \"average_buy_price\": 1,\n            \"average_sell_price\": 1,\n            \"total_gain\": 0,\n            \"realized_gain\": 0,\n            \"unrealized_gain\": 0,\n            \"relative_total_gain_percentage\": 0,\n            \"relative_realized_gain_percentage\": 0,\n            \"relative_unrealized_gain_percentage\": 0,\n            \"total_fee\": 12.5,\n            \"total_invested\": 5000,\n            \"realized_cost_basis\": 3000,\n            \"net_invested\": 2000,\n            \"received_external\": 1000,\n            \"sent_external\": 500,\n            \"sent_for_nfts\": 0,\n            \"received_for_nfts\": 0\n          }\n        }\n      }\n    }\n  },\n  \"meta\": {\n    \"excluded_fungible_ids\": [\n      \"4a702a34-5cfd-41af-96ad-bd1c45c3672e\"\n    ],\n    \"excluded_fungible_implementations\": [\n      \"ethereum:0x6b175474e89094c44da98b954eedeac495271d0f\",\n      \"ethereum:\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20ed45a3-a0fa-4f03-985a-d177f9f2160c",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "pnl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "ethereum,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "till",
+                      "value": "1688842525735"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43249a23-6412-40c4-8a9b-061cfc9f5258",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "pnl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "ethereum,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "till",
+                      "value": "1688842525735"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b5ec07b-0a67-4865-a556-c482e115d76d",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "pnl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "ethereum,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "till",
+                      "value": "1688842525735"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e563305b-170d-486c-98ab-9f1c593b398b",
+              "name": "Service is temporarily unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "pnl"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "ethereum,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "till",
+                      "value": "1688842525735"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Indicates how long the client should wait before making a follow-up request.\n",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Service is temporarily unavailable\",\n      \"detail\": \"Please, retry later (check the Retry-After header)\"\n    },\n    {\n      \"title\": \"Service is temporarily unavailable\",\n      \"detail\": \"Please, retry later (check the Retry-After header)\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce27c8ad-efaf-4381-8f36-e82351d74b94",
+          "name": "Get wallet set portfolio",
+          "request": {
+            "name": "Get wallet set portfolio",
+            "description": {
+              "content": "This endpoint returns a wallet set's portfolio overview.\nA wallet set is represented by an EVM address, a Solana address, or both. At least one address must be provided.\n\n**Temporary limitations for Solana addresses:**\n- Doesn't support protocol positions\n\n> NOTE: Don't forget to stop retries after some reasonable period of time. If the `200` status is not returned within 2 minutes it most probably means that some unexpected error occurred and the client should stop the polling.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallet-sets",
+                "portfolio"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "(Required) A list of wallet addresses forming a wallet set.\nexample: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990,8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K\n\nThe set must contain at least one address and may include at most one address per supported chain type (currently EVM and Solana).\nThe order of addresses does not matter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[positions]",
+                  "value": "only_simple",
+                  "description": "This parameter allows to customize the aggregation of DeFi positions within a portfolio based on their types. The aggregation can include:\n\n  - `only_simple`: Only includes wallet-type positions, which are basic, non-protocol related assets. This is the default selection if the parameter is not specified.\n  - `only_complex`: Aggregates positions associated with DeFi protocols only (e.g., staked assets, liquidity pools), like Uniswap or Aave, excluding simple wallet positions.\n  - `no_filter`: Provides an aggregated view of both protocol-related and simple wallet positions without any filtering.\n\nThe selection of filters affects the composition of the aggregated portfolio results, allowing for tailored analysis and reporting based on the types of positions of interest.\n\n> ⚠️ Note: Enterprise usage of this API may be subject to different pricing models depending on the selected filter type. For detailed pricing information, please contact `api@zerion.io`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f3d83024-2fbb-4576-859a-5353b4da30fb",
+              "name": "Response for requested wallet set portfolio",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "portfolio"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/wallet-sets/portfolio?addresses=0x42b9df65b219b3dd36ff330a4dd8f327a6ada990%2C8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K&currency=eth&filter%5Bpositions%5D=no_filter\"\n  },\n  \"data\": {\n    \"type\": \"portfolio\",\n    \"id\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n    \"attributes\": {\n      \"positions_distribution_by_type\": {\n        \"wallet\": 1864.774102420957,\n        \"deposited\": 78.04192492782934,\n        \"borrowed\": 0.9751475798305564,\n        \"locked\": 5.780032725068765,\n        \"staked\": 66.13183205505294\n      },\n      \"positions_distribution_by_chain\": {\n        \"arbitrum\": 458.3555051522226,\n        \"aurora\": 72.01031337463428,\n        \"avalanche\": 17.128850607339444,\n        \"base\": 55.01550749900544,\n        \"binance-smart-chain\": 5.561075880033699,\n        \"celo\": 31.293849330045006,\n        \"ethereum\": 1214.009900354964,\n        \"fantom\": 84.58514074264951,\n        \"linea\": 8.258227109505139,\n        \"optimism\": 573.032664994399,\n        \"polygon\": 64.31407562634853,\n        \"xdai\": 113.1679493137936,\n        \"zksync-era\": 9.451002156306377\n      },\n      \"total\": {\n        \"positions\": 2017.4858230069574\n      },\n      \"changes\": {\n        \"absolute_1d\": 102.0271468171374,\n        \"percent_1d\": 5.326512552079021\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21118dc9-59b7-4254-9318-30de1f583e80",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "portfolio"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "712010cd-59c0-4cfe-b6de-2fdfe89b4b70",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "portfolio"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfe0acba-f405-4b14-9b3e-e7143a16487f",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "portfolio"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ec6d5d7-92ad-4cf0-acd6-0b81de756f7a",
+          "name": "Get wallet set fungible positions",
+          "request": {
+            "name": "Get wallet set fungible positions",
+            "description": {
+              "content": "This endpoint returns a list of wallet set positions.\nA wallet set is represented by an EVM address, a Solana address, or both. At least one address must be provided.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\n**Understanding Liquidity Pool Positions:**\n\nLiquidity pools (Uniswap, Curve, Balancer, etc.) return **multiple positions** - one for each token in the pool. Positions belonging to the same pool share the same `group_id` value in attributes.\n\nFor example, a Uniswap V2 USDC/WETH pool returns two positions:\n- Position 1: WETH token, `group_id=\"820ee2f1ca8ccb716f6beb5e450908a028be890ec44aba87c739b416ef41e197\"`, `fungible_info.symbol=\"WETH\"`\n- Position 2: USDC token, `group_id=\"820ee2f1ca8ccb716f6beb5e450908a028be890ec44aba87c739b416ef41e197\"`, `fungible_info.symbol=\"USDC\"`\n\nTo display all tokens in a liquidity pool together, group positions by their `group_id` attribute.\n\n**Temporary limitations for Solana addresses:**\n- Doesn't support protocol positions\n\n> NOTE: Don't forget to stop retries after some reasonable period of time. If the `200` status is not returned within 2 minutes it most probably means that some unexpected error occurred and the client should stop the polling.\n\n> NOTE: This endpoint is not paginated and returns all matching positions in a single response. It supports a lot of filters and sorting parameters, so make sure that a request URL length is in a safe range for your platform. Usually, 2000 characters are the safe limit in virtually any combination of client and server software.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallet-sets",
+                "positions",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "(Required) A list of wallet addresses forming a wallet set.\nexample: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990,8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K\n\nThe set must contain at least one address and may include at most one address per supported chain type (currently EVM and Solana).\nThe order of addresses does not matter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[positions]",
+                  "value": "only_simple",
+                  "description": "This parameter allows users to filter DeFi positions based on their types. There are three options:\n\n- `only_simple`: Retrieves exclusively wallet-type positions. These are basic, non-protocol related positions. This option is applied if parameter is not specified.\n- `only_complex`: Fetches only positions associated with all DeFi protocols (including staked assets, liquidity pools, etc), like Uniswap or Aave. This option excludes simple wallet positions.\n- `no_filter`: Applies no filtering, thus returning both protocol-related and simple wallet positions.\n\n> ⚠️ Note: Different pricing models are applied for enterprise usage of this API, depending on the filter type selected. For detailed pricing information, please reach out to us at `api@zerion.io`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[position_types]",
+                  "value": "<string>,<string>",
+                  "description": "Keep only positions with these types (comma-separated list).\n\nPossible values:\n- `deposit` - Assets deposited into a DeFi protocol (e.g., supplied to lending pools, deposited in vaults, or provided as liquidity)\n- `loan` - Borrowed assets representing a debt position that needs to be repaid\n- `locked` - Assets locked for a specific period or purpose (e.g., vote-escrowed tokens, time-locked tokens)\n- `staked` - Assets staked in a protocol to earn rewards, participate in consensus, or for governance purposes\n- `reward` - Earned rewards that are claimable or have been distributed but not yet withdrawn\n- `wallet` - Regular assets held directly in the wallet, not actively deposited in any protocol\n- `investment` - Investment positions such as tokenized funds, indices, or structured products\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[chain_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Keep only positions from these chains (comma-separated list). Available chain ids can be found in chains endpoints."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[fungible_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Keep only positions related to given fungible assets (comma-separated list)."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[dapp_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Keep only positions related to these decentralized applications (dapps) (comma-separated list)."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[trash]",
+                  "value": "only_non_trash",
+                  "description": "Filter positions based on the `is_trash` flag. If no flag is specified, then `only_non_trash` is applied."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "value",
+                  "description": "Choose how the result should be ordered"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Custom header that allows you to get data for testnets.",
+                "key": "X-Env",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cd7f9124-8036-4562-8b19-1a31dcd01174",
+              "name": "Response for requested list of positions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "positions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[position_types]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[dapp_ids]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[trash]",
+                      "value": "only_non_trash"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "value"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/wallet-sets/positions/?addresses=0x42b9df65b219b3dd36ff330a4dd8f327a6ada990%2C8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K&currency=eth&filter%5Bchain_ids%5D=ethereum%2Csolana&filter%5Bpositions%5D=only_simple&filter%5Btrash%5D=only_non_trash&sort=value\"\n  },\n  \"data\": [\n    {\n      \"type\": \"positions\",\n      \"id\": \"0x111c47865ade3b172a928df8f990bc7f2a3b9aaa-polygon-asset-none-\",\n      \"attributes\": {\n        \"quantity\": {\n          \"int\": \"12345678\",\n          \"decimals\": 5,\n          \"float\": 123.45678,\n          \"numeric\": \"123.45678\"\n        },\n        \"name\": \"Asset\",\n        \"parent\": \"0x111c47865ade3b172a928df8f990bc7f2a3b9aaa-polygon-asset-none-\",\n        \"protocol\": \"string\",\n        \"protocol_module\": \"lending\",\n        \"pool_address\": \"0x109830a1aaad605bbf02a9dfa7b0b92ec2fb7daa\",\n        \"group_id\": \"0a771a0064dad468045899032c7fb01a971f973f7dff0a5cdc3ce199f45e94d7\",\n        \"position_type\": \"<string>\",\n        \"value\": 5.384656557642683,\n        \"price\": 0.043615722,\n        \"changes\": {\n          \"absolute_1d\": 0.272309794,\n          \"percent_1d\": 5.326512552079021\n        },\n        \"fungible_info\": {\n          \"name\": \"Bankless BED Index\",\n          \"symbol\": \"BED\",\n          \"icon\": {},\n          \"flags\": {\n            \"verified\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"implementations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"id\": \"0230395c-2b01-46d8-b2d6-ce8121d51f9e\",\n          \"description\": \"The BED index is meant to track crypto’s top 3 investab.\",\n          \"market_data\": {}\n        },\n        \"flags\": {\n          \"displayable\": true,\n          \"is_trash\": true\n        },\n        \"updated_at\": \"2023-11-10T23:00:00Z\",\n        \"updated_at_block\": 2485,\n        \"application_metadata\": {\n          \"name\": \"AAVE\",\n          \"icon\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"url\": \"https://app.aave.com/\"\n        },\n        \"receipt\": {\n          \"fungible_info\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"icon\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"flags\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"implementations\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"fungible\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungibles\",\n            \"id\": \"0x111c47865ade3b172a928df8f990bc7f2a3b9aaa\"\n          }\n        },\n        \"dapp\": {\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"positions\",\n      \"id\": \"0x111c47865ade3b172a928df8f990bc7f2a3b9aaa-polygon-asset-none-\",\n      \"attributes\": {\n        \"quantity\": {\n          \"int\": \"12345678\",\n          \"decimals\": 5,\n          \"float\": 123.45678,\n          \"numeric\": \"123.45678\"\n        },\n        \"name\": \"Asset\",\n        \"parent\": \"0x111c47865ade3b172a928df8f990bc7f2a3b9aaa-polygon-asset-none-\",\n        \"protocol\": \"string\",\n        \"protocol_module\": \"lending\",\n        \"pool_address\": \"0x109830a1aaad605bbf02a9dfa7b0b92ec2fb7daa\",\n        \"group_id\": \"0a771a0064dad468045899032c7fb01a971f973f7dff0a5cdc3ce199f45e94d7\",\n        \"position_type\": \"<string>\",\n        \"value\": 5.384656557642683,\n        \"price\": 0.043615722,\n        \"changes\": {\n          \"absolute_1d\": 0.272309794,\n          \"percent_1d\": 5.326512552079021\n        },\n        \"fungible_info\": {\n          \"name\": \"Bankless BED Index\",\n          \"symbol\": \"BED\",\n          \"icon\": {},\n          \"flags\": {\n            \"verified\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"implementations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"id\": \"0230395c-2b01-46d8-b2d6-ce8121d51f9e\",\n          \"description\": \"The BED index is meant to track crypto’s top 3 investab.\",\n          \"market_data\": {}\n        },\n        \"flags\": {\n          \"displayable\": true,\n          \"is_trash\": false\n        },\n        \"updated_at\": \"2023-11-10T23:00:00Z\",\n        \"updated_at_block\": 3279,\n        \"application_metadata\": {\n          \"name\": \"AAVE\",\n          \"icon\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"url\": \"https://app.aave.com/\"\n        },\n        \"receipt\": {\n          \"fungible_info\": {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"icon\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"flags\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"implementations\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"fungible\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungibles\",\n            \"id\": \"0x111c47865ade3b172a928df8f990bc7f2a3b9aaa\"\n          }\n        },\n        \"dapp\": {\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cae1292d-c633-40b2-a070-fb0e863a9d58",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "positions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[position_types]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[dapp_ids]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[trash]",
+                      "value": "only_non_trash"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "value"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0633a79-1651-4fbd-b36d-5f0ecc2cb4d5",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "positions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[position_types]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[dapp_ids]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[trash]",
+                      "value": "only_non_trash"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "value"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9df2ef0-8717-4056-85fc-c4d355a7af95",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "positions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[positions]",
+                      "value": "only_simple"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "filter[position_types]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[dapp_ids]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[trash]",
+                      "value": "only_non_trash"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "value"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f26df12-07af-4902-a90b-214861a4d7d3",
+          "name": "Get wallet set transactions",
+          "request": {
+            "name": "Get wallet set transactions",
+            "description": {
+              "content": "This endpoint returns a list of transactions associated with the wallet set.\nA wallet set is represented by an EVM address, a Solana address, or both. At least one address must be provided.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\n**Temporary limitations for Solana addresses:**\n- Doesn't support NFT transactions\n\n> NOTE: This endpoint supports a lot of filters, sorting, and pagination parameters. Make sure that your request URL length is safe for your platform. Usually, 2000 characters are the safe limit in virtually any combination of client and server software.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallet-sets",
+                "transactions",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "(Required) A list of wallet addresses forming a wallet set.\nexample: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990,8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K\n\nThe set must contain at least one address and may include at most one address per supported chain type (currently EVM and Solana).\nThe order of addresses does not matter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "Pagination parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "100",
+                  "description": "Pagination parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[search_query]",
+                  "value": "<string>",
+                  "description": "Query for a full-text search."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[operation_types]",
+                  "value": "<string>,<string>",
+                  "description": "Return only transactions with specified types (comma-separated list). See the operation type schema for the full list of values."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[asset_types]",
+                  "value": "<string>,<string>",
+                  "description": "Return only transactions that contain specified asset types (comma-separated list)."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[chain_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Return only transactions from specified chains (comma-separated list). You can find available chain ids in chain endpoints."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[fungible_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Return only transactions with fungibles with specified ids (comma-separated list)."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[min_mined_at]",
+                  "value": "<string>",
+                  "description": "Return only transactions since specific date. Timestamp in milliseconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[max_mined_at]",
+                  "value": "<string>",
+                  "description": "Return only transactions until specific date. Timestamp in milliseconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[trash]",
+                  "value": "no_filter",
+                  "description": "Filter transactions based on the `is_trash` flag. If no flag is specified, then `no_filter` is applied."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[fungible_implementations]",
+                  "value": "<string>,<string>",
+                  "description": "Specify implementations of fungible tokens as a comma-separated list of `chain:address` pairs.\n\nExample format: `ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,polygon:0x123456789abcdef123456789abcdef123456789`\n\nEach item consists of a blockchain `chain_id` and an `address`, separated by a colon (`:`). Multiple pairs can be provided using commas (`,`).\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Custom header that allows you to get data for testnets.",
+                "key": "X-Env",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "46328755-47a6-49c8-80f5-2d485e8047ad",
+              "name": "Response for requested list of transactions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "transactions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filter[search_query]",
+                      "value": "Trade"
+                    },
+                    {
+                      "key": "filter[operation_types]",
+                      "value": "trade,trade"
+                    },
+                    {
+                      "key": "filter[asset_types]",
+                      "value": "fungible,fungible"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "filter[min_mined_at]",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "filter[max_mined_at]",
+                      "value": "1694192535967"
+                    },
+                    {
+                      "key": "filter[trash]",
+                      "value": "no_filter"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"http://api.zerion.io/v1/wallet-sets/transactions/?addresses=0x42b9df65b219b3dd36ff330a4dd8f327a6ada990%2C8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K&currency=eth&filter%5Bchain_ids%5D=arbitrum%2Csolana&filter%5Bmax_mined_at%5D=1764246600000&filter%5Btrash%5D=no_filter&page%5Bafter%5D=WyIiLCIiXQ%3D%3D&page%5Bsize%5D=5\",\n    \"next\": \"http://api.zerion.io/v1/wallet-sets/transactions/?addresses=0x42b9df65b219b3dd36ff330a4dd8f327a6ada990%2C8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K&currency=eth&filter%5Bchain_ids%5D=arbitrum%2Csolana&filter%5Bmax_mined_at%5D=1764246600000&filter%5Btrash%5D=no_filter&page%5Bafter%5D=WyIyMDI1LTExLTI3VDA4OjQwOjU3WiIsImYxNWMwOTEzYTBlMzVhMjk4NDZhODY1ZmVjYjQyZDUwIl0%3D&page%5Bsize%5D=5\"\n  },\n  \"data\": [\n    {\n      \"type\": \"transactions\",\n      \"id\": \"52d994a173d755e99845e861d534a419\",\n      \"attributes\": {\n        \"operation_type\": \"trade\",\n        \"hash\": \"0x109d8622084d562263230ba5de412b5cd7c372019131e2c9d0a8aa4925eb6034\",\n        \"mined_at_block\": 15345739,\n        \"mined_at\": \"2022-08-15T11:26:31+00:00\",\n        \"sent_from\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n        \"sent_to\": \"0x794a61358d6845594f94dc1db02a252b5b4814ad\",\n        \"status\": \"confirmed\",\n        \"nonce\": 3757,\n        \"fee\": {\n          \"fungible_info\": {},\n          \"quantity\": {\n            \"int\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"decimals\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"float\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"numeric\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"price\": 2542.23,\n          \"value\": 39.965672931101786\n        },\n        \"transfers\": [\n          {\n            \"direction\": \"in\",\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": 0,\n            \"price\": 0,\n            \"sender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"recipient\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"2\",\n            \"fungible_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nft_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"direction\": \"in\",\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": 0,\n            \"price\": 0,\n            \"sender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"recipient\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"2\",\n            \"fungible_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nft_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"approvals\": [\n          {\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"1\",\n            \"fungible_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nft_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"1\",\n            \"fungible_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nft_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"address\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n        \"refund\": {\n          \"fungible_info\": {},\n          \"quantity\": {\n            \"int\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"decimals\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"float\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"numeric\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"value\": 5.123456789,\n          \"price\": 2542.23\n        },\n        \"collection_approvals\": [\n          {\n            \"cancelled\": true,\n            \"spender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"1\",\n            \"collection_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"cancelled\": false,\n            \"spender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"1\",\n            \"collection_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"delegations\": [\n          {\n            \"address\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n            \"act_id\": \"1\",\n            \"chain_id\": \"ethereum\"\n          },\n          {\n            \"address\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n            \"act_id\": \"1\",\n            \"chain_id\": \"ethereum\"\n          }\n        ],\n        \"application_metadata\": {\n          \"contract_address\": \"0x794a61358d6845594f94dc1db02a252b5b4814ad\",\n          \"name\": \"AAVE\",\n          \"icon\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"method\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"flags\": {\n          \"is_trash\": true\n        },\n        \"acts\": [\n          {\n            \"id\": \"1\",\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"fee_kind\": \"ui\",\n            \"sent_from\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n            \"application_metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": \"1\",\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"fee_kind\": \"ui\",\n            \"sent_from\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n            \"application_metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"paymaster\": \"0x794a61358d6845594f94dc1db02a252b5b4814ad\"\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"dapp\": {\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"transactions\",\n      \"id\": \"52d994a173d755e99845e861d534a419\",\n      \"attributes\": {\n        \"operation_type\": \"trade\",\n        \"hash\": \"0x109d8622084d562263230ba5de412b5cd7c372019131e2c9d0a8aa4925eb6034\",\n        \"mined_at_block\": 15345739,\n        \"mined_at\": \"2022-08-15T11:26:31+00:00\",\n        \"sent_from\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n        \"sent_to\": \"0x794a61358d6845594f94dc1db02a252b5b4814ad\",\n        \"status\": \"confirmed\",\n        \"nonce\": 3757,\n        \"fee\": {\n          \"fungible_info\": {},\n          \"quantity\": {\n            \"int\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"decimals\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"float\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"numeric\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"price\": 2542.23,\n          \"value\": 39.965672931101786\n        },\n        \"transfers\": [\n          {\n            \"direction\": \"in\",\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": 0,\n            \"price\": 0,\n            \"sender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"recipient\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"2\",\n            \"fungible_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nft_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"direction\": \"in\",\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": 0,\n            \"price\": 0,\n            \"sender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"recipient\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"2\",\n            \"fungible_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nft_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"approvals\": [\n          {\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"1\",\n            \"fungible_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nft_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"1\",\n            \"fungible_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"nft_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"address\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n        \"refund\": {\n          \"fungible_info\": {},\n          \"quantity\": {\n            \"int\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"decimals\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"float\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"numeric\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"value\": 5.123456789,\n          \"price\": 2542.23\n        },\n        \"collection_approvals\": [\n          {\n            \"cancelled\": true,\n            \"spender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"1\",\n            \"collection_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"cancelled\": false,\n            \"spender\": \"0x60a26d69263ef43e9a68964ba141263f19d71d51\",\n            \"act_id\": \"1\",\n            \"collection_info\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"delegations\": [\n          {\n            \"address\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n            \"act_id\": \"1\",\n            \"chain_id\": \"ethereum\"\n          },\n          {\n            \"address\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n            \"act_id\": \"1\",\n            \"chain_id\": \"ethereum\"\n          }\n        ],\n        \"application_metadata\": {\n          \"contract_address\": \"0x794a61358d6845594f94dc1db02a252b5b4814ad\",\n          \"name\": \"AAVE\",\n          \"icon\": {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"method\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"flags\": {\n          \"is_trash\": true\n        },\n        \"acts\": [\n          {\n            \"id\": \"1\",\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"fee_kind\": \"ui\",\n            \"sent_from\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n            \"application_metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": \"1\",\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"fee_kind\": \"ui\",\n            \"sent_from\": \"0x42b9df65b219b3dd36ff330a4dd8f327a6ada990\",\n            \"application_metadata\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"paymaster\": \"0x794a61358d6845594f94dc1db02a252b5b4814ad\"\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"dapp\": {\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d64f879-bd4a-4f4c-bde0-331fbd702bee",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "transactions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filter[search_query]",
+                      "value": "Trade"
+                    },
+                    {
+                      "key": "filter[operation_types]",
+                      "value": "trade,trade"
+                    },
+                    {
+                      "key": "filter[asset_types]",
+                      "value": "fungible,fungible"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "filter[min_mined_at]",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "filter[max_mined_at]",
+                      "value": "1694192535967"
+                    },
+                    {
+                      "key": "filter[trash]",
+                      "value": "no_filter"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b98bcf09-c28b-43e3-ad05-0c2f3d73e746",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "transactions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filter[search_query]",
+                      "value": "Trade"
+                    },
+                    {
+                      "key": "filter[operation_types]",
+                      "value": "trade,trade"
+                    },
+                    {
+                      "key": "filter[asset_types]",
+                      "value": "fungible,fungible"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "filter[min_mined_at]",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "filter[max_mined_at]",
+                      "value": "1694192535967"
+                    },
+                    {
+                      "key": "filter[trash]",
+                      "value": "no_filter"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "228dfba3-beeb-42f3-8d76-f3bec616768c",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet-sets",
+                    "transactions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addresses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filter[search_query]",
+                      "value": "Trade"
+                    },
+                    {
+                      "key": "filter[operation_types]",
+                      "value": "trade,trade"
+                    },
+                    {
+                      "key": "filter[asset_types]",
+                      "value": "fungible,fungible"
+                    },
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "filter[min_mined_at]",
+                      "value": "1688842525735"
+                    },
+                    {
+                      "key": "filter[max_mined_at]",
+                      "value": "1694192535967"
+                    },
+                    {
+                      "key": "filter[trash]",
+                      "value": "no_filter"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Custom header that allows you to get data for testnets.",
+                    "key": "X-Env",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.zerion.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6b345aca-bc01-4716-b1e6-b179cbd198ca",
+    "name": "REST chains wallet sets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+      "type": "text/plain"
+    }
+  }
+}

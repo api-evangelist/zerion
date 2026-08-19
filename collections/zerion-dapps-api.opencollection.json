@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REST chains dapps API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "dapps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of DApps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/dapps",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters"
+              }
+            ]
+          },
+          "docs": "This endpoint returns list of DApps by using different parameters.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Get DApp by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/dapps/:dapp_id",
+            "params": [
+              {
+                "name": "dapp_id",
+                "value": "",
+                "type": "path",
+                "description": "DApp's unique identifier"
+              }
+            ]
+          },
+          "docs": "This endpoint returns single DApp by its unique identifier.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

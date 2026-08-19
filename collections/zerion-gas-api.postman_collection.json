@@ -1,0 +1,311 @@
+{
+  "item": [
+    {
+      "id": "76643198-6d65-43af-b78e-d70295df060b",
+      "name": "gas",
+      "description": {
+        "content": "Operations related to gas.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "59236a4e-fdef-4f45-9aee-96d339eaec44",
+          "name": "Get list of all available gas prices",
+          "request": {
+            "name": "Get list of all available gas prices",
+            "description": {
+              "content": "This endpoint provides real-time information on the current gas prices across all supported blockchain networks. Gas prices play a crucial role in the speed and cost of executing transactions on a blockchain, and fluctuate frequently based on network demand and usage. By using this endpoint, developers can stay up-to-date with the latest gas prices and adjust their application's transaction parameters accordingly to ensure optimal speed and cost efficiency.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "gas-prices",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[chain_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Return only gas prices from specified chains (comma-separated list). You can find available chain ids in chain endpoints."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[gas_types]",
+                  "value": "<string>,<string>",
+                  "description": "Return only gas prices with specified gas-type (comma-separated list)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bfb251b0-0520-430c-95b8-d96d646e09af",
+              "name": "List of gas prices",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "gas-prices",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    },
+                    {
+                      "key": "filter[gas_types]",
+                      "value": "classic,classic"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"type\": \"gas-prices\",\n      \"id\": \"gas-polygon-classic\",\n      \"attributes\": {\n        \"updated_at\": \"2023-02-28T19:24:39.000Z\",\n        \"gas_type\": \"classic\",\n        \"info\": {\n          \"slow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"standard\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fast\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rapid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"gas-prices\",\n      \"id\": \"gas-polygon-classic\",\n      \"attributes\": {\n        \"updated_at\": \"2023-02-28T19:24:39.000Z\",\n        \"gas_type\": \"classic\",\n        \"info\": {\n          \"slow\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"standard\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fast\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rapid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"relationships\": {\n        \"chain\": {\n          \"links\": {\n            \"related\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"data\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ],\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/gas-prices\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d94194c1-d7a7-45b0-b2b7-02ebc8c7809f",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "gas-prices",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    },
+                    {
+                      "key": "filter[gas_types]",
+                      "value": "classic,classic"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b60d7b1-64cb-42b4-b4c1-eb625013f146",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "gas-prices",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    },
+                    {
+                      "key": "filter[gas_types]",
+                      "value": "classic,classic"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13c51740-470a-429f-b06f-a33a118add68",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "gas-prices",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[chain_ids]",
+                      "value": "polygon,polygon"
+                    },
+                    {
+                      "key": "filter[gas_types]",
+                      "value": "classic,classic"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.zerion.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4a3751ec-6308-444b-94fa-6e6e0176ceb7",
+    "name": "REST chains gas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+      "type": "text/plain"
+    }
+  }
+}

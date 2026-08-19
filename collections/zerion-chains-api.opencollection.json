@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REST chains API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "chains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of all chains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/chains/",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint returns list of all chains supported by Zerion.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n"
+        },
+        {
+          "info": {
+            "name": "Get chain by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/chains/:chain_id",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chain_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique chain ID"
+              }
+            ]
+          },
+          "docs": "This endpoint returns chain by unique chain identifier.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REST chains gas API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of all available gas prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/gas-prices/",
+            "params": [
+              {
+                "name": "filter[chain_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Return only gas prices from specified chains (comma-separated list). You can find available chain ids in chain endpoints."
+              },
+              {
+                "name": "filter[gas_types]",
+                "value": "",
+                "type": "query",
+                "description": "Return only gas prices with specified gas-type (comma-separated list)."
+              }
+            ]
+          },
+          "docs": "This endpoint provides real-time information on the current gas prices across all supported blockchain networks. Gas prices play a crucial role in the speed and cost of executing transactions on a blockchain, and fluctuate frequently based on network demand and usage. By using this endpoint, developers can stay up-to-date with the latest gas prices and adjust their application's transaction parameters accordingly to ensure optimal speed and cost efficiency."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

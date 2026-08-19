@@ -1,0 +1,2046 @@
+{
+  "item": [
+    {
+      "id": "f7ff86b3-54f5-4dcd-a6af-d538aa0e74f9",
+      "name": "fungibles",
+      "description": {
+        "content": "Operations related to fungible assets, such as list them all, search or get by ID.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dad59469-c302-4fff-ae3c-aff443cd7dd6",
+          "name": "Get list of fungible assets",
+          "request": {
+            "name": "Get list of fungible assets",
+            "description": {
+              "content": "This endpoint returns a paginated list of fungible assets supported by Zerion. It also provides the ability to search for fungibles.\nIf no fungible assets are found for given filters, the empty list with 200 status is returned.\n\n> NOTE: This endpoint supports a lot of filters, sorting, and pagination parameters. Ensure your request URL length is within a safe range for your platform. Usually, 2000 characters are the safe limit in virtually any combination of client and server software.\n\n> NOTE: The `filter[implementation_address]` parameter ignores `filter[search_query]`. It may be changed in the future.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "fungibles",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "Pagination parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "100",
+                  "description": "Pagination parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[search_query]",
+                  "value": "<string>",
+                  "description": "Query for a full-text search."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[implementation_chain_id]",
+                  "value": "<string>",
+                  "description": "Keep only fungibles from this chain. Available chain ids can be found in chains endpoints."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[implementation_address]",
+                  "value": "<string>",
+                  "description": "Keep only fungibles deployed at given address. Is it possible that different fungibles are deployed at the same address on different chains."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[fungible_implementations]",
+                  "value": "<string>,<string>",
+                  "description": "Keep only fungibles with given implementations (comma-separated list of chain:address pairs). Maximum of 25 implementations allowed.\nexample: \"base,ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\"\n\nThis filter is mutually exclusive with `filter[implementation_chain_id]` and `filter[implementation_address]`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[fungible_ids]",
+                  "value": "<string>,<string>",
+                  "description": "Keep only fungibles with the given ids (comma-separated list)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Choose how the result should be ordered"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e4e835af-26b2-42fe-bbf3-f4fc35a684f3",
+              "name": "Response for requested list of fungibles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filter[search_query]",
+                      "value": "Index"
+                    },
+                    {
+                      "key": "filter[implementation_chain_id]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[implementation_address]",
+                      "value": "0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/fungibles/\",\n    \"first\": \"https://api.zerion.io/v1/fungibles/\",\n    \"next\": \"https://api.zerion.io/v1/fungibles/\",\n    \"prev\": \"https://api.zerion.io/v1/fungibles/\"\n  },\n  \"data\": [\n    {\n      \"type\": \"fungibles\",\n      \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n      \"attributes\": {\n        \"name\": \"Bankless BED Index\",\n        \"symbol\": \"BED\",\n        \"flags\": {\n          \"verified\": true\n        },\n        \"external_links\": [\n          {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"implementations\": [\n          {\n            \"chain_id\": \"ethereum\",\n            \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n            \"decimals\": 18,\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deployment_date\": \"2020-09-09T11:11:13Z\"\n          },\n          {\n            \"chain_id\": \"ethereum\",\n            \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n            \"decimals\": 18,\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deployment_date\": \"2020-09-09T11:11:13Z\"\n          }\n        ],\n        \"market_data\": {\n          \"price\": 106.87952669793131,\n          \"total_supply\": 29905.762448515918,\n          \"circulating_supply\": 29905.762448515918,\n          \"fully_diluted_valuation\": 3196313.736038149,\n          \"market_cap\": 3196313.736038149,\n          \"changes\": {\n            \"percent_1d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_30d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_90d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_365d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"trading_volumes\": {\n            \"volume_1d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"description\": \"The BED index is meant to track crypto's top 3 investab.\",\n        \"icon\": {\n          \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n        }\n      },\n      \"relationships\": {\n        \"chart_hour\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour\"\n          }\n        },\n        \"chart_day\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day\"\n          }\n        },\n        \"chart_week\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week\"\n          }\n        },\n        \"chart_month\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month\"\n          }\n        },\n        \"chart_year\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year\"\n          }\n        },\n        \"chart_max\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"fungibles\",\n      \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n      \"attributes\": {\n        \"name\": \"Bankless BED Index\",\n        \"symbol\": \"BED\",\n        \"flags\": {\n          \"verified\": true\n        },\n        \"external_links\": [\n          {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"implementations\": [\n          {\n            \"chain_id\": \"ethereum\",\n            \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n            \"decimals\": 18,\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deployment_date\": \"2020-09-09T11:11:13Z\"\n          },\n          {\n            \"chain_id\": \"ethereum\",\n            \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n            \"decimals\": 18,\n            \"market_data\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deployment_date\": \"2020-09-09T11:11:13Z\"\n          }\n        ],\n        \"market_data\": {\n          \"price\": 106.87952669793131,\n          \"total_supply\": 29905.762448515918,\n          \"circulating_supply\": 29905.762448515918,\n          \"fully_diluted_valuation\": 3196313.736038149,\n          \"market_cap\": 3196313.736038149,\n          \"changes\": {\n            \"percent_1d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_30d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_90d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"percent_365d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"trading_volumes\": {\n            \"volume_1d\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"description\": \"The BED index is meant to track crypto's top 3 investab.\",\n        \"icon\": {\n          \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n        }\n      },\n      \"relationships\": {\n        \"chart_hour\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour\"\n          }\n        },\n        \"chart_day\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day\"\n          }\n        },\n        \"chart_week\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week\"\n          }\n        },\n        \"chart_month\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month\"\n          }\n        },\n        \"chart_year\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year\"\n          }\n        },\n        \"chart_max\": {\n          \"links\": {\n            \"related\": {}\n          },\n          \"data\": {\n            \"type\": \"fungible_charts\",\n            \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4f51506-aa56-4242-93de-069518f54de4",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filter[search_query]",
+                      "value": "Index"
+                    },
+                    {
+                      "key": "filter[implementation_chain_id]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[implementation_address]",
+                      "value": "0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d3e8a1e-8e92-4512-8c3f-ae6e6596e127",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filter[search_query]",
+                      "value": "Index"
+                    },
+                    {
+                      "key": "filter[implementation_chain_id]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[implementation_address]",
+                      "value": "0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23dd091d-a778-4a6f-9abb-eb17e052cfb6",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    },
+                    {
+                      "key": "filter[search_query]",
+                      "value": "Index"
+                    },
+                    {
+                      "key": "filter[implementation_chain_id]",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "filter[implementation_address]",
+                      "value": "0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6"
+                    },
+                    {
+                      "key": "filter[fungible_implementations]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "filter[fungible_ids]",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16091637-886c-4769-bc22-100bb43aafb8",
+          "name": "Get fungible asset by ID",
+          "request": {
+            "name": "Get fungible asset by ID",
+            "description": {
+              "content": "This endpoint returns a fungible asset by unique identifier",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "fungibles",
+                ":fungible_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fungible_id",
+                  "description": "(Required) Unique fungible ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9b23b43-ab36-4556-af78-525f1446ed03",
+              "name": "Resource for requested fungible",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"related\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\"\n  },\n  \"data\": {\n    \"type\": \"fungibles\",\n    \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n    \"attributes\": {\n      \"name\": \"Bankless BED Index\",\n      \"symbol\": \"BED\",\n      \"flags\": {\n        \"verified\": true\n      },\n      \"external_links\": [\n        {\n          \"url\": \"https://www.indexcoop.com\",\n          \"type\": \"website\",\n          \"name\": \"Website\"\n        },\n        {\n          \"url\": \"https://www.indexcoop.com\",\n          \"type\": \"website\",\n          \"name\": \"Website\"\n        }\n      ],\n      \"implementations\": [\n        {\n          \"chain_id\": \"ethereum\",\n          \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n          \"decimals\": 18,\n          \"market_data\": {\n            \"trading_volumes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"deployment_date\": \"2020-09-09T11:11:13Z\"\n        },\n        {\n          \"chain_id\": \"ethereum\",\n          \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n          \"decimals\": 18,\n          \"market_data\": {\n            \"trading_volumes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"deployment_date\": \"2020-09-09T11:11:13Z\"\n        }\n      ],\n      \"market_data\": {\n        \"price\": 106.87952669793131,\n        \"total_supply\": 29905.762448515918,\n        \"circulating_supply\": 29905.762448515918,\n        \"fully_diluted_valuation\": 3196313.736038149,\n        \"market_cap\": 3196313.736038149,\n        \"changes\": {\n          \"percent_1d\": -0.7379066649086338,\n          \"percent_30d\": -2.499465618806962,\n          \"percent_90d\": 11.316340269371775,\n          \"percent_365d\": null\n        },\n        \"trading_volumes\": {\n          \"volume_1d\": 40096375.69294812\n        }\n      },\n      \"description\": \"The BED index is meant to track crypto's top 3 investab.\",\n      \"icon\": {\n        \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n      }\n    },\n    \"relationships\": {\n      \"chart_hour\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour\"\n        }\n      },\n      \"chart_day\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day\"\n        }\n      },\n      \"chart_week\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week\"\n        }\n      },\n      \"chart_month\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month\"\n        }\n      },\n      \"chart_year\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year\"\n        }\n      },\n      \"chart_max\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ab775f6-b0d9-4be3-8f43-12a733ba7652",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3652f7a-bf9f-445f-b8b8-3d3bcd4209f3",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c56b455-bbcd-45ac-83fe-60cad6b17f41",
+              "name": "Resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    },\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b91ad2bd-e778-4ce6-aac9-1a12408f62fd",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d0781a3-057c-4b29-bd56-a0172bce9dd0",
+          "name": "Get a chart for a fungible asset",
+          "request": {
+            "name": "Get a chart for a fungible asset",
+            "description": {
+              "content": "This endpoint returns the chart for the fungible asset for a selected period",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "fungibles",
+                ":fungible_id",
+                "charts",
+                ":chart_period"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fungible_id",
+                  "description": "(Required) Unique fungible ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "day",
+                  "key": "chart_period",
+                  "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1bd60512-e100-4421-b13b-0f4e9474d04b",
+              "name": "Resource for the requested fungible chart",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/fungibles/fda0820a-9cff-40f5-997b-a76b9f9d60e7/charts/day\"\n  },\n  \"data\": {\n    \"type\": \"fungible_charts\",\n    \"id\": \"fda0820a-9cff-40f5-997b-a76b9f9d60e7-week\",\n    \"attributes\": {\n      \"begin_at\": \"2023-01-18T11:00:00Z\",\n      \"end_at\": \"2023-01-25T10:30:00Z\",\n      \"stats\": {\n        \"first\": 1145.00999,\n        \"min\": 1133.034,\n        \"avg\": 1689.1110093,\n        \"max\": 2345.601,\n        \"last\": 1515.34\n      },\n      \"points\": [\n        [\n          6697,\n          7587\n        ],\n        [\n          809,\n          1305\n        ]\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1513869-24e4-4726-be4d-c40261f9b713",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9560bcbe-9a7f-408b-a6cc-1930a73b6bf9",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79ec2bc9-8d27-43df-b33c-afddc91838a4",
+              "name": "Resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    },\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09f75490-dde7-447a-a650-af162546b129",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99e2606f-08dd-40fe-bab5-be25dda1fd25",
+              "name": "Service is temporarily unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    ":fungible_id",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fungible_id",
+                      "description": "(Required) Unique fungible ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Indicates how long the client should wait before making a follow-up request.\n",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Service is temporarily unavailable\",\n      \"detail\": \"Please, retry later (check the Retry-After header)\"\n    },\n    {\n      \"title\": \"Service is temporarily unavailable\",\n      \"detail\": \"Please, retry later (check the Retry-After header)\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2be16ba9-d659-4408-8b36-413fd40a3a6c",
+          "name": "Get fungible asset by implementation",
+          "request": {
+            "name": "Get fungible asset by implementation",
+            "description": {
+              "content": "This endpoint returns a fungible asset by its implementation.\nThe implementation is a `chain` (for base asset) or `chain:address` pair (e.g., \"ethereum\", ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "fungibles",
+                "by-implementation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "implementation",
+                  "value": "<string>",
+                  "description": "(Required) Fungible implementation in the format `chain` or `chain:address`\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the base asset of that chain.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ea08a1e-3cf5-43bc-9df9-3301d00a1e26",
+              "name": "Resource for requested fungible",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"related\": \"https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\"\n  },\n  \"data\": {\n    \"type\": \"fungibles\",\n    \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n    \"attributes\": {\n      \"name\": \"Bankless BED Index\",\n      \"symbol\": \"BED\",\n      \"flags\": {\n        \"verified\": true\n      },\n      \"external_links\": [\n        {\n          \"url\": \"https://www.indexcoop.com\",\n          \"type\": \"website\",\n          \"name\": \"Website\"\n        },\n        {\n          \"url\": \"https://www.indexcoop.com\",\n          \"type\": \"website\",\n          \"name\": \"Website\"\n        }\n      ],\n      \"implementations\": [\n        {\n          \"chain_id\": \"ethereum\",\n          \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n          \"decimals\": 18,\n          \"market_data\": {\n            \"trading_volumes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"deployment_date\": \"2020-09-09T11:11:13Z\"\n        },\n        {\n          \"chain_id\": \"ethereum\",\n          \"address\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6\",\n          \"decimals\": 18,\n          \"market_data\": {\n            \"trading_volumes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"deployment_date\": \"2020-09-09T11:11:13Z\"\n        }\n      ],\n      \"market_data\": {\n        \"price\": 106.87952669793131,\n        \"total_supply\": 29905.762448515918,\n        \"circulating_supply\": 29905.762448515918,\n        \"fully_diluted_valuation\": 3196313.736038149,\n        \"market_cap\": 3196313.736038149,\n        \"changes\": {\n          \"percent_1d\": -0.7379066649086338,\n          \"percent_30d\": -2.499465618806962,\n          \"percent_90d\": 11.316340269371775,\n          \"percent_365d\": null\n        },\n        \"trading_volumes\": {\n          \"volume_1d\": 40096375.69294812\n        }\n      },\n      \"description\": \"The BED index is meant to track crypto's top 3 investab.\",\n      \"icon\": {\n        \"url\": \"https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png\"\n      }\n    },\n    \"relationships\": {\n      \"chart_hour\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour\"\n        }\n      },\n      \"chart_day\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day\"\n        }\n      },\n      \"chart_week\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week\"\n        }\n      },\n      \"chart_month\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month\"\n        }\n      },\n      \"chart_year\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year\"\n        }\n      },\n      \"chart_max\": {\n        \"links\": {\n          \"related\": {}\n        },\n        \"data\": {\n          \"type\": \"fungible_charts\",\n          \"id\": \"0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "090d342b-7441-4d3d-9866-8aa95fecec80",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6dca44b6-8fdb-4813-8d59-ce06d64b53d1",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d623058b-fc61-4ee9-ba9b-4917657f3841",
+              "name": "Resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    },\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8844fc43-09a2-43e2-92b6-9e0ac83e2003",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3e61e07-6e7e-47ea-99ac-71ec235295fc",
+          "name": "Get a chart for a fungible asset by implementation",
+          "request": {
+            "name": "Get a chart for a fungible asset by implementation",
+            "description": {
+              "content": "This endpoint returns the chart for a fungible asset for a selected period, identified by its implementation.\nThe implementation is a chain:address pair (e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "fungibles",
+                "by-implementation",
+                "charts",
+                ":chart_period"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "implementation",
+                  "value": "<string>",
+                  "description": "(Required) Fungible implementation in the format chain:address\n(e.g., \"ethereum:0xa5a4214bb5f00c86b7969b7dc007302e4f6f05d6\").\n\nIf only the chain is provided without an address (e.g., \"ethereum\"), it will return the chart for the base asset of that chain.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "usd",
+                  "description": "Denominated currency value of returned prices"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "day",
+                  "key": "chart_period",
+                  "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "204a307d-3007-4b49-ac25-23a6b125322c",
+              "name": "Resource for the requested fungible chart",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": {\n    \"self\": \"https://api.zerion.io/v1/fungibles/fda0820a-9cff-40f5-997b-a76b9f9d60e7/charts/day\"\n  },\n  \"data\": {\n    \"type\": \"fungible_charts\",\n    \"id\": \"fda0820a-9cff-40f5-997b-a76b9f9d60e7-week\",\n    \"attributes\": {\n      \"begin_at\": \"2023-01-18T11:00:00Z\",\n      \"end_at\": \"2023-01-25T10:30:00Z\",\n      \"stats\": {\n        \"first\": 1145.00999,\n        \"min\": 1133.034,\n        \"avg\": 1689.1110093,\n        \"max\": 2345.601,\n        \"last\": 1515.34\n      },\n      \"points\": [\n        [\n          7614,\n          47\n        ],\n        [\n          2593,\n          6169\n        ]\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bbf9211-2d89-4561-953b-fb4cd519f13d",
+              "name": "Parameters are malformed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    },\n    {\n      \"title\": \"Parameter is malformed\",\n      \"detail\": \"Some validation errors will be described here\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b39a888f-fd15-4270-8c9e-df6b5801dbe3",
+              "name": "Unathenticated request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    },\n    {\n      \"title\": \"Unauthorized Error\",\n      \"detail\": \"The API key is invalid, please, make sure that you are using a valid key\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7cea49f-27e2-44b8-aad5-7b1c45dec196",
+              "name": "Resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    },\n    {\n      \"title\": \"Resource was not found\",\n      \"detail\": \"Requested resource was not found, try later\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8971711a-10f0-4ab5-881e-2501da67b291",
+              "name": "Too many requests error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    },\n    {\n      \"title\": \"Too many requests\",\n      \"detail\": \"Your request had been throttled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3b449f1-e58a-409e-96fc-938a467bb1fb",
+              "name": "Service is temporarily unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fungibles",
+                    "by-implementation",
+                    "charts",
+                    ":chart_period"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "implementation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "usd"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "day",
+                      "key": "chart_period",
+                      "description": "(Required) Chart period. Determines both the time window covered and the spacing\nbetween chart points (`points`). Each period samples the window at a fixed\ninterval, so the number of points is roughly constant (~290–460) regardless\nof period:\n\n| Period     | Point interval | Time window         |\n| ---------- | -------------- | ------------------- |\n| `hour`     | 10 seconds     | last 1 hour         |\n| `day`      | 5 minutes      | last 24 hours       |\n| `week`     | 30 minutes     | last 7 days         |\n| `month`    | 2 hours        | last 30 days        |\n| `3months`  | 6 hours        | last 90 days        |\n| `6months`  | 12 hours       | last 180 days       |\n| `year`     | 1 day          | last 365 days       |\n| `5years`   | 4 days         | last 5 years        |\n| `max`      | varies         | full available history |\n\nPoint counts are approximate, and `begin_at` / `end_at` are aligned to the\ninterval. For `max`, the interval is derived from the amount of available\nhistory (targeting ~400 points), so it varies; for wallet and wallet-set\ncharts the spacing is at least 1 day.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Indicates how long the client should wait before making a follow-up request.\n",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Service is temporarily unavailable\",\n      \"detail\": \"Please, retry later (check the Retry-After header)\"\n    },\n    {\n      \"title\": \"Service is temporarily unavailable\",\n      \"detail\": \"Please, retry later (check the Retry-After header)\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.zerion.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3e9aee6a-c303-4c4f-b8d1-7ba1736cde21",
+    "name": "REST chains fungibles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST-like API provides access to rich Zerion ecosystem.\n\nContact Support:\n Name: Zerion API\n Email: api@zerion.io",
+      "type": "text/plain"
+    }
+  }
+}

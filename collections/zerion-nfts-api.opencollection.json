@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REST chains nfts API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "nfts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of NFTs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/nfts/",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter[references]",
+                "value": "",
+                "type": "query",
+                "description": "Keep only NFTs matching specified references.\n\nReference format is `chain_id:contract_address:token_id`.\n\nReferences should be separated by comma `,`.\n\n`chain_id`- ID of the chain where NFT exists, can be found in /chains endpoint.\n\n`contract_address` address of the deployed contract which NFT belongs to.\n\n`token_id` id of the NFT withing specified `contract_address`.\n\nNOTE: parameter currently is mandatory and can not be omitted.\n"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema."
+              }
+            ]
+          },
+          "docs": "This endpoint returns list of NFTs by using different parameters.\n\nIt returns NFTs of both types - ERC721 and ERC1155.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n\n> NOTE: Consider all IDs as abstract strings, without making any assumptions about their format or relying on such assumptions. There is a non-zero probability that IDs may change in the future, and this should not result in any breaking changes.\n"
+        },
+        {
+          "info": {
+            "name": "Get single NFT by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.zerion.io/v1/nfts/:nft_id",
+            "headers": [
+              {
+                "name": "X-Env",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "nft_id",
+                "value": "",
+                "type": "path",
+                "description": "NFT unique identifier"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Denominated currency value of returned prices"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Array of related resources to be included to the response (comma-separated list). This parameter corresponds to the JSON API schema."
+              }
+            ]
+          },
+          "docs": "This endpoint returns single NFT by its unique identifier.\n\nThis endpoint supports testnets. To get data for testnets use `X-Env` header.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
