@@ -41,6 +41,19 @@ tags:
 - Blockchain
 - Cryptocurrency
 - DeFi
+- Wallets
+- NFT
+- Ethereum
+- Solana
+- Portfolio
+- On-Chain Data
+- Transaction
+tags_raw:
+- Company
+- Web3
+- Blockchain
+- Cryptocurrency
+- DeFi
 - Wallet
 - NFT
 - Ethereum
@@ -55,6 +68,8 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
+  - Chains
+  tags_raw:
   - chains
   properties:
   - type: OpenAPI
@@ -70,6 +85,8 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
+  - DApps
+  tags_raw:
   - dapps
   properties:
   - type: OpenAPI
@@ -98,6 +115,8 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
+  - Gas
+  tags_raw:
   - gas
   properties:
   - type: OpenAPI
@@ -112,6 +131,8 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
+  - NFT
+  tags_raw:
   - nfts
   properties:
   - type: OpenAPI
@@ -140,6 +161,8 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
+  - Swap
+  tags_raw:
   - swap
   properties:
   - type: OpenAPI
@@ -156,6 +179,8 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
+  - Wallet Sets
+  tags_raw:
   - wallet sets
   properties:
   - type: OpenAPI
@@ -170,6 +195,8 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
+  - Wallets
+  tags_raw:
   - wallets
   properties:
   - type: OpenAPI
