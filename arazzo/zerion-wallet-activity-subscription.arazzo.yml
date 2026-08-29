@@ -4,8 +4,8 @@ info:
   version: 1.0.0
   summary: Create a transaction webhook subscription for a set of wallets, confirm it, then verify the watched-wallet count.
 sourceDescriptions:
-- name: zerion
-  url: ../openapi/zerion-openapi-original.yml
+- name: subscriptionsToTransactionsApi
+  url: ../openapi/zerion-subscriptions-to-transactions-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-and-confirm-subscription

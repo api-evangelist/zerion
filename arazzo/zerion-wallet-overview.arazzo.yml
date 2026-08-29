@@ -4,8 +4,8 @@ info:
   version: 1.0.0
   summary: Pull a wallet's portfolio, positions, transaction history, and PnL in one flow.
 sourceDescriptions:
-- name: zerion
-  url: ../openapi/zerion-openapi-original.yml
+- name: walletsApi
+  url: ../openapi/zerion-wallets-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: wallet-overview

@@ -1,6 +1,6 @@
-generated: '2026-07-21'
-method: derived
-source: arazzo/*.arazzo.yml
+x-generated: '2026-07-21'
+x-method: derived
+x-source: arazzo/*.arazzo.yml
 workflows:
 - file: zerion-wallet-overview.arazzo.yml
   workflowId: wallet-overview
