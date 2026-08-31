@@ -58,7 +58,7 @@ tags:
 - Ethereum
 - Solana
 - Portfolio
-- On-Chain Data
+- Onchain Data
 - Transaction
 tags_raw:
 - Company
@@ -97,7 +97,7 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
-  - DApps
+  - dapps
   tags_raw:
   - dapps
   properties:
@@ -127,7 +127,7 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
-  - Gas
+  - gas
   tags_raw:
   - gas
   properties:
@@ -173,7 +173,7 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
-  - Swap
+  - swap
   tags_raw:
   - swap
   properties:
@@ -191,7 +191,7 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
-  - Wallet Sets
+  - wallet sets
   tags_raw:
   - wallet sets
   properties:
