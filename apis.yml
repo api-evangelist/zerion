@@ -225,6 +225,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Website
+  url: https://www.zerion.io/
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/zerion/overview
 - url: https://developers.zerion.io/
