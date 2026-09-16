@@ -139,22 +139,6 @@ apis:
     url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
   - type: Documentation
     url: https://developers.zerion.io/
-- aid: zerion:zerion-nfts-api
-  name: Zerion nfts API
-  description: Operations related to non fungible assets, such list them, search or get by ID.
-  humanURL: https://developers.zerion.io/
-  baseURL: https://api.zerion.io
-  tags:
-  - NFT
-  tags_raw:
-  - nfts
-  properties:
-  - type: OpenAPI
-    url: openapi/zerion-nfts-api-openapi.yml
-  - type: APIReference
-    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
-  - type: Documentation
-    url: https://developers.zerion.io/
 - aid: zerion:zerion-subscriptions-to-transactions-api
   name: Zerion subscriptions to transactions API
   description: Operations related to subscriptions to transactions.
@@ -215,6 +199,20 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/zerion-wallets-api-openapi.yml
+  - type: APIReference
+    url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
+  - type: Documentation
+    url: https://developers.zerion.io/
+- aid: zerion:zerion-nf-ts-api
+  name: Zerion NF Ts API
+  description: Operations related to non fungible assets, such list them, search or get by ID.
+  humanURL: https://developers.zerion.io/
+  baseURL: https://api.zerion.io
+  tags:
+  - NF Ts
+  properties:
+  - type: OpenAPI
+    url: openapi/zerion-nf-ts-api-openapi.yml
   - type: APIReference
     url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
   - type: Documentation
