@@ -203,16 +203,16 @@ apis:
     url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
   - type: Documentation
     url: https://developers.zerion.io/
-- aid: zerion:zerion-nf-ts-api
-  name: Zerion NF Ts API
+- aid: zerion:zerion-nfts-api
+  name: Zerion Nfts API
   description: Operations related to non fungible assets, such list them, search or get by ID.
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
-  - NF Ts
+  - nfts
   properties:
   - type: OpenAPI
-    url: openapi/zerion-nf-ts-api-openapi.yml
+    url: openapi/zerion-nfts-api-openapi.yml
   - type: APIReference
     url: https://developers.zerion.io/api-reference/wallets/get-wallet-portfolio
   - type: Documentation
