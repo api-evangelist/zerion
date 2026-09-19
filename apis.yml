@@ -209,6 +209,8 @@ apis:
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
   tags:
+  - NFT
+  tags_raw:
   - nfts
   properties:
   - type: OpenAPI
