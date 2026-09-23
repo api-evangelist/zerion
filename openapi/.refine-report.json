@@ -1,15 +1,7 @@
 {
   "provider": "zerion",
   "sources": [
-    "zerion-chains-api-openapi.yml",
-    "zerion-dapps-api-openapi.yml",
-    "zerion-fungibles-api-openapi.yml",
-    "zerion-gas-api-openapi.yml",
-    "zerion-nfts-api-openapi.yml",
-    "zerion-subscriptions-to-transactions-api-openapi.yml",
-    "zerion-swap-api-openapi.yml",
-    "zerion-wallet-sets-api-openapi.yml",
-    "zerion-wallets-api-openapi.yml"
+    "_original/zerion-openapi-original.yml"
   ],
   "outputs": [
     "zerion-chains-api-openapi.yml",
@@ -22,9 +14,26 @@
     "zerion-wallet-sets-api-openapi.yml",
     "zerion-wallets-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "zerion-openapi-original.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "superseded outputs removed: zerion-nf-ts-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 9 total)"
+  ],
+  "skipped": [
+    "zerion-chains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-dapps-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-fungibles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-gas-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-nf-ts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-subscriptions-to-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-swap-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-wallet-sets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-wallets-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
