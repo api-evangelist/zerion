@@ -146,6 +146,40 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    Response-16:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-17'
+        data:
+          $ref: '#/components/schemas/ResponseData'
+        included:
+          $ref: '#/components/schemas/ResponseIncluded'
+    Implementation-2:
+      type: object
+      description: Represents a blockchain implementation of an NFT collection.
+      required:
+      - chain_id
+      - address
+      properties:
+        chain_id:
+          type: string
+          description: The chain ID where the collection is deployed.
+          example: ethereum
+        address:
+          type:
+          - string
+          - 'null'
+          description: The contract address of the collection on the chain.
+          example: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
+    ExternalLinks:
+      type: array
+      description: A list of relevant URLs.
+      items:
+        $ref: '#/components/schemas/ExternalLink'
     ExternalLink:
       type: object
       required:
@@ -164,32 +198,6 @@ components:
           format: url
           description: Link to the external resource
           example: https://www.indexcoop.com
-    ContainerAttributesNoMarketData:
-      type: object
-      description: Represents an NFT collection attributes corresponding to JSON API specification.
-      properties:
-        metadata:
-          $ref: '#/components/schemas/Metadata-2'
-        implementations:
-          type: array
-          description: List of blockchain implementations where this collection is deployed
-          items:
-            $ref: '#/components/schemas/Implementation-2'
-    Metadata-2:
-      type: object
-      description: Metadata associated with the NFT.
-      properties:
-        name:
-          type: string
-          description: The name of the collection.
-        description:
-          type: string
-          description: The description of the collection.
-        content:
-          $ref: '#/components/schemas/Content-2'
-        payment_token_symbol:
-          type: string
-          description: The symbol for the payment token used by the collection.
     Response-17:
       type: object
       required:
@@ -202,10 +210,54 @@ components:
           $ref: '#/components/schemas/Container-5'
         included:
           $ref: '#/components/schemas/ResponseIncluded'
-    ResponseData:
+    ResponseIncluded:
       type: array
       items:
-        $ref: '#/components/schemas/Container-5'
+        anyOf:
+        - $ref: '#/components/schemas/ContainerNoMarketData'
+    ResponseLinks-18:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          description: Link to the current response
+          example: https://api.zerion.io/v1/nfts/polygon:0x3a422450db73c450310e6e24191d4221a5be81b1:2/?currency=usd&include=nft_collections
+    ContentLink:
+      type: object
+      required:
+      - url
+      properties:
+        url:
+          type: string
+          format: url
+          description: URL to the content
+          example: https://token-icons.s3.amazonaws.com/0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b.png
+        content_type:
+          type: string
+          description: MIME content type
+          example: image/png
+    Icon:
+      type: object
+      description: Icon related to object.
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          format: url
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
+    ResponseLinks-17:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          description: Link to the current response
+          example: https://api.zerion.io/v1/nfts/?currency=usd&filter%5Breferences%5D=ethereum%3A0x909899c5dbb5002610dd8543b6f638be56e3b17e%3A57896044618658097711785492504343953928676686534345912800509039648547174119787%2Cpolygon%3A0x3a422450db73c450310e6e24191d4221a5be81b1%3A30&include=nft_collections
     Relationships-4:
       type: object
       description: Represents relationships of a non-fungible token (NFT) corresponding to JSON API specification.
@@ -230,135 +282,6 @@ components:
           format: url
           description: URL to the current chain.
           example: https://api.zerion.io/v1/chains/polygon
-    ResponseIncluded:
-      type: array
-      items:
-        anyOf:
-        - $ref: '#/components/schemas/ContainerNoMarketData'
-    Attribute:
-      type: object
-      required:
-      - key
-      properties:
-        key:
-          type: string
-          description: 'Attribute key. The key is not unique and is it possible to have several attributes
-
-            with the same key.
-
-            '
-          example: Rarity
-        value:
-          type: string
-          description: Attribute value
-          example: common
-    LastSale:
-      type: object
-      description: Information about last sale of the NFT.
-      properties:
-        price:
-          type: number
-          format: float
-          description: The last known sale price of the NFT in the currency specified in the request parameters.
-          example: 31
-        quantity:
-          allOf:
-          - description: The quantity of the NFT in the last sale.
-          - $ref: '#/components/schemas/Quantity'
-    Implementation-2:
-      type: object
-      description: Represents a blockchain implementation of an NFT collection.
-      required:
-      - chain_id
-      - address
-      properties:
-        chain_id:
-          type: string
-          description: The chain ID where the collection is deployed.
-          example: ethereum
-        address:
-          type:
-          - string
-          - 'null'
-          description: The contract address of the collection on the chain.
-          example: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
-    MarketDataPrices:
-      type: object
-      description: The prices associated with the NFT expressed in the currency specified in the request parameters.
-      properties:
-        floor:
-          type: number
-          format: float
-          description: The lowest known price for the NFT.
-    Content-2:
-      type: object
-      properties:
-        icon:
-          allOf:
-          - description: The URL for the collection's icon.
-          - $ref: '#/components/schemas/Icon'
-        banner:
-          allOf:
-          - description: The URL for the collection's banner image.
-          - $ref: '#/components/schemas/ContentLink'
-    Attributes-7:
-      type: object
-      description: Represents attributes of a non-fungible token (NFT) corresponding to JSON API specification.
-      required:
-      - contract_address
-      - token_id
-      properties:
-        contract_address:
-          type: string
-          description: The address of the contract that manages the NFT.
-          example: '0x74ee68a33f6c9f113e22b3b77418b75f85d07d22'
-        token_id:
-          type: string
-          description: The unique identifier for the NFT within its contract.
-          example: '10'
-        interface:
-          $ref: '#/components/schemas/InterfaceEnum'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-        market_data:
-          $ref: '#/components/schemas/MarketData-2'
-        external_links:
-          $ref: '#/components/schemas/ExternalLinks'
-        flags:
-          $ref: '#/components/schemas/Flags-3'
-    Relationship:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/RelationshipLinks'
-        data:
-          $ref: '#/components/schemas/ContainerShort'
-    ResponseLinks-17:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          description: Link to the current response
-          example: https://api.zerion.io/v1/nfts/?currency=usd&filter%5Breferences%5D=ethereum%3A0x909899c5dbb5002610dd8543b6f638be56e3b17e%3A57896044618658097711785492504343953928676686534345912800509039648547174119787%2Cpolygon%3A0x3a422450db73c450310e6e24191d4221a5be81b1%3A30&include=nft_collections
-    ContainerShort:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Chain resource type.
-          example: chains
-        id:
-          type: string
-          description: Chain unique identifier.
-          example: polygon
     ContainerNoMarketData:
       type: object
       properties:
@@ -372,25 +295,6 @@ components:
           example: 14
         attributes:
           $ref: '#/components/schemas/ContainerAttributesNoMarketData'
-    MarketData-2:
-      type: object
-      properties:
-        prices:
-          $ref: '#/components/schemas/MarketDataPrices'
-        last_sale:
-          $ref: '#/components/schemas/LastSale'
-    Response-16:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-17'
-        data:
-          $ref: '#/components/schemas/ResponseData'
-        included:
-          $ref: '#/components/schemas/ResponseIncluded'
     Metadata:
       type: object
       description: Metadata associated with the NFT.
@@ -413,50 +317,52 @@ components:
           description: The list of attributes associated with the NFT
           items:
             $ref: '#/components/schemas/Attribute'
-    Relationship-4:
+    Content-2:
+      type: object
+      properties:
+        icon:
+          allOf:
+          - description: The URL for the collection's icon.
+          - $ref: '#/components/schemas/Icon'
+        banner:
+          allOf:
+          - description: The URL for the collection's banner image.
+          - $ref: '#/components/schemas/ContentLink'
+    Relationship:
       type: object
       required:
+      - links
       - data
       properties:
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
         data:
-          $ref: '#/components/schemas/ContainerShort-4'
-    ContainerShort-4:
+          $ref: '#/components/schemas/ContainerShort'
+    ContainerAttributesNoMarketData:
       type: object
+      description: Represents an NFT collection attributes corresponding to JSON API specification.
+      properties:
+        metadata:
+          $ref: '#/components/schemas/Metadata-2'
+        implementations:
+          type: array
+          description: List of blockchain implementations where this collection is deployed
+          items:
+            $ref: '#/components/schemas/Implementation-2'
+    ContainerShort:
+      type: object
+      required:
+      - type
+      - id
       properties:
         type:
           type: string
-          description: NFT collections resource type.
-          example: nft_collections
+          description: Chain resource type.
+          example: chains
         id:
-          type: integer
-          description: Unique NFT collection ID.
-          example: 14
-    Icon:
-      type: object
-      description: Icon related to object.
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          format: url
-          description: URL of the icon.
-          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
-    ResponseLinks-18:
-      type: object
-      required:
-      - self
-      properties:
-        self:
           type: string
-          description: Link to the current response
-          example: https://api.zerion.io/v1/nfts/polygon:0x3a422450db73c450310e6e24191d4221a5be81b1:2/?currency=usd&include=nft_collections
-    Flags-3:
-      type: object
-      properties:
-        is_spam:
-          type: boolean
-          description: Indicates whether the NFT spam or not.
+          description: Chain unique identifier.
+          example: polygon
     Content:
       type: object
       properties:
@@ -476,6 +382,92 @@ components:
           allOf:
           - description: The URL of the video file
           - $ref: '#/components/schemas/ContentLink'
+    ResponseData:
+      type: array
+      items:
+        $ref: '#/components/schemas/Container-5'
+    Attribute:
+      type: object
+      required:
+      - key
+      properties:
+        key:
+          type: string
+          description: 'Attribute key. The key is not unique and is it possible to have several attributes
+
+            with the same key.
+
+            '
+          example: Rarity
+        value:
+          type: string
+          description: Attribute value
+          example: common
+    MarketDataPrices:
+      type: object
+      description: The prices associated with the NFT expressed in the currency specified in the request parameters.
+      properties:
+        floor:
+          type: number
+          format: float
+          description: The lowest known price for the NFT.
+    LastSale:
+      type: object
+      description: Information about last sale of the NFT.
+      properties:
+        price:
+          type: number
+          format: float
+          description: The last known sale price of the NFT in the currency specified in the request parameters.
+          example: 31
+        quantity:
+          allOf:
+          - description: The quantity of the NFT in the last sale.
+          - $ref: '#/components/schemas/Quantity'
+    Container-5:
+      type: object
+      description: Represents a non-fungible token (NFT).
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: NFTs resource type.
+          example: nfts
+        id:
+          type: string
+          description: Unique identifier of the NFT.
+        attributes:
+          $ref: '#/components/schemas/Attributes-7'
+        relationships:
+          $ref: '#/components/schemas/Relationships-4'
+    Metadata-2:
+      type: object
+      description: Metadata associated with the NFT.
+      properties:
+        name:
+          type: string
+          description: The name of the collection.
+        description:
+          type: string
+          description: The description of the collection.
+        content:
+          $ref: '#/components/schemas/Content-2'
+        payment_token_symbol:
+          type: string
+          description: The symbol for the payment token used by the collection.
+    ContainerShort-4:
+      type: object
+      properties:
+        type:
+          type: string
+          description: NFT collections resource type.
+          example: nft_collections
+        id:
+          type: integer
+          description: Unique NFT collection ID.
+          example: 14
     Quantity:
       type: object
       required:
@@ -501,20 +493,51 @@ components:
           type: string
           description: Ready-to-display value = int / 10^decimals. For Token-2022 ScaledUiAmount assets (a small subset of Solana tokens), the display value is int × multiplier / 10^decimals.
           example: '123.45678'
-    ContentLink:
+    Flags-3:
+      type: object
+      properties:
+        is_spam:
+          type: boolean
+          description: Indicates whether the NFT spam or not.
+    MarketData-2:
+      type: object
+      properties:
+        prices:
+          $ref: '#/components/schemas/MarketDataPrices'
+        last_sale:
+          $ref: '#/components/schemas/LastSale'
+    Relationship-4:
       type: object
       required:
-      - url
+      - data
       properties:
-        url:
+        data:
+          $ref: '#/components/schemas/ContainerShort-4'
+    Attributes-7:
+      type: object
+      description: Represents attributes of a non-fungible token (NFT) corresponding to JSON API specification.
+      required:
+      - contract_address
+      - token_id
+      properties:
+        contract_address:
           type: string
-          format: url
-          description: URL to the content
-          example: https://token-icons.s3.amazonaws.com/0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b.png
-        content_type:
+          description: The address of the contract that manages the NFT.
+          example: '0x74ee68a33f6c9f113e22b3b77418b75f85d07d22'
+        token_id:
           type: string
-          description: MIME content type
-          example: image/png
+          description: The unique identifier for the NFT within its contract.
+          example: '10'
+        interface:
+          $ref: '#/components/schemas/InterfaceEnum'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        market_data:
+          $ref: '#/components/schemas/MarketData-2'
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+        flags:
+          $ref: '#/components/schemas/Flags-3'
     InterfaceEnum:
       type: string
       description: The standard that the NFT contract follows, e.g. ERC-721.
@@ -522,56 +545,7 @@ components:
       enum:
       - erc721
       - erc1155
-    Container-5:
-      type: object
-      description: Represents a non-fungible token (NFT).
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: NFTs resource type.
-          example: nfts
-        id:
-          type: string
-          description: Unique identifier of the NFT.
-        attributes:
-          $ref: '#/components/schemas/Attributes-7'
-        relationships:
-          $ref: '#/components/schemas/Relationships-4'
-    ExternalLinks:
-      type: array
-      description: A list of relevant URLs.
-      items:
-        $ref: '#/components/schemas/ExternalLink'
   responses:
-    MalformedParameters:
-      description: Parameters are malformed
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Parameter is malformed
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Some validation errors will be described here
-    NFTResponse:
-      description: Requested NFT
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-17'
     NFTsResponse:
       description: Response for requested list of NFTs
       content:
@@ -618,6 +592,32 @@ components:
                       type: string
                       description: Long description of the error
                       example: The API key is invalid, please, make sure that you are using a valid key
+    MalformedParameters:
+      description: Parameters are malformed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Parameter is malformed
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Some validation errors will be described here
+    NFTResponse:
+      description: Requested NFT
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-17'
   parameters:
     Currency:
       name: currency

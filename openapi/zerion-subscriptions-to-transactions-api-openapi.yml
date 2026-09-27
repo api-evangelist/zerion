@@ -458,167 +458,359 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    SubscriptionResponse:
-      description: Response for requested wallet's transactions subscription
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-21'
-    SubscriptionsResponse:
-      description: Response for requested wallet's transactions subscription
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-20'
-    MalformedParameters:
-      description: Parameters are malformed
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Parameter is malformed
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Some validation errors will be described here
-    SubscriptionWalletsResponse:
-      description: Response for wallets within subscription
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-23'
-    NotFoundResponse:
-      description: Resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Resource was not found
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Requested resource was not found, try later
-    TooManyRequests:
-      description: Too many requests error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Too many requests
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Your request had been throttled
-    SubscriptionWalletsCountResponse:
-      description: Response for wallets count within subscription
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-24'
-    UnauthenticatedError:
-      description: Unathenticated request
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Unauthorized Error
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: The API key is invalid, please, make sure that you are using a valid key
   schemas:
-    Included-3:
-      type: array
-      items:
-        $ref: '#/components/schemas/Container-4'
-    MarketDataChanges:
-      type: object
-      properties:
-        percent_1d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 1 day
-          example: -0.7379066649086338
-        percent_30d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 30 days
-          example: -2.499465618806962
-        percent_90d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 90 days
-          example: 11.316340269371775
-        percent_365d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 1 year
-          example: null
-    CollectionApproval:
+    Info-2:
       type: object
       required:
-      - cancelled
-      - spender
+      - contract_address
+      - token_id
+      - name
+      - interface
+      - flags
+      properties:
+        contract_address:
+          type: string
+          description: Address of the contract of the NFT.
+          example: '0x74ee68a33f6c9f113e22b3b77418b75f85d07d22'
+        token_id:
+          type: string
+          description: Unique identifier of the NFT inside the contract.
+          example: '10'
+        name:
+          type: string
+          description: Name of the NFT.
+          example: '#10 De·genesis'
+        interface:
+          $ref: '#/components/schemas/InterfaceEnum'
+        content:
+          $ref: '#/components/schemas/Content'
+        flags:
+          $ref: '#/components/schemas/Flags-3'
+    Container-17:
+      type: object
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+      properties:
+        type:
+          type: string
+          example: transactions_subscription
+        id:
+          type: string
+          description: Unique ID of the transaction subscription.
+          example: 52d994a173d755e99845e861d534a419
+        attributes:
+          $ref: '#/components/schemas/Attributes-15'
+        relationships:
+          $ref: '#/components/schemas/Relationships-9'
+    Flags:
+      type: object
+      required:
+      - verified
+      properties:
+        verified:
+          type: boolean
+          description: Whether this fungible verified or not
+          example: true
+    PaginatedRelationshipLinks:
+      type: object
+      required:
+      - related
+      properties:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d/wallets?page%5Bsize%5D=10
+        next:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d/wallets?page%5Bsize%5D=10&page%5Bafter%5D=MjAyNS0xMC0wMVQxMjowNzo1NlosNjhkZDE5OWMyMDFlODI3ODQzZmZkN2Jl
+        related:
+          type: string
+          format: url
+          description: URL to the current subscription
+          example: https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d
+    Relationships-2:
+      type: object
+      properties:
+        chain:
+          $ref: '#/components/schemas/Relationship'
+        dapp:
+          $ref: '#/components/schemas/Relationship-2'
+    ExecutionMethod:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Execution method id. First 4 bytes of keccak256 of method signature in hex format.
+          example: '0x095ea7b3'
+        name:
+          type: string
+          description: Human readable name of the method.
+          example: Approve
+    Approval:
+      type: object
+      required:
+      - quantity
+      - sender
       - act_id
       properties:
-        collection_info:
-          $ref: '#/components/schemas/CollectionInfo'
-        cancelled:
-          type: boolean
-          description: Indicates if the approval has been cancelled or granted.
-        spender:
+        fungible_info:
+          $ref: '#/components/schemas/Info'
+        nft_info:
+          $ref: '#/components/schemas/Info-2'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        sender:
           type: string
-          description: Address of the spender of the approval.
+          description: Address of the sender of the approval.
           example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
         act_id:
           type: string
+          description: Identifier of the act to which the transfer belongs
+          example: '1'
+    Transfer:
+      type: object
+      required:
+      - direction
+      - quantity
+      - value
+      - price
+      - sender
+      - recipient
+      - act_id
+      properties:
+        fungible_info:
+          $ref: '#/components/schemas/Info'
+        nft_info:
+          $ref: '#/components/schemas/Info-2'
+        direction:
+          type: string
+          description: Direction of the transfer.
+          example: in
+          enum:
+          - in
+          - out
+          - self
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        value:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Value of the transfer in requested currency. Can be null if value cannot be calculated.
+          example: 0
+        price:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Historical price of the asset. Can be null if price information is unavailable.
+          example: 0
+        sender:
+          type: string
+          description: Address of the sender of the transfer.
+          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
+        recipient:
+          type: string
+          description: Address of the recipient of the transfer.
+          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
+        act_id:
+          type: string
+          description: Identifier of the act to which the transfer belongs
+          example: '2'
+    Response-24:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-20'
+        data:
+          $ref: '#/components/schemas/Container-20'
+    Response-22:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/Container-18'
+        included:
+          $ref: '#/components/schemas/Included-3'
+    Relationships-10:
+      type: object
+      required:
+      - subscription
+      properties:
+        subscription:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            type:
+              type: string
+              example: tx-subscriptions
+            id:
+              type: string
+              example: 87db77a6-17eb-4ca8-af0e-e43cbe9c83c6
+    Relationship-2:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/ContainerShort-2'
+    ContentLink:
+      type: object
+      required:
+      - url
+      properties:
+        url:
+          type: string
+          format: url
+          description: URL to the content
+          example: https://token-icons.s3.amazonaws.com/0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b.png
+        content_type:
+          type: string
+          description: MIME content type
+          example: image/png
+    Icon:
+      type: object
+      description: Icon related to object.
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          format: url
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
+    Fee:
+      type: object
+      description: The fee that was paid for the transaction.
+      required:
+      - fungible_info
+      - quantity
+      - price
+      - value
+      properties:
+        fungible_info:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Info'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        price:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Price of the asset when the transaction was mined. Can be null if price information is unavailable.
+          example: 2542.23
+        value:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The fee value in requested currency. Can be null if value cannot be calculated.
+          example: 39.965672931101786
+    TradingVolumes:
+      type: object
+      properties:
+        volume_1d:
+          type: number
+          format: double
+          description: Trading volume over the last 24 hours in the selected currency.
+          example: 40096375.69294812
+    Delegation:
+      type: object
+      description: Delegation created on an EVM chain.
+      required:
+      - address
+      - act_id
+      properties:
+        chain_id:
+          type: string
+          example: ethereum
+        address:
+          type: string
+          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+        act_id:
+          type: string
+          example: '1'
+    Attributes-18:
+      type: object
+      required:
+      - count
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of wallets within the subscription
+          example: 42
+    CollectionInfo:
+      type: object
+      required:
+      - id
+      - name
+      - icon_url
+      properties:
+        id:
+          type: string
+          description: Collection id.
+        name:
+          type: string
+          description: Collection name.
+          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
+        icon_url:
+          type: string
           description: Identifier of the act to which the transfer belongs.
           example: '1'
+    DAppInfo-2:
+      type: object
+      required:
+      - contract_address
+      properties:
+        name:
+          type: string
+          example: AAVE
+          description: 'Human readable representation of DApp, that wallet interacted to. That offers more intuitive understanding for users.
+
+            '
+        icon:
+          $ref: '#/components/schemas/Icon'
+        contract_address:
+          type: string
+          description: The address of the executed contract.
+          example: '0x794a61358d6845594f94dc1db02a252b5b4814ad'
+        method:
+          $ref: '#/components/schemas/ExecutionMethod'
+    Attributes-15:
+      type: object
+      required:
+      - callback_url
+      - created_at
+      - updated_at
+      properties:
+        callback_url:
+          type: string
+          description: Callback URL where updates delivered to
+          example: https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3
+        created_at:
+          type: string
+          description: Timestamp string in ISO 8601 format when the subscription was created
+          example: '2022-08-15T11:26:31+00:00'
+        updated_at:
+          type: string
+          description: Timestamp string in ISO 8601 format when the subscription was last renewed
+          example: '2022-08-15T11:26:31+00:00'
     RelationshipLinks:
       type: object
       required:
@@ -629,70 +821,6 @@ components:
           format: url
           description: URL to the current chain.
           example: https://api.zerion.io/v1/chains/polygon
-    Flags-4:
-      type: object
-      properties:
-        is_trash:
-          type: boolean
-          description: Is the transaction classified by Zerion as trash.
-    Flags:
-      type: object
-      required:
-      - verified
-      properties:
-        verified:
-          type: boolean
-          description: Whether this fungible verified or not
-          example: true
-    Relationships-9:
-      type: object
-      properties:
-        chains:
-          type: array
-          items:
-            $ref: '#/components/schemas/Relationship'
-    ResponseLinks-20:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/tx-subscriptions/77e77447-1586-40e8-a75b-467ef939a0b1/wallets?page%5Bsize%5D=10
-        next:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/tx-subscriptions/77e77447-1586-40e8-a75b-467ef939a0b1/wallets?page%5Bsize%5D=10&page%5Bafter%5D=MjAyNS0xMC0wMVQxMjowNzo1NlosNjhkZDE5OWMyMDFlODI3ODQzZmZkN2Jl
-    Container-20:
-      type: object
-      required:
-      - type
-      - id
-      - attributes
-      - relationships
-      properties:
-        type:
-          type: string
-          example: transactions_subscription_wallets_count
-        id:
-          type: string
-          description: Unique ID
-          example: 52d994a173d755e99845e861d534a419-wallets-count
-        attributes:
-          $ref: '#/components/schemas/Attributes-18'
-        relationships:
-          $ref: '#/components/schemas/Relationships-11'
-    PaginatedRelationship:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/PaginatedRelationshipLinks'
-        data:
-          $ref: '#/components/schemas/RelationshipContainer'
     Refund:
       type: object
       description: The refund that was received for the transaction.
@@ -724,55 +852,6 @@ components:
           format: float
           description: The refund value in requested currency.
           example: 5.123456789
-    DAppInfo-2:
-      type: object
-      required:
-      - contract_address
-      properties:
-        name:
-          type: string
-          example: AAVE
-          description: 'Human readable representation of DApp, that wallet interacted to. That offers more intuitive understanding for users.
-
-            '
-        icon:
-          $ref: '#/components/schemas/Icon'
-        contract_address:
-          type: string
-          description: The address of the executed contract.
-          example: '0x794a61358d6845594f94dc1db02a252b5b4814ad'
-        method:
-          $ref: '#/components/schemas/ExecutionMethod'
-    Attributes-17:
-      type: object
-      required:
-      - addresses
-      properties:
-        addresses:
-          type: array
-          description: Addresses of the wallets within subscription
-          items:
-            type: string
-            example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
-    Container-17:
-      type: object
-      required:
-      - type
-      - id
-      - attributes
-      - relationships
-      properties:
-        type:
-          type: string
-          example: transactions_subscription
-        id:
-          type: string
-          description: Unique ID of the transaction subscription.
-          example: 52d994a173d755e99845e861d534a419
-        attributes:
-          $ref: '#/components/schemas/Attributes-15'
-        relationships:
-          $ref: '#/components/schemas/Relationships-9'
     Container-4:
       type: object
       required:
@@ -793,21 +872,6 @@ components:
           $ref: '#/components/schemas/Attributes-5'
         relationships:
           $ref: '#/components/schemas/Relationships-2'
-    TradingVolumes:
-      type: object
-      properties:
-        volume_1d:
-          type: number
-          format: double
-          description: Trading volume over the last 24 hours in the selected currency.
-          example: 40096375.69294812
-    Relationships-2:
-      type: object
-      properties:
-        chain:
-          $ref: '#/components/schemas/Relationship'
-        dapp:
-          $ref: '#/components/schemas/Relationship-2'
     ContainerShort-2:
       type: object
       required:
@@ -822,6 +886,65 @@ components:
           type: string
           description: Decentralized application ID
           example: aave-v3
+    Response-23:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-20'
+        data:
+          $ref: '#/components/schemas/Container-19'
+    MarketDataChanges:
+      type: object
+      properties:
+        percent_1d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 1 day
+          example: -0.7379066649086338
+        percent_30d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 30 days
+          example: -2.499465618806962
+        percent_90d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 90 days
+          example: 11.316340269371775
+        percent_365d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 1 year
+          example: null
+    Response-21:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/Container-17'
+    Included-3:
+      type: array
+      items:
+        $ref: '#/components/schemas/Container-4'
+    Relationships-9:
+      type: object
+      properties:
+        chains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relationship'
     Relationship:
       type: object
       required:
@@ -832,45 +955,23 @@ components:
           $ref: '#/components/schemas/RelationshipLinks'
         data:
           $ref: '#/components/schemas/ContainerShort'
-    Container-18:
+    Attributes-17:
       type: object
       required:
-      - type
-      - id
-      - attributes
-      - relationships
+      - addresses
       properties:
-        type:
-          type: string
-          example: transaction_notification
-        id:
-          type: string
-          description: Unique ID of the notification.
-          example: 52d994a173d755e99845e861d534a419
-        attributes:
-          $ref: '#/components/schemas/Attributes-16'
-        relationships:
-          $ref: '#/components/schemas/Relationships-10'
-    ActType:
-      type: string
-      description: Type of act in the transaction.
-      example: trade
-      enum:
-      - send
-      - receive
-      - trade
-      - deposit
-      - withdraw
-      - approve
-      - execute
-      - deploy
-      - fee
-      - mint
-      - burn
-      - claim
-      - delegate
-      - revoke_delegation
-      - bid
+        addresses:
+          type: array
+          description: Addresses of the wallets within subscription
+          items:
+            type: string
+            example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+    Flags-4:
+      type: object
+      properties:
+        is_trash:
+          type: boolean
+          description: Is the transaction classified by Zerion as trash.
     Info:
       type: object
       required:
@@ -918,6 +1019,193 @@ components:
           allOf:
           - $ref: '#/components/schemas/MarketData'
           description: Market data for the fungible, including price, supply, and market cap information. Currently available at transaction callback notifications only.
+    ContainerShort:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Chain resource type.
+          example: chains
+        id:
+          type: string
+          description: Chain unique identifier.
+          example: polygon
+    Content:
+      type: object
+      properties:
+        preview:
+          allOf:
+          - description: The URL of the preview image
+          - $ref: '#/components/schemas/ContentLink'
+        detail:
+          allOf:
+          - description: The URL of the full-size image
+          - $ref: '#/components/schemas/ContentLink'
+        audio:
+          allOf:
+          - description: The URL of the audio file
+          - $ref: '#/components/schemas/ContentLink'
+        video:
+          allOf:
+          - description: The URL of the video file
+          - $ref: '#/components/schemas/ContentLink'
+    MarketData:
+      type: object
+      required:
+      - price
+      properties:
+        total_supply:
+          type: number
+          format: double
+          description: Total market supply of fungible
+          example: 29905.762448515918
+        circulating_supply:
+          type: number
+          format: double
+          description: Circulating value of fungible
+          example: 29905.762448515918
+        fully_diluted_valuation:
+          type: number
+          format: double
+          description: Total market capitalization of fungible in selected currency
+          example: 3196313.736038149
+        market_cap:
+          type: number
+          format: double
+          description: Circulating market capitalization of fungible in selected currency
+          example: 3196313.736038149
+        price:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latest fungible price
+          example: 106.87952669793131
+        changes:
+          $ref: '#/components/schemas/MarketDataChanges'
+        trading_volumes:
+          $ref: '#/components/schemas/TradingVolumes'
+    Relationships-11:
+      type: object
+      properties:
+        subscription:
+          $ref: '#/components/schemas/PaginatedRelationship'
+    Type:
+      type: string
+      description: 'Type of the transaction operation. This field indicates the primary action performed in the transaction.
+
+
+        Possible values and their meanings:
+
+
+        - `approve` - Grant permission to a smart contract to access and spend tokens on behalf of the wallet
+
+        - `bid` - Place a bid in a prediction market
+
+        - `burn` - Destroy tokens permanently, reducing the total token supply
+
+        - `claim` - Claim earned rewards, airdrops, or vested tokens from a protocol
+
+        - `delegate` - Delegate tokens or voting power to another address
+
+        - `deploy` - Deploy a new smart contract to the blockchain
+
+        - `deposit` - Deposit assets into a protocol (e.g., lending pool, liquidity pool, vault)
+
+        - `execute` - Execute a smart contract function or complex interaction that doesn''t fit other specific types
+
+        - `mint` - Create new tokens, increasing the total token supply
+
+        - `receive` - Receive tokens from another wallet address
+
+        - `revoke` - Revoke previously granted token spending permissions from a smart contract
+
+        - `revoke_delegation` - Revoke a previously delegated token or voting power
+
+        - `send` - Send tokens to another wallet address
+
+        - `trade` - Exchange or swap assets (e.g., on a DEX)
+
+        - `withdraw` - Withdraw assets from a protocol (e.g., from lending pools, liquidity pools, or vaults)
+
+        '
+      example: trade
+      enum:
+      - approve
+      - bid
+      - burn
+      - claim
+      - delegate
+      - deploy
+      - deposit
+      - execute
+      - mint
+      - receive
+      - revoke
+      - revoke_delegation
+      - send
+      - trade
+      - withdraw
+    Container-20:
+      type: object
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+      properties:
+        type:
+          type: string
+          example: transactions_subscription_wallets_count
+        id:
+          type: string
+          description: Unique ID
+          example: 52d994a173d755e99845e861d534a419-wallets-count
+        attributes:
+          $ref: '#/components/schemas/Attributes-18'
+        relationships:
+          $ref: '#/components/schemas/Relationships-11'
+    Container-19:
+      type: object
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+      properties:
+        type:
+          type: string
+          example: transactions_subscription_wallets
+        id:
+          type: string
+          description: Unique ID
+          example: 52d994a173d755e99845e861d534a419-wallets
+        attributes:
+          $ref: '#/components/schemas/Attributes-17'
+        relationships:
+          $ref: '#/components/schemas/Relationships-11'
+    Attributes-16:
+      type: object
+      required:
+      - timestamp
+      - callback_url
+      - address
+      properties:
+        timestamp:
+          type: string
+          description: Timestamp when notification was generated.
+          example: '2024-07-31T00:17:36Z'
+        callback_url:
+          type: string
+          description: URL to the callback endpoint.
+          example: https://example.com/callback
+        address:
+          type: string
+          description: Address of the subscription wallet.
+          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
     Attributes-5:
       type: object
       required:
@@ -1010,28 +1298,7 @@ components:
           type: string
           description: Address of a transaction fee payer.
           example: '0x794a61358d6845594f94dc1db02a252b5b4814ad'
-    Approval:
-      type: object
-      required:
-      - quantity
-      - sender
-      - act_id
-      properties:
-        fungible_info:
-          $ref: '#/components/schemas/Info'
-        nft_info:
-          $ref: '#/components/schemas/Info-2'
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-        sender:
-          type: string
-          description: Address of the sender of the approval.
-          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
-        act_id:
-          type: string
-          description: Identifier of the act to which the transfer belongs
-          example: '1'
-    ContainerShort:
+    RelationshipContainer:
       type: object
       required:
       - type
@@ -1039,403 +1306,12 @@ components:
       properties:
         type:
           type: string
-          description: Chain resource type.
-          example: chains
+          description: Subscription resource type
+          example: subscription
         id:
           type: string
-          description: Chain unique identifier.
-          example: polygon
-    Attributes-16:
-      type: object
-      required:
-      - timestamp
-      - callback_url
-      - address
-      properties:
-        timestamp:
-          type: string
-          description: Timestamp when notification was generated.
-          example: '2024-07-31T00:17:36Z'
-        callback_url:
-          type: string
-          description: URL to the callback endpoint.
-          example: https://example.com/callback
-        address:
-          type: string
-          description: Address of the subscription wallet.
-          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
-    Attributes-15:
-      type: object
-      required:
-      - callback_url
-      - created_at
-      - updated_at
-      properties:
-        callback_url:
-          type: string
-          description: Callback URL where updates delivered to
-          example: https://webhook.site/fcd606d2-f5bd-4832-9874-ff07c980b5a3
-        created_at:
-          type: string
-          description: Timestamp string in ISO 8601 format when the subscription was created
-          example: '2022-08-15T11:26:31+00:00'
-        updated_at:
-          type: string
-          description: Timestamp string in ISO 8601 format when the subscription was last renewed
-          example: '2022-08-15T11:26:31+00:00'
-    ExecutionMethod:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Execution method id. First 4 bytes of keccak256 of method signature in hex format.
-          example: '0x095ea7b3'
-        name:
-          type: string
-          description: Human readable name of the method.
-          example: Approve
-    Attributes-18:
-      type: object
-      required:
-      - count
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Number of wallets within the subscription
-          example: 42
-    MarketData:
-      type: object
-      required:
-      - price
-      properties:
-        total_supply:
-          type: number
-          format: double
-          description: Total market supply of fungible
-          example: 29905.762448515918
-        circulating_supply:
-          type: number
-          format: double
-          description: Circulating value of fungible
-          example: 29905.762448515918
-        fully_diluted_valuation:
-          type: number
-          format: double
-          description: Total market capitalization of fungible in selected currency
-          example: 3196313.736038149
-        market_cap:
-          type: number
-          format: double
-          description: Circulating market capitalization of fungible in selected currency
-          example: 3196313.736038149
-        price:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latest fungible price
-          example: 106.87952669793131
-        changes:
-          $ref: '#/components/schemas/MarketDataChanges'
-        trading_volumes:
-          $ref: '#/components/schemas/TradingVolumes'
-    Response-21:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/Container-17'
-    Implementation:
-      type: object
-      required:
-      - chain_id
-      - decimals
-      properties:
-        chain_id:
-          type: string
-          description: Unique id of the chain.
-          example: ethereum
-        address:
-          type: string
-          description: Implementation address on the chain.
-          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
-        decimals:
-          type: integer
-          description: Number of decimals points of the implementation.
-          example: 18
-    Relationships-11:
-      type: object
-      properties:
-        subscription:
-          $ref: '#/components/schemas/PaginatedRelationship'
-    Delegation:
-      type: object
-      description: Delegation created on an EVM chain.
-      required:
-      - address
-      - act_id
-      properties:
-        chain_id:
-          type: string
-          example: ethereum
-        address:
-          type: string
-          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
-        act_id:
-          type: string
-          example: '1'
-    Info-2:
-      type: object
-      required:
-      - contract_address
-      - token_id
-      - name
-      - interface
-      - flags
-      properties:
-        contract_address:
-          type: string
-          description: Address of the contract of the NFT.
-          example: '0x74ee68a33f6c9f113e22b3b77418b75f85d07d22'
-        token_id:
-          type: string
-          description: Unique identifier of the NFT inside the contract.
-          example: '10'
-        name:
-          type: string
-          description: Name of the NFT.
-          example: '#10 De·genesis'
-        interface:
-          $ref: '#/components/schemas/InterfaceEnum'
-        content:
-          $ref: '#/components/schemas/Content'
-        flags:
-          $ref: '#/components/schemas/Flags-3'
-    Icon:
-      type: object
-      description: Icon related to object.
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          format: url
-          description: URL of the icon.
-          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
-    PaginatedRelationshipLinks:
-      type: object
-      required:
-      - related
-      properties:
-        self:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d/wallets?page%5Bsize%5D=10
-        next:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d/wallets?page%5Bsize%5D=10&page%5Bafter%5D=MjAyNS0xMC0wMVQxMjowNzo1NlosNjhkZDE5OWMyMDFlODI3ODQzZmZkN2Jl
-        related:
-          type: string
-          format: url
-          description: URL to the current subscription
-          example: https://api.zerion.io/v1/tx-subscriptions/8bf9db31-eb59-4fa9-973c-34e3428acf5d
-    Response-22:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/Container-18'
-        included:
-          $ref: '#/components/schemas/Included-3'
-    Relationships-10:
-      type: object
-      required:
-      - subscription
-      properties:
-        subscription:
-          type: object
-          required:
-          - type
-          - id
-          properties:
-            type:
-              type: string
-              example: tx-subscriptions
-            id:
-              type: string
-              example: 87db77a6-17eb-4ca8-af0e-e43cbe9c83c6
-    Response-20:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Container-17'
-    Type:
-      type: string
-      description: 'Type of the transaction operation. This field indicates the primary action performed in the transaction.
-
-
-        Possible values and their meanings:
-
-
-        - `approve` - Grant permission to a smart contract to access and spend tokens on behalf of the wallet
-
-        - `bid` - Place a bid in a prediction market
-
-        - `burn` - Destroy tokens permanently, reducing the total token supply
-
-        - `claim` - Claim earned rewards, airdrops, or vested tokens from a protocol
-
-        - `delegate` - Delegate tokens or voting power to another address
-
-        - `deploy` - Deploy a new smart contract to the blockchain
-
-        - `deposit` - Deposit assets into a protocol (e.g., lending pool, liquidity pool, vault)
-
-        - `execute` - Execute a smart contract function or complex interaction that doesn''t fit other specific types
-
-        - `mint` - Create new tokens, increasing the total token supply
-
-        - `receive` - Receive tokens from another wallet address
-
-        - `revoke` - Revoke previously granted token spending permissions from a smart contract
-
-        - `revoke_delegation` - Revoke a previously delegated token or voting power
-
-        - `send` - Send tokens to another wallet address
-
-        - `trade` - Exchange or swap assets (e.g., on a DEX)
-
-        - `withdraw` - Withdraw assets from a protocol (e.g., from lending pools, liquidity pools, or vaults)
-
-        '
-      example: trade
-      enum:
-      - approve
-      - bid
-      - burn
-      - claim
-      - delegate
-      - deploy
-      - deposit
-      - execute
-      - mint
-      - receive
-      - revoke
-      - revoke_delegation
-      - send
-      - trade
-      - withdraw
-    CollectionInfo:
-      type: object
-      required:
-      - id
-      - name
-      - icon_url
-      properties:
-        id:
-          type: string
-          description: Collection id.
-        name:
-          type: string
-          description: Collection name.
-          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
-        icon_url:
-          type: string
-          description: Identifier of the act to which the transfer belongs.
-          example: '1'
-    Fee:
-      type: object
-      description: The fee that was paid for the transaction.
-      required:
-      - fungible_info
-      - quantity
-      - price
-      - value
-      properties:
-        fungible_info:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Info'
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-        price:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: Price of the asset when the transaction was mined. Can be null if price information is unavailable.
-          example: 2542.23
-        value:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: The fee value in requested currency. Can be null if value cannot be calculated.
-          example: 39.965672931101786
-    Container-19:
-      type: object
-      required:
-      - type
-      - id
-      - attributes
-      - relationships
-      properties:
-        type:
-          type: string
-          example: transactions_subscription_wallets
-        id:
-          type: string
-          description: Unique ID
-          example: 52d994a173d755e99845e861d534a419-wallets
-        attributes:
-          $ref: '#/components/schemas/Attributes-17'
-        relationships:
-          $ref: '#/components/schemas/Relationships-11'
-    Flags-3:
-      type: object
-      properties:
-        is_spam:
-          type: boolean
-          description: Indicates whether the NFT spam or not.
-    Response-24:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-20'
-        data:
-          $ref: '#/components/schemas/Container-20'
-    Content:
-      type: object
-      properties:
-        preview:
-          allOf:
-          - description: The URL of the preview image
-          - $ref: '#/components/schemas/ContentLink'
-        detail:
-          allOf:
-          - description: The URL of the full-size image
-          - $ref: '#/components/schemas/ContentLink'
-        audio:
-          allOf:
-          - description: The URL of the audio file
-          - $ref: '#/components/schemas/ContentLink'
-        video:
-          allOf:
-          - description: The URL of the video file
-          - $ref: '#/components/schemas/ContentLink'
+          description: Subscription unique identifier
+          example: 8bf9db31-eb59-4fa9-973c-34e3428acf5d
     Quantity:
       type: object
       required:
@@ -1461,109 +1337,16 @@ components:
           type: string
           description: Ready-to-display value = int / 10^decimals. For Token-2022 ScaledUiAmount assets (a small subset of Solana tokens), the display value is int × multiplier / 10^decimals.
           example: '123.45678'
-    ContentLink:
-      type: object
-      required:
-      - url
-      properties:
-        url:
-          type: string
-          format: url
-          description: URL to the content
-          example: https://token-icons.s3.amazonaws.com/0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b.png
-        content_type:
-          type: string
-          description: MIME content type
-          example: image/png
-    Transfer:
-      type: object
-      required:
-      - direction
-      - quantity
-      - value
-      - price
-      - sender
-      - recipient
-      - act_id
-      properties:
-        fungible_info:
-          $ref: '#/components/schemas/Info'
-        nft_info:
-          $ref: '#/components/schemas/Info-2'
-        direction:
-          type: string
-          description: Direction of the transfer.
-          example: in
-          enum:
-          - in
-          - out
-          - self
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-        value:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: Value of the transfer in requested currency. Can be null if value cannot be calculated.
-          example: 0
-        price:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: Historical price of the asset. Can be null if price information is unavailable.
-          example: 0
-        sender:
-          type: string
-          description: Address of the sender of the transfer.
-          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
-        recipient:
-          type: string
-          description: Address of the recipient of the transfer.
-          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
-        act_id:
-          type: string
-          description: Identifier of the act to which the transfer belongs
-          example: '2'
-    RelationshipContainer:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Subscription resource type
-          example: subscription
-        id:
-          type: string
-          description: Subscription unique identifier
-          example: 8bf9db31-eb59-4fa9-973c-34e3428acf5d
-    InterfaceEnum:
-      type: string
-      description: The standard that the NFT contract follows, e.g. ERC-721.
-      example: erc1155
-      enum:
-      - erc721
-      - erc1155
-    Relationship-2:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/ContainerShort-2'
-    Response-23:
+    PaginatedRelationship:
       type: object
       required:
       - links
       - data
       properties:
         links:
-          $ref: '#/components/schemas/ResponseLinks-20'
+          $ref: '#/components/schemas/PaginatedRelationshipLinks'
         data:
-          $ref: '#/components/schemas/Container-19'
+          $ref: '#/components/schemas/RelationshipContainer'
     Act:
       type: object
       required:
@@ -1589,13 +1372,223 @@ components:
           example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
         application_metadata:
           $ref: '#/components/schemas/DAppInfo-2'
-  requestBodies:
-    NotificationResponse:
-      description: Response for requested list of transactions
+    ResponseLinks-20:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/tx-subscriptions/77e77447-1586-40e8-a75b-467ef939a0b1/wallets?page%5Bsize%5D=10
+        next:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/tx-subscriptions/77e77447-1586-40e8-a75b-467ef939a0b1/wallets?page%5Bsize%5D=10&page%5Bafter%5D=MjAyNS0xMC0wMVQxMjowNzo1NlosNjhkZDE5OWMyMDFlODI3ODQzZmZkN2Jl
+    Flags-3:
+      type: object
+      properties:
+        is_spam:
+          type: boolean
+          description: Indicates whether the NFT spam or not.
+    CollectionApproval:
+      type: object
+      required:
+      - cancelled
+      - spender
+      - act_id
+      properties:
+        collection_info:
+          $ref: '#/components/schemas/CollectionInfo'
+        cancelled:
+          type: boolean
+          description: Indicates if the approval has been cancelled or granted.
+        spender:
+          type: string
+          description: Address of the spender of the approval.
+          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
+        act_id:
+          type: string
+          description: Identifier of the act to which the transfer belongs.
+          example: '1'
+    ActType:
+      type: string
+      description: Type of act in the transaction.
+      example: trade
+      enum:
+      - send
+      - receive
+      - trade
+      - deposit
+      - withdraw
+      - approve
+      - execute
+      - deploy
+      - fee
+      - mint
+      - burn
+      - claim
+      - delegate
+      - revoke_delegation
+      - bid
+    Response-20:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container-17'
+    Implementation:
+      type: object
+      required:
+      - chain_id
+      - decimals
+      properties:
+        chain_id:
+          type: string
+          description: Unique id of the chain.
+          example: ethereum
+        address:
+          type: string
+          description: Implementation address on the chain.
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+        decimals:
+          type: integer
+          description: Number of decimals points of the implementation.
+          example: 18
+    Container-18:
+      type: object
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+      properties:
+        type:
+          type: string
+          example: transaction_notification
+        id:
+          type: string
+          description: Unique ID of the notification.
+          example: 52d994a173d755e99845e861d534a419
+        attributes:
+          $ref: '#/components/schemas/Attributes-16'
+        relationships:
+          $ref: '#/components/schemas/Relationships-10'
+    InterfaceEnum:
+      type: string
+      description: The standard that the NFT contract follows, e.g. ERC-721.
+      example: erc1155
+      enum:
+      - erc721
+      - erc1155
+  responses:
+    TooManyRequests:
+      description: Too many requests error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Response-22'
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Too many requests
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Your request had been throttled
+    NotFoundResponse:
+      description: Resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Resource was not found
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Requested resource was not found, try later
+    UnauthenticatedError:
+      description: Unathenticated request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Unauthorized Error
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: The API key is invalid, please, make sure that you are using a valid key
+    SubscriptionWalletsCountResponse:
+      description: Response for wallets count within subscription
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-24'
+    SubscriptionWalletsResponse:
+      description: Response for wallets within subscription
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-23'
+    MalformedParameters:
+      description: Parameters are malformed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Parameter is malformed
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Some validation errors will be described here
+    SubscriptionResponse:
+      description: Response for requested wallet's transactions subscription
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-21'
+    SubscriptionsResponse:
+      description: Response for requested wallet's transactions subscription
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-20'
   parameters:
     SubscriptionWalletsPage:
       name: page
@@ -1627,6 +1620,13 @@ components:
             default: 100
             minimum: 1
             maximum: 2000
+  requestBodies:
+    NotificationResponse:
+      description: Response for requested list of transactions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-22'
   securitySchemes:
     APIKeyBasicAuth:
       type: http

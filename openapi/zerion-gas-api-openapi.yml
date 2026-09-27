@@ -56,6 +56,44 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    Relationships-8:
+      type: object
+      description: Gas price related resources.
+      properties:
+        chain:
+          $ref: '#/components/schemas/Relationship'
+    Links:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/gas-prices
+    Container-15:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Gas price resource type.
+          example: gas-prices
+        id:
+          type: string
+          description: Gas price unique identifier.
+          example: gas-polygon-classic
+        attributes:
+          $ref: '#/components/schemas/Attributes-13'
+        relationships:
+          $ref: '#/components/schemas/Relationships-8'
+    Type-2:
+      type: string
+      description: Format of the gas.
+      example: classic
+      enum:
+      - classic
+      - eip1559
+      - optimistic
     Relationship:
       type: object
       required:
@@ -66,15 +104,29 @@ components:
           $ref: '#/components/schemas/RelationshipLinks'
         data:
           $ref: '#/components/schemas/ContainerShort'
-    Response-15:
+    Optimistic:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Container-15'
-        links:
-          $ref: '#/components/schemas/Links'
+        l1:
+          type: integer
+          format: uint64
+          example: 18330244428
+          description: The total cost of submitting a transaction to Ethereum. This cost is incurred in addition to the L2 execution fee and is typically the primary cost component of a transaction on Optimism.
+        l2:
+          type: integer
+          format: uint64
+          example: 1000000
+          description: The cost of computation and storage used in executing a transaction on Layer 2. This is equivalent to the gas used multiplied by the gas price attached to the transaction.
+        fixed_overhead:
+          type: integer
+          format: uint64
+          example: 2100
+          description: A fixed overhead cost denominated in gas that is included in the L1 data fee calculation. This value is currently set to 2100 and does not vary based on the size or complexity of the transaction.
+        dynamic_overhead:
+          type: integer
+          format: uint64
+          example: 1000000
+          description: A dynamic overhead cost that scales the L1 fee paid by a fixed number. This value is currently set to 1.0 and is included in the L1 data fee calculation. The L1 gas price used to charge the data fee is automatically updated when new data is received from Ethereum, which may result in users paying a higher or lower than estimated L1 data fee by up to 25%.
     Attributes-13:
       type: object
       properties:
@@ -95,6 +147,81 @@ components:
           - allOf:
             - description: Object that stores information related to gas prices on the Optimism blockchain.
             - $ref: '#/components/schemas/Optimistic'
+    ContainerShort:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Chain resource type.
+          example: chains
+        id:
+          type: string
+          description: Chain unique identifier.
+          example: polygon
+    RelationshipLinks:
+      type: object
+      required:
+      - related
+      properties:
+        related:
+          type: string
+          format: url
+          description: URL to the current chain.
+          example: https://api.zerion.io/v1/chains/polygon
+    EIP1559:
+      type: object
+      properties:
+        base_fee:
+          type: integer
+          format: uint256
+          description: The base fee is an algorithmically determined amount of gas that is required for a transaction to be included in a block. It is dynamically adjusted based on network demand and burned whenever a transaction is included in a block.
+          example: 47409362184
+        fast:
+          allOf:
+          - description: Object that stores information about the gas price for a slow transaction.
+          - $ref: '#/components/schemas/EIP1559Option'
+        slow:
+          allOf:
+          - description: Object that stores information about the gas price for a slow transaction.
+          - $ref: '#/components/schemas/EIP1559Option'
+        rapid:
+          allOf:
+          - description: Object that stores information about the gas price for a rapid transaction.
+          - $ref: '#/components/schemas/EIP1559Option'
+        standard:
+          allOf:
+          - description: Object that stores information about the gas price for a standard transaction.
+          - $ref: '#/components/schemas/EIP1559Option'
+    EIP1559Option:
+      type: object
+      properties:
+        priority_fee:
+          type: integer
+          format: uint256
+          description: The suggested gas price (in wei) that you are willing to pay in order to ensure acceptance of your transaction.
+          example: 590637816
+        max_fee:
+          type: integer
+          format: uint256
+          description: The suggested upper limit for the gas price (in wei) that you are willing to pay in order to ensure acceptance of your transaction.
+          example: 95409362184
+        estimation_seconds:
+          type: integer
+          format: uint64
+          description: An estimation of the time, measured in seconds, required for a transaction to be confirmed on the blockchain.
+          example: 195
+    Response-15:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container-15'
+        links:
+          $ref: '#/components/schemas/Links'
     Classic:
       type: object
       properties:
@@ -120,140 +247,27 @@ components:
           format: uint256
           example: null
           description: The gas price for a rapid transaction.
-    EIP1559:
-      type: object
-      properties:
-        base_fee:
-          type: integer
-          format: uint256
-          description: The base fee is an algorithmically determined amount of gas that is required for a transaction to be included in a block. It is dynamically adjusted based on network demand and burned whenever a transaction is included in a block.
-          example: 47409362184
-        fast:
-          allOf:
-          - description: Object that stores information about the gas price for a slow transaction.
-          - $ref: '#/components/schemas/EIP1559Option'
-        slow:
-          allOf:
-          - description: Object that stores information about the gas price for a slow transaction.
-          - $ref: '#/components/schemas/EIP1559Option'
-        rapid:
-          allOf:
-          - description: Object that stores information about the gas price for a rapid transaction.
-          - $ref: '#/components/schemas/EIP1559Option'
-        standard:
-          allOf:
-          - description: Object that stores information about the gas price for a standard transaction.
-          - $ref: '#/components/schemas/EIP1559Option'
-    Type-2:
-      type: string
-      description: Format of the gas.
-      example: classic
-      enum:
-      - classic
-      - eip1559
-      - optimistic
-    ContainerShort:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Chain resource type.
-          example: chains
-        id:
-          type: string
-          description: Chain unique identifier.
-          example: polygon
-    Links:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/gas-prices
-    Relationships-8:
-      type: object
-      description: Gas price related resources.
-      properties:
-        chain:
-          $ref: '#/components/schemas/Relationship'
-    Optimistic:
-      type: object
-      properties:
-        l1:
-          type: integer
-          format: uint64
-          example: 18330244428
-          description: The total cost of submitting a transaction to Ethereum. This cost is incurred in addition to the L2 execution fee and is typically the primary cost component of a transaction on Optimism.
-        l2:
-          type: integer
-          format: uint64
-          example: 1000000
-          description: The cost of computation and storage used in executing a transaction on Layer 2. This is equivalent to the gas used multiplied by the gas price attached to the transaction.
-        fixed_overhead:
-          type: integer
-          format: uint64
-          example: 2100
-          description: A fixed overhead cost denominated in gas that is included in the L1 data fee calculation. This value is currently set to 2100 and does not vary based on the size or complexity of the transaction.
-        dynamic_overhead:
-          type: integer
-          format: uint64
-          example: 1000000
-          description: A dynamic overhead cost that scales the L1 fee paid by a fixed number. This value is currently set to 1.0 and is included in the L1 data fee calculation. The L1 gas price used to charge the data fee is automatically updated when new data is received from Ethereum, which may result in users paying a higher or lower than estimated L1 data fee by up to 25%.
-    EIP1559Option:
-      type: object
-      properties:
-        priority_fee:
-          type: integer
-          format: uint256
-          description: The suggested gas price (in wei) that you are willing to pay in order to ensure acceptance of your transaction.
-          example: 590637816
-        max_fee:
-          type: integer
-          format: uint256
-          description: The suggested upper limit for the gas price (in wei) that you are willing to pay in order to ensure acceptance of your transaction.
-          example: 95409362184
-        estimation_seconds:
-          type: integer
-          format: uint64
-          description: An estimation of the time, measured in seconds, required for a transaction to be confirmed on the blockchain.
-          example: 195
-    RelationshipLinks:
-      type: object
-      required:
-      - related
-      properties:
-        related:
-          type: string
-          format: url
-          description: URL to the current chain.
-          example: https://api.zerion.io/v1/chains/polygon
-    Container-15:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Gas price resource type.
-          example: gas-prices
-        id:
-          type: string
-          description: Gas price unique identifier.
-          example: gas-polygon-classic
-        attributes:
-          $ref: '#/components/schemas/Attributes-13'
-        relationships:
-          $ref: '#/components/schemas/Relationships-8'
   responses:
-    GasPricesResponse:
-      description: List of gas prices
+    UnauthenticatedError:
+      description: Unathenticated request
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Response-15'
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Unauthorized Error
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: The API key is invalid, please, make sure that you are using a valid key
     TooManyRequests:
       description: Too many requests error
       content:
@@ -294,26 +308,12 @@ components:
                       type: string
                       description: Long description of the error
                       example: Some validation errors will be described here
-    UnauthenticatedError:
-      description: Unathenticated request
+    GasPricesResponse:
+      description: List of gas prices
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Unauthorized Error
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: The API key is invalid, please, make sure that you are using a valid key
+            $ref: '#/components/schemas/Response-15'
   securitySchemes:
     APIKeyBasicAuth:
       type: http

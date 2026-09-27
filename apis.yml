@@ -77,7 +77,7 @@ tags_raw:
 - Transactions
 apis:
 - aid: zerion:zerion-chains-api
-  name: Zerion chains API
+  name: Zerion Chains API
   description: Operations related to chains, such as list all chains.
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
@@ -93,7 +93,7 @@ apis:
   - type: Documentation
     url: https://developers.zerion.io/
 - aid: zerion:zerion-dapps-api
-  name: Zerion dapps API
+  name: Zerion Dapps API
   description: >-
     Operations related to decentralized applications, such as list them all, search or get by ID.
   humanURL: https://developers.zerion.io/
@@ -110,7 +110,7 @@ apis:
   - type: Documentation
     url: https://developers.zerion.io/
 - aid: zerion:zerion-fungibles-api
-  name: Zerion fungibles API
+  name: Zerion Fungibles API
   description: Operations related to fungible assets, such as list them all, search or get by ID.
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
@@ -124,7 +124,7 @@ apis:
   - type: Documentation
     url: https://developers.zerion.io/
 - aid: zerion:zerion-gas-api
-  name: Zerion gas API
+  name: Zerion Gas API
   description: Operations related to gas.
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
@@ -154,7 +154,7 @@ apis:
   - type: Documentation
     url: https://developers.zerion.io/
 - aid: zerion:zerion-swap-api
-  name: Zerion swap API
+  name: Zerion Swap API
   description: Operations related to swapping and bridging assets.
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io
@@ -188,7 +188,7 @@ apis:
   - type: Documentation
     url: https://developers.zerion.io/
 - aid: zerion:zerion-wallets-api
-  name: Zerion wallets API
+  name: Zerion Wallets API
   description: Operations related to wallets, such as portfolio charts, positions, and transactions.
   humanURL: https://developers.zerion.io/
   baseURL: https://api.zerion.io

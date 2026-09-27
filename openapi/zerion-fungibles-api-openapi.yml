@@ -254,115 +254,6 @@ paths:
           $ref: '#/components/responses/RetryAfter'
 components:
   schemas:
-    ResponseLinks-12:
-      type: object
-      properties:
-        related:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6
-    ExternalLink:
-      type: object
-      required:
-      - url
-      properties:
-        type:
-          type: string
-          description: Type of the link
-          example: website
-        name:
-          type: string
-          description: Displayable name of the link
-          example: Website
-        url:
-          type: string
-          format: url
-          description: Link to the external resource
-          example: https://www.indexcoop.com
-    Attributes-10:
-      type: object
-      required:
-      - name
-      - symbol
-      - flags
-      - external_links
-      - implementations
-      - market_data
-      properties:
-        name:
-          type: string
-          description: Displayable name of the fungible.
-          example: Bankless BED Index
-        symbol:
-          type: string
-          description: Displayable symbol of the fungible.
-          example: BED
-        description:
-          type:
-          - string
-          - 'null'
-          description: Brief description of the fungible.
-          example: The BED index is meant to track crypto's top 3 investab.
-        icon:
-          $ref: '#/components/schemas/Icon'
-        flags:
-          $ref: '#/components/schemas/Flags'
-        external_links:
-          $ref: '#/components/schemas/ExternalLinks'
-        implementations:
-          type: array
-          description: Implementation details of the fungible on various chains.
-          items:
-            $ref: '#/components/schemas/AttributesImplementation'
-        market_data:
-          $ref: '#/components/schemas/MarketData'
-    MarketDataChanges:
-      type: object
-      properties:
-        percent_1d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 1 day
-          example: -0.7379066649086338
-        percent_30d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 30 days
-          example: -2.499465618806962
-        percent_90d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 90 days
-          example: 11.316340269371775
-        percent_365d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 1 year
-          example: null
-    Container-13:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Fungible chart resource type
-          example: fungible_charts
-        id:
-          type: string
-          description: Fungible chart unique identifier
-          example: fda0820a-9cff-40f5-997b-a76b9f9d60e7-week
-        attributes:
-          $ref: '#/components/schemas/Attributes-11'
     Container-12:
       type: object
       description: Object, representing fungible asset.
@@ -391,6 +282,57 @@ components:
           type: boolean
           description: Whether this fungible verified or not
           example: true
+    ResponseLinks-12:
+      type: object
+      properties:
+        related:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6
+    ImplementationMarketData:
+      type: object
+      properties:
+        trading_volumes:
+          $ref: '#/components/schemas/TradingVolumes'
+    Container-13:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Fungible chart resource type
+          example: fungible_charts
+        id:
+          type: string
+          description: Fungible chart unique identifier
+          example: fda0820a-9cff-40f5-997b-a76b9f9d60e7-week
+        attributes:
+          $ref: '#/components/schemas/Attributes-11'
+    ExternalLinks:
+      type: array
+      description: A list of relevant URLs.
+      items:
+        $ref: '#/components/schemas/ExternalLink'
+    ExternalLink:
+      type: object
+      required:
+      - url
+      properties:
+        type:
+          type: string
+          description: Type of the link
+          example: website
+        name:
+          type: string
+          description: Displayable name of the link
+          example: Website
+        url:
+          type: string
+          format: url
+          description: Link to the external resource
+          example: https://www.indexcoop.com
     ResponseMany-2:
       type: object
       required:
@@ -403,28 +345,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Container-12'
-    ImplementationMarketData:
-      type: object
-      properties:
-        trading_volumes:
-          $ref: '#/components/schemas/TradingVolumes'
-    Response-13:
+    ResponseManyLinks-2:
       type: object
       required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-13'
-        data:
-          $ref: '#/components/schemas/Container-13'
-    ResponseLinks-13:
-      type: object
+      - self
       properties:
         self:
           type: string
           format: url
-          example: https://api.zerion.io/v1/fungibles/fda0820a-9cff-40f5-997b-a76b9f9d60e7/charts/day
+          example: https://api.zerion.io/v1/fungibles/
+        first:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/fungibles/
+        next:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/fungibles/
+        prev:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/fungibles/
+    Icon:
+      type: object
+      description: Icon related to object.
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          format: url
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
     Attributes-11:
       type: object
       required:
@@ -496,55 +448,47 @@ components:
           format: double
           description: Trading volume over the last 24 hours in the selected currency.
           example: 40096375.69294812
-    AttributesImplementation:
+    Response-13:
       type: object
       required:
-      - chain_id
-      - address
-      - decimals
+      - links
+      - data
       properties:
-        chain_id:
-          type: string
-          description: Unique id of the chain.
-          example: ethereum
-        address:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-13'
+        data:
+          $ref: '#/components/schemas/Container-13'
+    MarketDataChanges:
+      type: object
+      properties:
+        percent_1d:
           type:
-          - string
+          - number
           - 'null'
-          description: Implementation address on the chain.
-          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
-        decimals:
-          type: integer
-          description: Number of decimals points of the implementation.
-          example: 18
-        market_data:
-          $ref: '#/components/schemas/ImplementationMarketData'
-        deployment_date:
-          type: string
-          format: date-time
-          description: Date and time when the token contract was deployed on this chain (ISO 8601).
-          example: '2020-09-09T11:11:13Z'
-    ResponseManyLinks-2:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/fungibles/
-        first:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/fungibles/
-        next:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/fungibles/
-        prev:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/fungibles/
+          format: double
+          description: Price relative change in percent for 1 day
+          example: -0.7379066649086338
+        percent_30d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 30 days
+          example: -2.499465618806962
+        percent_90d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 90 days
+          example: 11.316340269371775
+        percent_365d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 1 year
+          example: null
     MarketData:
       type: object
       required:
@@ -581,17 +525,6 @@ components:
           $ref: '#/components/schemas/MarketDataChanges'
         trading_volumes:
           $ref: '#/components/schemas/TradingVolumes'
-    Icon:
-      type: object
-      description: Icon related to object.
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          format: url
-          description: URL of the icon.
-          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
     Relationships-6:
       type: object
       required:
@@ -758,6 +691,71 @@ components:
                 id:
                   type: string
                   example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max
+    AttributesImplementation:
+      type: object
+      required:
+      - chain_id
+      - address
+      - decimals
+      properties:
+        chain_id:
+          type: string
+          description: Unique id of the chain.
+          example: ethereum
+        address:
+          type:
+          - string
+          - 'null'
+          description: Implementation address on the chain.
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+        decimals:
+          type: integer
+          description: Number of decimals points of the implementation.
+          example: 18
+        market_data:
+          $ref: '#/components/schemas/ImplementationMarketData'
+        deployment_date:
+          type: string
+          format: date-time
+          description: Date and time when the token contract was deployed on this chain (ISO 8601).
+          example: '2020-09-09T11:11:13Z'
+    Attributes-10:
+      type: object
+      required:
+      - name
+      - symbol
+      - flags
+      - external_links
+      - implementations
+      - market_data
+      properties:
+        name:
+          type: string
+          description: Displayable name of the fungible.
+          example: Bankless BED Index
+        symbol:
+          type: string
+          description: Displayable symbol of the fungible.
+          example: BED
+        description:
+          type:
+          - string
+          - 'null'
+          description: Brief description of the fungible.
+          example: The BED index is meant to track crypto's top 3 investab.
+        icon:
+          $ref: '#/components/schemas/Icon'
+        flags:
+          $ref: '#/components/schemas/Flags'
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+        implementations:
+          type: array
+          description: Implementation details of the fungible on various chains.
+          items:
+            $ref: '#/components/schemas/AttributesImplementation'
+        market_data:
+          $ref: '#/components/schemas/MarketData'
     Response-12:
       type: object
       required:
@@ -768,70 +766,14 @@ components:
           $ref: '#/components/schemas/ResponseLinks-12'
         data:
           $ref: '#/components/schemas/Container-12'
-    ExternalLinks:
-      type: array
-      description: A list of relevant URLs.
-      items:
-        $ref: '#/components/schemas/ExternalLink'
+    ResponseLinks-13:
+      type: object
+      properties:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/fungibles/fda0820a-9cff-40f5-997b-a76b9f9d60e7/charts/day
   responses:
-    SingleFungibleChartResponse:
-      description: Resource for the requested fungible chart
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-13'
-    MalformedParameters:
-      description: Parameters are malformed
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Parameter is malformed
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Some validation errors will be described here
-    NotFoundResponse:
-      description: Resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Resource was not found
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Requested resource was not found, try later
-    SingleFungibleResponse:
-      description: Resource for requested fungible
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-12'
-    FungiblesListResponse:
-      description: Response for requested list of fungibles
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ResponseMany-2'
     TooManyRequests:
       description: Too many requests error
       content:
@@ -852,6 +794,52 @@ components:
                       type: string
                       description: Long description of the error
                       example: Your request had been throttled
+    NotFoundResponse:
+      description: Resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Resource was not found
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Requested resource was not found, try later
+    FungiblesListResponse:
+      description: Response for requested list of fungibles
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseMany-2'
+    UnauthenticatedError:
+      description: Unathenticated request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Unauthorized Error
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: The API key is invalid, please, make sure that you are using a valid key
     RetryAfter:
       description: Service is temporarily unavailable
       headers:
@@ -881,8 +869,8 @@ components:
                       type: string
                       description: Long description of the error
                       example: Please, retry later (check the Retry-After header)
-    UnauthenticatedError:
-      description: Unathenticated request
+    MalformedParameters:
+      description: Parameters are malformed
       content:
         application/json:
           schema:
@@ -896,12 +884,49 @@ components:
                     title:
                       type: string
                       description: Error short title
-                      example: Unauthorized Error
+                      example: Parameter is malformed
                     detail:
                       type: string
                       description: Long description of the error
-                      example: The API key is invalid, please, make sure that you are using a valid key
+                      example: Some validation errors will be described here
+    SingleFungibleResponse:
+      description: Resource for requested fungible
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-12'
+    SingleFungibleChartResponse:
+      description: Resource for the requested fungible chart
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-13'
   parameters:
+    Currency:
+      name: currency
+      in: query
+      required: false
+      description: Denominated currency value of returned prices
+      schema:
+        type: string
+        default: usd
+        enum:
+        - eth
+        - btc
+        - usd
+        - eur
+        - krw
+        - rub
+        - gbp
+        - aud
+        - cad
+        - inr
+        - jpy
+        - nzd
+        - try
+        - zar
+        - cny
+        - chf
     ChartPeriod:
       name: chart_period
       in: path
@@ -992,31 +1017,6 @@ components:
             default: 100
             minimum: 1
             maximum: 100
-    Currency:
-      name: currency
-      in: query
-      required: false
-      description: Denominated currency value of returned prices
-      schema:
-        type: string
-        default: usd
-        enum:
-        - eth
-        - btc
-        - usd
-        - eur
-        - krw
-        - rub
-        - gbp
-        - aud
-        - cad
-        - inr
-        - jpy
-        - nzd
-        - try
-        - zar
-        - cny
-        - chf
   securitySchemes:
     APIKeyBasicAuth:
       type: http

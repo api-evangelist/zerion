@@ -14,23 +14,20 @@
     "zerion-wallet-sets-api-openapi.yml",
     "zerion-wallets-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "zerion-openapi-original.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "superseded outputs removed: zerion-nf-ts-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 9 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "zerion-chains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zerion-dapps-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zerion-fungibles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zerion-gas-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "zerion-nf-ts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zerion-nfts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zerion-subscriptions-to-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zerion-swap-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "zerion-wallet-sets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
