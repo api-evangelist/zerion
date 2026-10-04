@@ -790,727 +790,29 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    NFTPortfolioResponse:
-      description: Response for requested wallet's portfolio
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-6'
-    ChartsResponse:
-      description: Resource for the requested wallet chart
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response'
-    NFTCollectionsProcessingResponse:
-      description: Request accepted, but NFT collections held by the wallet are still being aggregated.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProcessingResponseMany'
-    RetryAfter:
-      description: Service is temporarily unavailable
-      headers:
-        Retry-After:
-          description: 'Indicates how long the client should wait before making a follow-up request.
-
-            '
-          schema:
-            type: integer
-            example: 10
-            description: Number of seconds to wait.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Service is temporarily unavailable
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Please, retry later (check the Retry-After header)
-    UnauthenticatedError:
-      description: Unathenticated request
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Unauthorized Error
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: The API key is invalid, please, make sure that you are using a valid key
-    MalformedParameters:
-      description: Parameters are malformed
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Parameter is malformed
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Some validation errors will be described here
-    NFTPositionsProcessingResponse:
-      description: Request accepted, but NFT positions are still being aggregated.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProcessingResponseMany'
-    PositionsListResponse:
-      description: Response for requested list of positions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-3'
-    NFTPositionsResponse:
-      description: Response for requested list of NFT positions.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ResponseMany'
-    PortfolioResponse:
-      description: Response for requested wallet's portfolio
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-2'
-    NFTCollectionsResponse:
-      description: Response for requested list of NFT collections.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-5'
-    NFTPortfolioProcessingResponse:
-      description: Request accepted, but nft portfolio is still being aggregated
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProcessingResponse'
-    TransactionsListResponse:
-      description: Response for requested list of transactions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-4'
-    PNLResponse:
-      description: Response for requested wallet's pnl
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WalletPNLResponse'
-    TooManyRequests:
-      description: Too many requests error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Too many requests
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Your request had been throttled
-  parameters:
-    WalletNFTCollectionsSort:
-      name: sort
-      in: query
-      required: false
-      description: The order of NFTs in the result.
-      schema:
-        type: string
-        example: -total_floor_price
-        enum:
-        - -max_changed_at
-        - min_changed_at
-        - total_floor_price
-        - -total_floor_price
-    Page:
-      name: page
-      in: query
-      required: false
-      description: Pagination parameters
-      style: deepObject
-      explode: true
-      schema:
-        type: object
-        properties:
-          after:
-            type:
-            - string
-            - 'null'
-            minLength: 1
-            maxLength: 64
-            description: 'This field is used for result pagination. You SHOULD NOT use this parameter directly.
-
-              To get the next page of the results you should use `links.next` field.
-
-              Omit it to return the first page.
-
-              '
-          size:
-            type: integer
-            format: uint8
-            description: Set maximum number of items per a page in the pagination.
-            default: 100
-            minimum: 1
-            maximum: 100
-    NFTPositionsPage:
-      name: page
-      in: query
-      required: false
-      description: Pagination parameters
-      style: deepObject
-      explode: true
-      schema:
-        type: object
-        properties:
-          after:
-            type:
-            - string
-            - 'null'
-            minLength: 1
-            maxLength: 64
-            description: 'This field is used for result pagination. You SHOULD NOT use this parameter directly.
-
-              To get the next page of the results you should use `links.next` field.
-
-              Omit it to return the first page.
-
-              '
-          size:
-            type: integer
-            format: int32
-            description: Set maximum number of items per a page in the pagination.
-            default: 50
-            minimum: 1
-            maximum: 500
-    ChartPeriod:
-      name: chart_period
-      in: path
-      required: true
-      description: 'Chart period. Determines both the time window covered and the spacing
-
-        between chart points (`points`). Each period samples the window at a fixed
-
-        interval, so the number of points is roughly constant (~290–460) regardless
-
-        of period:
-
-
-        | Period     | Point interval | Time window         |
-
-        | ---------- | -------------- | ------------------- |
-
-        | `hour`     | 10 seconds     | last 1 hour         |
-
-        | `day`      | 5 minutes      | last 24 hours       |
-
-        | `week`     | 30 minutes     | last 7 days         |
-
-        | `month`    | 2 hours        | last 30 days        |
-
-        | `3months`  | 6 hours        | last 90 days        |
-
-        | `6months`  | 12 hours       | last 180 days       |
-
-        | `year`     | 1 day          | last 365 days       |
-
-        | `5years`   | 4 days         | last 5 years        |
-
-        | `max`      | varies         | full available history |
-
-
-        Point counts are approximate, and `begin_at` / `end_at` are aligned to the
-
-        interval. For `max`, the interval is derived from the amount of available
-
-        history (targeting ~400 points), so it varies; for wallet and wallet-set
-
-        charts the spacing is at least 1 day.
-
-        '
-      schema:
-        type: string
-        minLength: 3
-        maxLength: 7
-        default: day
-        enum:
-        - hour
-        - day
-        - week
-        - month
-        - 3months
-        - 6months
-        - year
-        - 5years
-        - max
-    WalletAddress:
-      name: address
-      in: path
-      required: true
-      description: The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion.
-      example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
-      schema:
-        $ref: '#/components/schemas/WalletAddress'
-    Currency:
-      name: currency
-      in: query
-      required: false
-      description: Denominated currency value of returned prices
-      schema:
-        type: string
-        default: usd
-        enum:
-        - eth
-        - btc
-        - usd
-        - eur
-        - krw
-        - rub
-        - gbp
-        - aud
-        - cad
-        - inr
-        - jpy
-        - nzd
-        - try
-        - zar
-        - cny
-        - chf
   schemas:
-    Relationship:
+    Included-2:
+      type: array
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/Container-6'
+    Response-4:
       type: object
       required:
       - links
       - data
       properties:
         links:
-          $ref: '#/components/schemas/RelationshipLinks'
+          $ref: '#/components/schemas/ResponseLinks-4'
         data:
-          $ref: '#/components/schemas/ContainerShort'
-    Attributes-7:
-      type: object
-      description: Represents attributes of a non-fungible token (NFT) corresponding to JSON API specification.
-      required:
-      - contract_address
-      - token_id
-      properties:
-        contract_address:
-          type: string
-          description: The address of the contract that manages the NFT.
-          example: '0x74ee68a33f6c9f113e22b3b77418b75f85d07d22'
-        token_id:
-          type: string
-          description: The unique identifier for the NFT within its contract.
-          example: '10'
-        interface:
-          $ref: '#/components/schemas/InterfaceEnum'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-        market_data:
-          $ref: '#/components/schemas/MarketData-2'
-        external_links:
-          $ref: '#/components/schemas/ExternalLinks'
-        flags:
-          $ref: '#/components/schemas/Flags-3'
-    Attributes-4:
-      type: object
-      required:
-      - quantity
-      - name
-      properties:
-        parent:
-          type:
-          - string
-          - 'null'
-          description: Id of parent position
-          example: 0x111c47865ade3b172a928df8f990bc7f2a3b9aaa-polygon-asset-none-
-        protocol:
-          type:
-          - string
-          - 'null'
-          description: Protocol which the position is belong to.
-        protocol_module:
-          type: string
-          description: 'The specific module or functionality within a DeFi protocol where this position is held. This categorizes the type of protocol interaction.
-
-
-            Possible values and their meanings:
-
-
-            - `deposit` - Generic deposit module for protocols with simple deposit functionality
-
-            - `lending` - Lending and borrowing protocols (e.g., Aave, Compound) where users can supply or borrow assets
-
-            - `yield` - Yield optimization and aggregator protocols (e.g., Yearn Finance) that automatically maximize returns
-
-            - `liquidity_pool` - Automated Market Maker (AMM) liquidity pools (e.g., Uniswap, Curve) where users provide liquidity for trading
-
-            - `staked` - Staking modules where assets are staked for rewards, governance, or network security
-
-            - `leveraged_farming` - Leveraged yield farming protocols (e.g., Alpaca Finance) that enable leveraged positions on farms
-
-            - `nft_staked` - NFT staking modules where NFTs are staked to earn rewards
-
-            - `farming` - Yield farming and reward distribution modules (e.g., liquidity mining programs)
-
-            - `locked` - Token locking mechanisms such as vote-escrowed (ve) tokens or time-locked positions
-
-            - `vesting` - Token vesting schedules for team allocations, investor tokens, or earned rewards
-
-            - `rewards` - Unclaimed rewards modules representing rewards that have been earned but not yet claimed
-
-            - `investment` - Investment product modules such as tokenized funds, indices, or structured investment vehicles
-
-            '
-          example: lending
-        pool_address:
-          type: string
-          description: Address of the pool the position belongs to if applicable
-          example: '0x109830a1aaad605bbf02a9dfa7b0b92ec2fb7daa'
-        name:
-          type: string
-          description: Human readable position name
-          example: Asset
-        group_id:
-          type: string
-          description: Unique ID which could be used to group position within DApp naturally for convenience of users. For example for UniswapV2 it is grouping by specific pool.
-          example: 0a771a0064dad468045899032c7fb01a971f973f7dff0a5cdc3ce199f45e94d7
-        position_type:
-          $ref: '#/components/schemas/PositionType'
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-        value:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: Position value in requested currency
-          example: 5.384656557642683
-        price:
-          type: number
-          format: float
-          description: Price of position's asset
-          example: 0.043615722
-        changes:
-          $ref: '#/components/schemas/Change-2'
-        fungible_info:
-          $ref: '#/components/schemas/Info'
-        flags:
-          $ref: '#/components/schemas/Flags-2'
-        updated_at:
-          type: string
-          description: 'ISO-8601 timestamp the position was updated at.
-
-            The field indicates when our service last checked and updated the balance.
-
-            This update typically occurs immediately after any event causing a change in position.
-
-            '
-          example: '2023-11-10T23:00:00Z'
-        updated_at_block:
-          type: integer
-          format: int32
-          description: Number of the block of the position
-        application_metadata:
-          $ref: '#/components/schemas/DAppInfo'
-        receipt:
-          $ref: '#/components/schemas/Receipt'
-    PositionsDistributionByChain-2:
-      type: object
-      properties:
-        arbitrum:
-          type: number
-          format: float
-          description: Total value of NFTs on arbitrum chain in selected currency
-          example: 140.14877478334236
-        aurora:
-          type: number
-          format: float
-          description: Total value of NFTs on polygon chain in selected currency
-          example: 75.59585404617037
-        avalanche:
-          type: number
-          format: float
-          description: Total value of NFTs on avalanche chain in selected currency
-          example: 54.39483513803602
-        binance-smart-chain:
-          type: number
-          format: float
-          description: Total value of NFTs on bsc chain in selected currency
-          example: 1439.98965199211
-        ethereum:
-          type: number
-          format: float
-          description: Total value of NFTs on ethereum chain in selected currency
-          example: 1439.98965199211
-        fantom:
-          type: number
-          format: float
-          description: Total value of NFTs on fantom chain in selected currency
-          example: 104.5039957833603
-        loopring:
-          type: number
-          format: float
-          description: Total value of NFTs on loopring chain in selected currency
-          example: 0
-        optimism:
-          type: number
-          format: float
-          description: Total value of NFTs on optimism chain in selected currency
-          example: 55.111921042409875
-        polygon:
-          type: number
-          format: float
-          description: Total value of NFTs on polygon chain in selected currency
-          example: 37.55943746454931
-        solana:
-          type: number
-          format: float
-          description: Total value of NFTs on solana chain in selected currency
-          example: 0
-        xdai:
-          type: number
-          format: float
-          description: Total value of NFTs on xdai chain in selected currency
-          example: 74.08441891963194
-      additionalProperties:
-        type: number
-        format: float
-        description: Total value of NFTs in selected currency on specified chain.
-        example: 123.5
-    MarketDataChanges:
-      type: object
-      properties:
-        percent_1d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 1 day
-          example: -0.7379066649086338
-        percent_30d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 30 days
-          example: -2.499465618806962
-        percent_90d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 90 days
-          example: 11.316340269371775
-        percent_365d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 1 year
-          example: null
-    ContainerShort-2:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Decentralized application resource type.
-          example: dapps
-        id:
-          type: string
-          description: Decentralized application ID
-          example: aave-v3
-    WalletPNLResponseLinks:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/pnl
-    Attributes-6:
-      type: object
-      properties:
-        changed_at:
-          type: string
-          description: The date and the time when the position was updated in ISO format.
-          example: '2023-02-28T19:24:39Z'
-        amount:
-          type: string
-          description: The quantity of the NFT position.
-          example: '1'
-        price:
-          type: number
-          format: float
-          description: The lowest price (floor) of the position's NFT. Measured in the requested currency.
-          example: 0.043615722
-        value:
-          type: number
-          format: float
-          description: The lowest value of the NFT position (floor). Measured in the requested currency.
-        nft_info:
-          $ref: '#/components/schemas/Info-2'
-        collection_info:
-          $ref: '#/components/schemas/Info-3'
-    Approval:
-      type: object
-      required:
-      - quantity
-      - sender
-      - act_id
-      properties:
-        fungible_info:
-          $ref: '#/components/schemas/Info'
-        nft_info:
-          $ref: '#/components/schemas/Info-2'
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-        sender:
-          type: string
-          description: Address of the sender of the approval.
-          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
-        act_id:
-          type: string
-          description: Identifier of the act to which the transfer belongs
-          example: '1'
-    Icon:
-      type: object
-      description: Icon related to object.
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          format: url
-          description: URL of the icon.
-          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
-    Flags-3:
-      type: object
-      properties:
-        is_spam:
-          type: boolean
-          description: Indicates whether the NFT spam or not.
-    Content-2:
-      type: object
-      properties:
-        icon:
-          allOf:
-          - description: The URL for the collection's icon.
-          - $ref: '#/components/schemas/Icon'
-        banner:
-          allOf:
-          - description: The URL for the collection's banner image.
-          - $ref: '#/components/schemas/ContentLink'
-    ResponseLinks-5:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/nft-collections/
-    ResponseLinks-6:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/nft-portfolio/?currency=usd
-    Change:
-      type: object
-      description: Portfolio changes
-      required:
-      - absolute_1d
-      - percent_1d
-      properties:
-        absolute_1d:
-          type: number
-          format: float
-          description: Daily absolute portfolio change value
-          example: 102.0271468171374
-        percent_1d:
-          type: number
-          format: float
-          description: Daily portfolio change percent
-          example: 5.326512552079021
-    PositionsDistributionByType:
-      type: object
-      required:
-      - wallet
-      - deposited
-      - borrowed
-      - locked
-      - staked
-      properties:
-        wallet:
-          type: number
-          format: float
-          description: Total value of asset on the wallet in selected currency
-          example: 1864.774102420957
-        deposited:
-          type: number
-          format: float
-          description: Total value of deposited assets in selected currency
-          example: 78.04192492782934
-        borrowed:
-          type: number
-          format: float
-          description: Total value of borrowed assets in selected currency
-          example: 0.9751475798305564
-        locked:
-          type: number
-          format: float
-          description: Total value of locked assets in selected currency
-          example: 5.780032725068765
-        staked:
-          type: number
-          format: float
-          description: Total value of staked assets in selected currency
-          example: 66.13183205505294
+          type: array
+          items:
+            $ref: '#/components/schemas/Container-4'
+    SolanaAddress:
+      type: string
+      description: Solana address
+      pattern: ^[1-9A-HJ-NP-Za-km-z]{32,44}$
+      example: 8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K
     Container-5:
       type: object
       description: Represents a non-fungible token (NFT).
@@ -1529,32 +831,6 @@ components:
           $ref: '#/components/schemas/Attributes-7'
         relationships:
           $ref: '#/components/schemas/Relationships-4'
-    Flags-4:
-      type: object
-      properties:
-        is_trash:
-          type: boolean
-          description: Is the transaction classified by Zerion as trash.
-    Container-7:
-      type: object
-      description: The NFT collection held by the wallet.
-      required:
-      - type
-      - id
-      - attributes
-      properties:
-        type:
-          type: string
-          description: NFT collection resource type.
-          example: wallet_nft_collections
-        id:
-          type: integer
-          description: NFT collection's unique ID.
-          example: 14
-        attributes:
-          $ref: '#/components/schemas/Attributes-8'
-        relationships:
-          $ref: '#/components/schemas/Relationships-5'
     CollectionInfo:
       type: object
       required:
@@ -1573,355 +849,104 @@ components:
           type: string
           description: Identifier of the act to which the transfer belongs.
           example: '1'
-    ContainerShort-3:
+    Fee:
       type: object
+      description: The fee that was paid for the transaction.
       required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: NFTs resource type.
-          example: nfts
-        id:
-          type: string
-          description: Unique identifier of the NFT.
-    WalletAddress:
-      oneOf:
-      - $ref: '#/components/schemas/EVMAddress'
-      - $ref: '#/components/schemas/SolanaAddress'
-      description: A wallet address, which can be either an EVM or Solana address
-    Flags-2:
-      type: object
-      required:
-      - displayable
-      properties:
-        displayable:
-          type: boolean
-          description: Whether this position should be displayable and calculated in the wallet or not
-          example: true
-        is_trash:
-          type: boolean
-          description: Is the position classified by Zerion as trash.
-    DAppInfo:
-      type: object
-      properties:
-        name:
-          type: string
-          example: AAVE
-          description: 'Human readable representation of DApp. That offers more intuitive understanding for users.
-
-
-            Note: only available for positions within protocols.
-
-            '
-        icon:
-          $ref: '#/components/schemas/Icon'
-        url:
-          type: string
-          format: url
-          description: URL of the DApp the position relates to.
-          example: https://app.aave.com/
-    Act:
-      type: object
-      required:
-      - id
-      - type
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the act within the transaction.
-          example: '1'
-        type:
-          $ref: '#/components/schemas/ActType'
-        fee_kind:
-          type: string
-          description: "Classification of the fee for acts of type `fee`. Omitted for non-fee acts.\n\nPossible values:\n  - ui — Fee charged by the UI / client application (e.g., a wallet or dApp frontend)\n  - jito — Jito tip paid on Solana for priority inclusion\n"
-          enum:
-          - ui
-          - jito
-          example: ui
-        sent_from:
-          type: string
-          description: Address of the actual sender of this act. Only set when it differs from the transaction-level `sent_from`, e.g. in ERC-4337 bundler transactions.
-          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
-        application_metadata:
-          $ref: '#/components/schemas/DAppInfo-2'
-    LastSale:
-      type: object
-      description: Information about last sale of the NFT.
-      properties:
-        price:
-          type: number
-          format: float
-          description: The last known sale price of the NFT in the currency specified in the request parameters.
-          example: 31
-        quantity:
-          allOf:
-          - description: The quantity of the NFT in the last sale.
-          - $ref: '#/components/schemas/Quantity'
-    Response-2:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-2'
-        data:
-          $ref: '#/components/schemas/Container-2'
-    Relationships-5:
-      type: object
-      required:
-      - chains
-      - nft_collection
-      properties:
-        chains:
-          type: array
-          description: The blockchain on which the NFT collection exists.
-          items:
-            $ref: '#/components/schemas/Relationship'
-        nft_collection:
-          allOf:
-          - description: The NFT collection itself.
-          - $ref: '#/components/schemas/Relationship-4'
-    Relationships-3:
-      type: object
-      required:
-      - chain
-      - nft_collection
-      properties:
-        chain:
-          allOf:
-          - description: The blockchain on which the NFT position exists.
-          - $ref: '#/components/schemas/Relationship'
-        nft:
-          allOf:
-          - description: The NFT which represents the position.
-          - $ref: '#/components/schemas/Relationship-3'
-        nft_collection:
-          allOf:
-          - description: The NFT collection which the NFT belongs to.
-          - $ref: '#/components/schemas/Relationship-4'
-    ContainerShort-4:
-      type: object
-      properties:
-        type:
-          type: string
-          description: NFT collections resource type.
-          example: nft_collections
-        id:
-          type: integer
-          description: Unique NFT collection ID.
-          example: 14
-    SolanaAddress:
-      type: string
-      description: Solana address
-      pattern: ^[1-9A-HJ-NP-Za-km-z]{32,44}$
-      example: 8BH9pjtgyZDC4iAQH5ZiYDZ1MDWC98xki2V8NzqqKW3K
-    Response-6:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-6'
-        data:
-          $ref: '#/components/schemas/Container-9'
-    Receipt:
-      type: object
-      description: Token representing a DeFi position.
+      - fungible_info
+      - quantity
+      - price
+      - value
       properties:
         fungible_info:
-          $ref: '#/components/schemas/Info'
-    Implementation-2:
-      type: object
-      description: Represents a blockchain implementation of an NFT collection.
-      required:
-      - chain_id
-      - address
-      properties:
-        chain_id:
-          type: string
-          description: The chain ID where the collection is deployed.
-          example: ethereum
-        address:
           type:
-          - string
+          - object
           - 'null'
-          description: The contract address of the collection on the chain.
-          example: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
-    ResponseMany:
+          allOf:
+          - $ref: '#/components/schemas/Info'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        price:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Price of the asset when the transaction was mined. Can be null if price information is unavailable.
+          example: 2542.23
+        value:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The fee value in requested currency. Can be null if value cannot be calculated.
+          example: 39.965672931101786
+    PositionsDistributionByChain:
+      type: object
+      additionalProperties:
+        type: number
+        format: double
+        description: Total value of asset on the chain in selected currency
+      example:
+        arbitrum: 458.3555051522226
+        aurora: 72.01031337463428
+        avalanche: 17.128850607339444
+        base: 55.01550749900544
+        binance-smart-chain: 5.561075880033699
+        celo: 31.293849330045006
+        ethereum: 1214.009900354964
+        fantom: 84.58514074264951
+        linea: 8.258227109505139
+        optimism: 573.032664994399
+        polygon: 64.31407562634853
+        xdai: 113.1679493137936
+        zksync-era: 9.451002156306377
+    ResponseLinks-4:
       type: object
       required:
-      - links
-      - data
+      - self
       properties:
-        links:
-          $ref: '#/components/schemas/ResponseManyLinks'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Container-8'
-    Relationship-2:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/transactions/?currency=usd&page%5Bsize%5D=10
+        next:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/transactions/?currency=usd&page%5BlastId%5D=950ac208a5545dd19a1b2eb8edaef36c&page%5BlastTimestamp%5D=2022-12-08T09%3A12%3A35Z&page%5Bsize%5D=10
+    Container-2:
       type: object
       required:
-      - data
+      - type
+      - id
+      - attributes
       properties:
-        data:
-          $ref: '#/components/schemas/ContainerShort-2'
-    ActType:
-      type: string
-      description: Type of act in the transaction.
-      example: trade
-      enum:
-      - send
-      - receive
-      - trade
-      - deposit
-      - withdraw
-      - approve
-      - execute
-      - deploy
-      - fee
-      - mint
-      - burn
-      - claim
-      - delegate
-      - revoke_delegation
-      - bid
-    Implementation:
+        type:
+          type: string
+          description: Resource type
+          enum:
+          - portfolio
+        id:
+          type: string
+          description: Portfolio unique ID
+          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+        attributes:
+          $ref: '#/components/schemas/Attributes-3'
+    ResponseLinks-5:
       type: object
       required:
-      - chain_id
-      - decimals
+      - self
       properties:
-        chain_id:
+        self:
           type: string
-          description: Unique id of the chain.
-          example: ethereum
-        address:
-          type: string
-          description: Implementation address on the chain.
-          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
-        decimals:
-          type: integer
-          description: Number of decimals points of the implementation.
-          example: 18
-    Attributes:
-      type: object
-      required:
-      - begin_at
-      - end_at
-      properties:
-        begin_at:
-          type: string
-          description: Begin timestamp of the chart
-          example: '2023-01-18T11:00:00Z'
-        end_at:
-          type: string
-          description: End timestamp of the chart
-          example: '2023-01-25T10:30:00Z'
-        points:
-          type: array
-          description: Sorted list of chart points. The spacing between points depends on `chart_period` — see that parameter for the per-period interval.
-          items:
-            type: array
-            description: Chart point - tuple of two items, the first one is timestamp, the second one is a balance in requested currency
-            items:
-              oneOf:
-              - type: integer
-              - type: number
-            minItems: 2
-            maxItems: 2
-            example:
-            - 1674039600
-            - 1145.00999
-    Statistics:
-      type: object
-      description: PnL statistics for an individual fungible.
-      properties:
-        average_buy_price:
-          type: number
-          format: float
-          description: The average price at which the fungible was purchased.
-          example: 1258.8
-        average_sell_price:
-          type: number
-          format: float
-          description: The average price at which the fungible was sold.
-          example: 1224.96
-        total_gain:
-          type: number
-          format: float
-          description: The sum of realized and unrealized gains for this fungible.
-          example: -6900.85
-        realized_gain:
-          type: number
-          format: float
-          description: The gain (or loss) realized from selling this fungible, calculated using the FIFO method.
-          example: -6871.21
-        unrealized_gain:
-          type: number
-          format: float
-          description: The potential gain (or loss) on unsold holdings of this fungible.
-          example: -29.64
-        relative_total_gain_percentage:
-          type: number
-          format: float
-          description: The percentage return on total investment for this fungible.
-          example: -11.38
-        relative_realized_gain_percentage:
-          type: number
-          format: float
-          description: The percentage return on realized trades for this fungible.
-          example: -15.15
-        relative_unrealized_gain_percentage:
-          type: number
-          format: float
-          description: The percentage return on open positions for this fungible.
-          example: -0.19
-        total_fee:
-          type: number
-          format: float
-          description: The sum of all transaction fees associated with this fungible.
-          example: 4679.93
-        total_invested:
-          type: number
-          format: float
-          description: The total amount invested in this fungible (sum of all buy transactions).
-          example: 60643.33
-        realized_cost_basis:
-          type: number
-          format: float
-          description: The cost basis of closed (sold) positions for this fungible.
-          example: 45363.2
-        net_invested:
-          type: number
-          format: float
-          description: The total amount invested in this fungible that has not been sold.
-          example: 15280.13
-        received_external:
-          type: number
-          format: float
-          description: The cumulative value of this fungible received from other wallets.
-          example: 35402.73
-        sent_external:
-          type: number
-          format: float
-          description: The cumulative value of this fungible sent to other wallets.
-          example: 22213.21
-        sent_for_nfts:
-          type: number
-          format: float
-          description: The cumulative value of this fungible sent in transactions where the wallet receives NFTs.
-          example: 1713.23
-        received_for_nfts:
-          type: number
-          format: float
-          description: The cumulative value of this fungible received in transactions where the wallet sends NFTs.
-          example: 1635.05
+          format: url
+          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/nft-collections/
+    Included:
+      type: array
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/Container-5'
+        - $ref: '#/components/schemas/Container-6'
+        - $ref: '#/components/schemas/Container-7'
     Attributes-5:
       type: object
       required:
@@ -2014,7 +1039,29 @@ components:
           type: string
           description: Address of a transaction fee payer.
           example: '0x794a61358d6845594f94dc1db02a252b5b4814ad'
-    Container-9:
+    Relationship-2:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/ContainerShort-2'
+    Metadata-2:
+      type: object
+      description: Metadata associated with the NFT.
+      properties:
+        name:
+          type: string
+          description: The name of the collection.
+        description:
+          type: string
+          description: The description of the collection.
+        content:
+          $ref: '#/components/schemas/Content-2'
+        payment_token_symbol:
+          type: string
+          description: The symbol for the payment token used by the collection.
+    Container-4:
       type: object
       required:
       - type
@@ -2023,74 +1070,89 @@ components:
       properties:
         type:
           type: string
-          example: wallet_nft_portfolio
+          description: Resource type
+          enum:
+          - transactions
         id:
           type: string
-          description: NFT portfolio unique ID
-          example: nft-portfolio-0x42b9df65b219b3dd36ff330a4dd8f327a6ada990
+          description: Unique ID of the transaction.
+          example: 52d994a173d755e99845e861d534a419
         attributes:
-          $ref: '#/components/schemas/Attributes-9'
-    Included:
-      type: array
-      items:
-        anyOf:
-        - $ref: '#/components/schemas/Container-5'
-        - $ref: '#/components/schemas/Container-6'
-        - $ref: '#/components/schemas/Container-7'
-    ProcessingResponseMany:
+          $ref: '#/components/schemas/Attributes-5'
+        relationships:
+          $ref: '#/components/schemas/Relationships-2'
+    Attributes-3:
+      type: object
+      properties:
+        positions_distribution_by_type:
+          $ref: '#/components/schemas/PositionsDistributionByType'
+        positions_distribution_by_chain:
+          $ref: '#/components/schemas/PositionsDistributionByChain'
+        total:
+          $ref: '#/components/schemas/Total'
+        changes:
+          $ref: '#/components/schemas/Change'
+    Info-2:
+      type: object
+      required:
+      - contract_address
+      - token_id
+      - name
+      - interface
+      - flags
+      properties:
+        contract_address:
+          type: string
+          description: Address of the contract of the NFT.
+          example: '0x74ee68a33f6c9f113e22b3b77418b75f85d07d22'
+        token_id:
+          type: string
+          description: Unique identifier of the NFT inside the contract.
+          example: '10'
+        name:
+          type: string
+          description: Name of the NFT.
+          example: '#10 De·genesis'
+        interface:
+          $ref: '#/components/schemas/InterfaceEnum'
+        content:
+          $ref: '#/components/schemas/Content'
+        flags:
+          $ref: '#/components/schemas/Flags-3'
+    ContainerShort-2:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Decentralized application resource type.
+          example: dapps
+        id:
+          type: string
+          description: Decentralized application ID
+          example: aave-v3
+    ProcessingResponse:
       type: object
       required:
       - links
-      - data
       properties:
         links:
-          $ref: '#/components/schemas/ResponseManyLinks'
+          $ref: '#/components/schemas/ResponseLinks-6'
         data:
-          type: array
-          example: []
-    ContainerAttributes:
+          type: object
+    Total:
       type: object
-      description: Represents an NFT collection attributes corresponding to JSON API specification.
+      required:
+      - positions
+      description: Total portfolio values across all wallet positions and NFT
       properties:
-        metadata:
-          $ref: '#/components/schemas/Metadata-2'
-        market_data:
-          $ref: '#/components/schemas/MarketData-3'
-        implementations:
-          type: array
-          description: List of blockchain implementations where this collection is deployed
-          items:
-            $ref: '#/components/schemas/Implementation-2'
-    Attributes-9:
-      type: object
-      properties:
-        positions_distribution_by_chain:
-          $ref: '#/components/schemas/PositionsDistributionByChain-2'
-    PositionsDistributionByChain:
-      type: object
-      additionalProperties:
-        type: number
-        format: double
-        description: Total value of asset on the chain in selected currency
-      example:
-        arbitrum: 458.3555051522226
-        aurora: 72.01031337463428
-        avalanche: 17.128850607339444
-        base: 55.01550749900544
-        binance-smart-chain: 5.561075880033699
-        celo: 31.293849330045006
-        ethereum: 1214.009900354964
-        fantom: 84.58514074264951
-        linea: 8.258227109505139
-        optimism: 573.032664994399
-        polygon: 64.31407562634853
-        xdai: 113.1679493137936
-        zksync-era: 9.451002156306377
-    Included-2:
-      type: array
-      items:
-        anyOf:
-        - $ref: '#/components/schemas/Container-6'
+        positions:
+          type: number
+          format: float
+          description: Total value of all positions
+          example: 2017.4858230069574
     Container-3:
       type: object
       required:
@@ -2111,214 +1173,24 @@ components:
           $ref: '#/components/schemas/Attributes-4'
         relationships:
           $ref: '#/components/schemas/Relationships'
-    Relationships:
+    Implementation:
       type: object
       required:
-      - chain
-      - fungible
+      - chain_id
+      - decimals
       properties:
-        chain:
-          $ref: '#/components/schemas/Relationship'
-        fungible:
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              type: object
-              required:
-              - related
-              properties:
-                related:
-                  format: url
-                  example: https://api.zerion.io/v1/fungibles/0x111c47865ade3b172a928df8f990bc7f2a3b9aaa
-            data:
-              type: object
-              required:
-              - type
-              - id
-              properties:
-                type:
-                  type: string
-                  example: fungibles
-                id:
-                  type: string
-                  example: '0x111c47865ade3b172a928df8f990bc7f2a3b9aaa'
-        dapp:
-          $ref: '#/components/schemas/Relationship-2'
-    Relationship-3:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/ContainerShort-3'
-    ExecutionMethod:
-      type: object
-      properties:
-        id:
+        chain_id:
           type: string
-          description: Execution method id. First 4 bytes of keccak256 of method signature in hex format.
-          example: '0x095ea7b3'
-        name:
+          description: Unique id of the chain.
+          example: ethereum
+        address:
           type: string
-          description: Human readable name of the method.
-          example: Approve
-    MarketData:
-      type: object
-      required:
-      - price
-      properties:
-        total_supply:
-          type: number
-          format: double
-          description: Total market supply of fungible
-          example: 29905.762448515918
-        circulating_supply:
-          type: number
-          format: double
-          description: Circulating value of fungible
-          example: 29905.762448515918
-        fully_diluted_valuation:
-          type: number
-          format: double
-          description: Total market capitalization of fungible in selected currency
-          example: 3196313.736038149
-        market_cap:
-          type: number
-          format: double
-          description: Circulating market capitalization of fungible in selected currency
-          example: 3196313.736038149
-        price:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latest fungible price
-          example: 106.87952669793131
-        changes:
-          $ref: '#/components/schemas/MarketDataChanges'
-        trading_volumes:
-          $ref: '#/components/schemas/TradingVolumes'
-    ContentLink:
-      type: object
-      required:
-      - url
-      properties:
-        url:
-          type: string
-          format: url
-          description: URL to the content
-          example: https://token-icons.s3.amazonaws.com/0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b.png
-        content_type:
-          type: string
-          description: MIME content type
-          example: image/png
-    Attributes-8:
-      type: object
-      required:
-      - nfts_count
-      - total_floor_price
-      properties:
-        min_changed_at:
-          type:
-          - string
-          - 'null'
-          description: The earliest `changed_at` date and time alongside all wallet's positions from the collection.
-          example: '2020-02-28T19:24:39Z'
-        max_changed_at:
-          type:
-          - string
-          - 'null'
-          description: The most recent `changed_at` date and time alongside all wallet's positions from the collection.
-          example: '2023-02-28T19:24:39Z'
-        nfts_count:
-          type: string
-          description: The total quantity of the wallet's NFT positions from the collection.
-          example: '1'
-        total_floor_price:
-          type: number
-          format: float
-          description: The lowest price (floor) of the all wallet's NFTs positions from the collection. Measured in the requested currency.
-        collection_info:
-          $ref: '#/components/schemas/Info-3'
-    Attribute:
-      type: object
-      required:
-      - key
-      properties:
-        key:
-          type: string
-          description: 'Attribute key. The key is not unique and is it possible to have several attributes
-
-            with the same key.
-
-            '
-          example: Rarity
-        value:
-          type: string
-          description: Attribute value
-          example: common
-    InterfaceEnum:
-      type: string
-      description: The standard that the NFT contract follows, e.g. ERC-721.
-      example: erc1155
-      enum:
-      - erc721
-      - erc1155
-    Metadata:
-      type: object
-      description: Metadata associated with the NFT.
-      properties:
-        name:
-          type: string
-          description: The name of the NFT
-        description:
-          type: string
-          description: The description of the NFT
-        tags:
-          type: array
-          description: The list of tags associated with the NFT
-          items:
-            type: string
-        content:
-          $ref: '#/components/schemas/Content'
-        attributes:
-          type: array
-          description: The list of attributes associated with the NFT
-          items:
-            $ref: '#/components/schemas/Attribute'
-    Relationships-2:
-      type: object
-      properties:
-        chain:
-          $ref: '#/components/schemas/Relationship'
-        dapp:
-          $ref: '#/components/schemas/Relationship-2'
-    MarketData-3:
-      type: object
-      description: Contains marketplace data for a collection of NFTs.
-      properties:
-        prices:
-          $ref: '#/components/schemas/MarketDataPrices-2'
-    Change-2:
-      type: object
-      description: Position changes
-      required:
-      - absolute_1d
-      - percent_1d
-      properties:
-        absolute_1d:
-          type: number
-          format: float
-          description: Daily absolute position change value
-          example: 0.272309794
-        percent_1d:
-          type: number
-          format: float
-          description: Daily position change percent
-          example: 5.326512552079021
+          description: Implementation address on the chain.
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+        decimals:
+          type: integer
+          description: Number of decimals points of the implementation.
+          example: 18
     WalletPNLResponse:
       type: object
       required:
@@ -2362,19 +1234,223 @@ components:
               example:
               - ethereum:0x6b175474e89094c44da98b954eedeac495271d0f
               - 'ethereum:'
-    EVMAddress:
+    Container-8:
+      type: object
+      description: The NFT position of the wallet.
+      required:
+      - type
+      - id
+      - attributes
+      properties:
+        type:
+          type: string
+          description: NFT positions resource type.
+          example: nft_positions
+        id:
+          type: string
+          description: NFT position's unique ID.
+          example: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990:ethereum:22:0x909899c5dbb5002610dd8543b6f638be56e3b17e:57896044618658097711785492504343953928676686534345912800509039648547174119787
+        attributes:
+          $ref: '#/components/schemas/Attributes-6'
+        relationships:
+          $ref: '#/components/schemas/Relationships-3'
+        included:
+          $ref: '#/components/schemas/Included'
+    ProcessingResponseMany:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseManyLinks'
+        data:
+          type: array
+          example: []
+    LastSale:
+      type: object
+      description: Information about last sale of the NFT.
+      properties:
+        price:
+          type: number
+          format: float
+          description: The last known sale price of the NFT in the currency specified in the request parameters.
+          example: 31
+        quantity:
+          allOf:
+          - description: The quantity of the NFT in the last sale.
+          - $ref: '#/components/schemas/Quantity'
+    Breakdown:
+      type: object
+      description: 'Detailed PnL breakdown by individual fungibles.
+
+        Contains per-fungible statistics keyed either by fungible ID or by implementation (chain:address pair).
+
+        Only returned when the request includes filters for fungibles (fungible_ids or fungible_implementations).
+
+        '
+      properties:
+        by_id:
+          type: object
+          description: PnL statistics broken down by fungible ID.
+          additionalProperties:
+            $ref: '#/components/schemas/Statistics'
+          example:
+            eth:
+              average_buy_price: 1258.8
+              average_sell_price: 1224.96
+              total_gain: -6900.85
+              realized_gain: -6871.21
+              unrealized_gain: -29.64
+              relative_total_gain_percentage: -11.38
+              relative_realized_gain_percentage: -15.15
+              relative_unrealized_gain_percentage: -0.19
+              total_fee: 4679.93
+              total_invested: 60643.33
+              realized_cost_basis: 45363.2
+              net_invested: 15280.13
+              received_external: 35402.73
+              sent_external: 22213.21
+              sent_for_nfts: 1713.23
+              received_for_nfts: 1635.05
+        by_implementation:
+          type: object
+          description: PnL statistics broken down by fungible implementation (chain:address pair).
+          additionalProperties:
+            $ref: '#/components/schemas/Statistics'
+          example:
+            ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48:
+              average_buy_price: 1
+              average_sell_price: 1
+              total_gain: 0
+              realized_gain: 0
+              unrealized_gain: 0
+              relative_total_gain_percentage: 0
+              relative_realized_gain_percentage: 0
+              relative_unrealized_gain_percentage: 0
+              total_fee: 12.5
+              total_invested: 5000
+              realized_cost_basis: 3000
+              net_invested: 2000
+              received_external: 1000
+              sent_external: 500
+              sent_for_nfts: 0
+              received_for_nfts: 0
+    ResponseMany:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseManyLinks'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container-8'
+    MarketData-2:
+      type: object
+      properties:
+        prices:
+          $ref: '#/components/schemas/MarketDataPrices'
+        last_sale:
+          $ref: '#/components/schemas/LastSale'
+    RelationshipLinks:
+      type: object
+      required:
+      - related
+      properties:
+        related:
+          type: string
+          format: url
+          description: URL to the current chain.
+          example: https://api.zerion.io/v1/chains/polygon
+    Type:
       type: string
-      description: Ethereum-compatible address (EVM).
-      pattern: ^0x[a-fA-F0-9]{40}$
-      example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
-    AssetType:
-      type: string
-      description: Type of concrete asset.
-      example: fungible
+      description: 'Type of the transaction operation. This field indicates the primary action performed in the transaction.
+
+
+        Possible values and their meanings:
+
+
+        - `approve` - Grant permission to a smart contract to access and spend tokens on behalf of the wallet
+
+        - `bid` - Place a bid in a prediction market
+
+        - `burn` - Destroy tokens permanently, reducing the total token supply
+
+        - `claim` - Claim earned rewards, airdrops, or vested tokens from a protocol
+
+        - `delegate` - Delegate tokens or voting power to another address
+
+        - `deploy` - Deploy a new smart contract to the blockchain
+
+        - `deposit` - Deposit assets into a protocol (e.g., lending pool, liquidity pool, vault)
+
+        - `execute` - Execute a smart contract function or complex interaction that doesn''t fit other specific types
+
+        - `mint` - Create new tokens, increasing the total token supply
+
+        - `receive` - Receive tokens from another wallet address
+
+        - `revoke` - Revoke previously granted token spending permissions from a smart contract
+
+        - `revoke_delegation` - Revoke a previously delegated token or voting power
+
+        - `send` - Send tokens to another wallet address
+
+        - `trade` - Exchange or swap assets (e.g., on a DEX)
+
+        - `withdraw` - Withdraw assets from a protocol (e.g., from lending pools, liquidity pools, or vaults)
+
+        '
+      example: trade
       enum:
-      - fungible
-      - nft
-    Container-2:
+      - approve
+      - bid
+      - burn
+      - claim
+      - delegate
+      - deploy
+      - deposit
+      - execute
+      - mint
+      - receive
+      - revoke
+      - revoke_delegation
+      - send
+      - trade
+      - withdraw
+    Attributes:
+      type: object
+      required:
+      - begin_at
+      - end_at
+      properties:
+        begin_at:
+          type: string
+          description: Begin timestamp of the chart
+          example: '2023-01-18T11:00:00Z'
+        end_at:
+          type: string
+          description: End timestamp of the chart
+          example: '2023-01-25T10:30:00Z'
+        points:
+          type: array
+          description: Sorted list of chart points. The spacing between points depends on `chart_period` — see that parameter for the per-period interval.
+          items:
+            type: array
+            description: Chart point - tuple of two items, the first one is timestamp, the second one is a balance in requested currency
+            items:
+              oneOf:
+              - type: integer
+              - type: number
+            minItems: 2
+            maxItems: 2
+            example:
+            - 1674039600
+            - 1145.00999
+    WalletPNLContainer:
       type: object
       required:
       - type
@@ -2385,14 +1461,78 @@ components:
           type: string
           description: Resource type
           enum:
-          - portfolio
+          - pnl
         id:
           type: string
-          description: Portfolio unique ID
+          description: PNL unique ID
           example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
         attributes:
-          $ref: '#/components/schemas/Attributes-3'
-    ResponseLinks-3:
+          $ref: '#/components/schemas/Attributes-2'
+    Response-3:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-3'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container-3'
+    Relationship:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
+        data:
+          $ref: '#/components/schemas/ContainerShort'
+    Relationships-5:
+      type: object
+      required:
+      - chains
+      - nft_collection
+      properties:
+        chains:
+          type: array
+          description: The blockchain on which the NFT collection exists.
+          items:
+            $ref: '#/components/schemas/Relationship'
+        nft_collection:
+          allOf:
+          - description: The NFT collection itself.
+          - $ref: '#/components/schemas/Relationship-4'
+    TradingVolumes:
+      type: object
+      properties:
+        volume_1d:
+          type: number
+          format: double
+          description: Trading volume over the last 24 hours in the selected currency.
+          example: 40096375.69294812
+    DAppInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          example: AAVE
+          description: 'Human readable representation of DApp. That offers more intuitive understanding for users.
+
+
+            Note: only available for positions within protocols.
+
+            '
+        icon:
+          $ref: '#/components/schemas/Icon'
+        url:
+          type: string
+          format: url
+          description: URL of the DApp the position relates to.
+          example: https://app.aave.com/
+    ResponseLinks-6:
       type: object
       required:
       - self
@@ -2400,50 +1540,182 @@ components:
         self:
           type: string
           format: url
-          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/positions/
-    ProcessingResponse:
+          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/nft-portfolio/?currency=usd
+    MarketDataPrices:
+      type: object
+      description: The prices associated with the NFT expressed in the currency specified in the request parameters.
+      properties:
+        floor:
+          type: number
+          format: float
+          description: The lowest known price for the NFT.
+    Content-2:
+      type: object
+      properties:
+        icon:
+          allOf:
+          - description: The URL for the collection's icon.
+          - $ref: '#/components/schemas/Icon'
+        banner:
+          allOf:
+          - description: The URL for the collection's banner image.
+          - $ref: '#/components/schemas/ContentLink'
+    ContainerShort-3:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: NFTs resource type.
+          example: nfts
+        id:
+          type: string
+          description: Unique identifier of the NFT.
+    Relationship-4:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/ContainerShort-4'
+    Flags-2:
+      type: object
+      required:
+      - displayable
+      properties:
+        displayable:
+          type: boolean
+          description: Whether this position should be displayable and calculated in the wallet or not
+          example: true
+        is_trash:
+          type: boolean
+          description: Is the position classified by Zerion as trash.
+    Implementation-2:
+      type: object
+      description: Represents a blockchain implementation of an NFT collection.
+      required:
+      - chain_id
+      - address
+      properties:
+        chain_id:
+          type: string
+          description: The chain ID where the collection is deployed.
+          example: ethereum
+        address:
+          type:
+          - string
+          - 'null'
+          description: The contract address of the collection on the chain.
+          example: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
+    MarketDataPrices-2:
+      type: object
+      description: Prices associated with the NFT collection expressed in the currency specified in the request parameters.
+      properties:
+        floor:
+          type: number
+          format: float
+          description: The lowest known price for an NFT in the collection.
+    WalletPNLResponseLinks:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/pnl
+    ResponseManyLinks:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/nft-positions/
+    Container-7:
+      type: object
+      description: The NFT collection held by the wallet.
+      required:
+      - type
+      - id
+      - attributes
+      properties:
+        type:
+          type: string
+          description: NFT collection resource type.
+          example: wallet_nft_collections
+        id:
+          type: integer
+          description: NFT collection's unique ID.
+          example: 14
+        attributes:
+          $ref: '#/components/schemas/Attributes-8'
+        relationships:
+          $ref: '#/components/schemas/Relationships-5'
+    ContainerShort:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Chain resource type.
+          example: chains
+        id:
+          type: string
+          description: Chain unique identifier.
+          example: polygon
+    Response-6:
       type: object
       required:
       - links
+      - data
       properties:
         links:
           $ref: '#/components/schemas/ResponseLinks-6'
         data:
-          type: object
-    PositionType:
-      type:
-      - string
-      - 'null'
-      description: 'Position''s type indicating how the assets are being used or their current state.
-
-        '
-      enum:
-      - deposit
-      - loan
-      - locked
-      - staked
-      - reward
-      - wallet
-      - investment
-      x-enum-descriptions:
-      - deposit - assets deposited into a DeFi protocol (e.g., lending pools, vaults, LP positions)
-      - loan - borrowed assets representing a debt position
-      - locked - assets locked for a period or purpose (e.g., veTokens, time-locks)
-      - staked - assets staked to earn rewards or participate in consensus
-      - reward - earned but unclaimed rewards
-      - wallet - assets held directly in the user wallet
-      - investment - tokenized funds, indices, structured products
-    Total:
+          $ref: '#/components/schemas/Container-9'
+    Container-6:
       type: object
-      required:
-      - positions
-      description: Total portfolio values across all wallet positions and NFT
       properties:
-        positions:
-          type: number
-          format: float
-          description: Total value of all positions
-          example: 2017.4858230069574
+        type:
+          type: string
+          description: NFT collections resource type.
+          example: nft_collections
+        id:
+          type: integer
+          description: Unique NFT collection ID.
+          example: 14
+        attributes:
+          $ref: '#/components/schemas/ContainerAttributes'
+    Attributes-9:
+      type: object
+      properties:
+        positions_distribution_by_chain:
+          $ref: '#/components/schemas/PositionsDistributionByChain-2'
+    Content:
+      type: object
+      properties:
+        preview:
+          allOf:
+          - description: The URL of the preview image
+          - $ref: '#/components/schemas/ContentLink'
+        detail:
+          allOf:
+          - description: The URL of the full-size image
+          - $ref: '#/components/schemas/ContentLink'
+        audio:
+          allOf:
+          - description: The URL of the audio file
+          - $ref: '#/components/schemas/ContentLink'
+        video:
+          allOf:
+          - description: The URL of the video file
+          - $ref: '#/components/schemas/ContentLink'
     Attributes-2:
       type: object
       properties:
@@ -2603,31 +1875,149 @@ components:
           example: 133971.2931
         breakdown:
           $ref: '#/components/schemas/Breakdown'
-    ResponseLinks-4:
+    ContainerShort-4:
       type: object
-      required:
-      - self
       properties:
-        self:
+        type:
           type: string
-          format: url
-          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/transactions/?currency=usd&page%5Bsize%5D=10
-        next:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/transactions/?currency=usd&page%5BlastId%5D=950ac208a5545dd19a1b2eb8edaef36c&page%5BlastTimestamp%5D=2022-12-08T09%3A12%3A35Z&page%5Bsize%5D=10
-    Response-3:
+          description: NFT collections resource type.
+          example: nft_collections
+        id:
+          type: integer
+          description: Unique NFT collection ID.
+          example: 14
+    Attributes-7:
       type: object
+      description: Represents attributes of a non-fungible token (NFT) corresponding to JSON API specification.
       required:
-      - links
-      - data
+      - contract_address
+      - token_id
       properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-3'
-        data:
+        contract_address:
+          type: string
+          description: The address of the contract that manages the NFT.
+          example: '0x74ee68a33f6c9f113e22b3b77418b75f85d07d22'
+        token_id:
+          type: string
+          description: The unique identifier for the NFT within its contract.
+          example: '10'
+        interface:
+          $ref: '#/components/schemas/InterfaceEnum'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        market_data:
+          $ref: '#/components/schemas/MarketData-2'
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+        flags:
+          $ref: '#/components/schemas/Flags-3'
+    Metadata:
+      type: object
+      description: Metadata associated with the NFT.
+      properties:
+        name:
+          type: string
+          description: The name of the NFT
+        description:
+          type: string
+          description: The description of the NFT
+        tags:
           type: array
+          description: The list of tags associated with the NFT
           items:
-            $ref: '#/components/schemas/Container-3'
+            type: string
+        content:
+          $ref: '#/components/schemas/Content'
+        attributes:
+          type: array
+          description: The list of attributes associated with the NFT
+          items:
+            $ref: '#/components/schemas/Attribute'
+    Refund:
+      type: object
+      description: The refund that was received for the transaction.
+      required:
+      - fungible_info
+      - quantity
+      - value
+      - price
+      properties:
+        fungible_info:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Info'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        price:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Price of the asset when the transaction was mined.
+          example: 2542.23
+        value:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The refund value in requested currency.
+          example: 5.123456789
+    Relationships-3:
+      type: object
+      required:
+      - chain
+      - nft_collection
+      properties:
+        chain:
+          allOf:
+          - description: The blockchain on which the NFT position exists.
+          - $ref: '#/components/schemas/Relationship'
+        nft:
+          allOf:
+          - description: The NFT which represents the position.
+          - $ref: '#/components/schemas/Relationship-3'
+        nft_collection:
+          allOf:
+          - description: The NFT collection which the NFT belongs to.
+          - $ref: '#/components/schemas/Relationship-4'
+    MarketData:
+      type: object
+      required:
+      - price
+      properties:
+        total_supply:
+          type: number
+          format: double
+          description: Total market supply of fungible
+          example: 29905.762448515918
+        circulating_supply:
+          type: number
+          format: double
+          description: Circulating value of fungible
+          example: 29905.762448515918
+        fully_diluted_valuation:
+          type: number
+          format: double
+          description: Total market capitalization of fungible in selected currency
+          example: 3196313.736038149
+        market_cap:
+          type: number
+          format: double
+          description: Circulating market capitalization of fungible in selected currency
+          example: 3196313.736038149
+        price:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latest fungible price
+          example: 106.87952669793131
+        changes:
+          $ref: '#/components/schemas/MarketDataChanges'
+        trading_volumes:
+          $ref: '#/components/schemas/TradingVolumes'
     Info:
       type: object
       required:
@@ -2675,422 +2065,24 @@ components:
           allOf:
           - $ref: '#/components/schemas/MarketData'
           description: Market data for the fungible, including price, supply, and market cap information. Currently available at transaction callback notifications only.
-    Content:
+    MarketData-3:
       type: object
+      description: Contains marketplace data for a collection of NFTs.
       properties:
-        preview:
-          allOf:
-          - description: The URL of the preview image
-          - $ref: '#/components/schemas/ContentLink'
-        detail:
-          allOf:
-          - description: The URL of the full-size image
-          - $ref: '#/components/schemas/ContentLink'
-        audio:
-          allOf:
-          - description: The URL of the audio file
-          - $ref: '#/components/schemas/ContentLink'
-        video:
-          allOf:
-          - description: The URL of the video file
-          - $ref: '#/components/schemas/ContentLink'
-    Response:
+        prices:
+          $ref: '#/components/schemas/MarketDataPrices-2'
+    Icon:
       type: object
-      required:
-      - links
-      - data
+      description: Icon related to object.
       properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks'
-        data:
-          $ref: '#/components/schemas/Container'
-    Breakdown:
-      type: object
-      description: 'Detailed PnL breakdown by individual fungibles.
-
-        Contains per-fungible statistics keyed either by fungible ID or by implementation (chain:address pair).
-
-        Only returned when the request includes filters for fungibles (fungible_ids or fungible_implementations).
-
-        '
-      properties:
-        by_id:
-          type: object
-          description: PnL statistics broken down by fungible ID.
-          additionalProperties:
-            $ref: '#/components/schemas/Statistics'
-          example:
-            eth:
-              average_buy_price: 1258.8
-              average_sell_price: 1224.96
-              total_gain: -6900.85
-              realized_gain: -6871.21
-              unrealized_gain: -29.64
-              relative_total_gain_percentage: -11.38
-              relative_realized_gain_percentage: -15.15
-              relative_unrealized_gain_percentage: -0.19
-              total_fee: 4679.93
-              total_invested: 60643.33
-              realized_cost_basis: 45363.2
-              net_invested: 15280.13
-              received_external: 35402.73
-              sent_external: 22213.21
-              sent_for_nfts: 1713.23
-              received_for_nfts: 1635.05
-        by_implementation:
-          type: object
-          description: PnL statistics broken down by fungible implementation (chain:address pair).
-          additionalProperties:
-            $ref: '#/components/schemas/Statistics'
-          example:
-            ethereum:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48:
-              average_buy_price: 1
-              average_sell_price: 1
-              total_gain: 0
-              realized_gain: 0
-              unrealized_gain: 0
-              relative_total_gain_percentage: 0
-              relative_realized_gain_percentage: 0
-              relative_unrealized_gain_percentage: 0
-              total_fee: 12.5
-              total_invested: 5000
-              realized_cost_basis: 3000
-              net_invested: 2000
-              received_external: 1000
-              sent_external: 500
-              sent_for_nfts: 0
-              received_for_nfts: 0
-    ExternalLinks:
-      type: array
-      description: A list of relevant URLs.
-      items:
-        $ref: '#/components/schemas/ExternalLink'
-    WalletPNLContainer:
-      type: object
-      required:
-      - type
-      - id
-      - attributes
-      properties:
-        type:
-          type: string
-          description: Resource type
-          enum:
-          - pnl
-        id:
-          type: string
-          description: PNL unique ID
-          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
-        attributes:
-          $ref: '#/components/schemas/Attributes-2'
-    Quantity:
-      type: object
-      required:
-      - int
-      - decimals
-      - float
-      - numeric
-      properties:
-        int:
-          type: string
-          description: Objective on-chain raw amount in base units. Use this value for building on-chain transactions.
-          example: '12345678'
-        decimals:
-          type: integer
-          description: Decimal number precision of the quantity - digits after the floating point.
-          example: 5
-        float:
-          type: number
-          format: float
-          description: Ready-to-display value = int / 10^decimals. For Token-2022 ScaledUiAmount assets (a small subset of Solana tokens), the display value is int × multiplier / 10^decimals.
-          example: 123.45678
-        numeric:
-          type: string
-          description: Ready-to-display value = int / 10^decimals. For Token-2022 ScaledUiAmount assets (a small subset of Solana tokens), the display value is int × multiplier / 10^decimals.
-          example: '123.45678'
-    DAppInfo-2:
-      type: object
-      required:
-      - contract_address
-      properties:
-        name:
-          type: string
-          example: AAVE
-          description: 'Human readable representation of DApp, that wallet interacted to. That offers more intuitive understanding for users.
-
-            '
-        icon:
-          $ref: '#/components/schemas/Icon'
-        contract_address:
-          type: string
-          description: The address of the executed contract.
-          example: '0x794a61358d6845594f94dc1db02a252b5b4814ad'
-        method:
-          $ref: '#/components/schemas/ExecutionMethod'
-    RelationshipLinks:
-      type: object
-      required:
-      - related
-      properties:
-        related:
-          type: string
+        url:
+          type:
+          - string
+          - 'null'
           format: url
-          description: URL to the current chain.
-          example: https://api.zerion.io/v1/chains/polygon
-    MarketDataPrices:
-      type: object
-      description: The prices associated with the NFT expressed in the currency specified in the request parameters.
-      properties:
-        floor:
-          type: number
-          format: float
-          description: The lowest known price for the NFT.
-    CollectionApproval:
-      type: object
-      required:
-      - cancelled
-      - spender
-      - act_id
-      properties:
-        collection_info:
-          $ref: '#/components/schemas/CollectionInfo'
-        cancelled:
-          type: boolean
-          description: Indicates if the approval has been cancelled or granted.
-        spender:
-          type: string
-          description: Address of the spender of the approval.
-          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
-        act_id:
-          type: string
-          description: Identifier of the act to which the transfer belongs.
-          example: '1'
-    Container-6:
-      type: object
-      properties:
-        type:
-          type: string
-          description: NFT collections resource type.
-          example: nft_collections
-        id:
-          type: integer
-          description: Unique NFT collection ID.
-          example: 14
-        attributes:
-          $ref: '#/components/schemas/ContainerAttributes'
-    Fee:
-      type: object
-      description: The fee that was paid for the transaction.
-      required:
-      - fungible_info
-      - quantity
-      - price
-      - value
-      properties:
-        fungible_info:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Info'
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-        price:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: Price of the asset when the transaction was mined. Can be null if price information is unavailable.
-          example: 2542.23
-        value:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: The fee value in requested currency. Can be null if value cannot be calculated.
-          example: 39.965672931101786
-    TradingVolumes:
-      type: object
-      properties:
-        volume_1d:
-          type: number
-          format: double
-          description: Trading volume over the last 24 hours in the selected currency.
-          example: 40096375.69294812
-    Metadata-2:
-      type: object
-      description: Metadata associated with the NFT.
-      properties:
-        name:
-          type: string
-          description: The name of the collection.
-        description:
-          type: string
-          description: The description of the collection.
-        content:
-          $ref: '#/components/schemas/Content-2'
-        payment_token_symbol:
-          type: string
-          description: The symbol for the payment token used by the collection.
-    Container-8:
-      type: object
-      description: The NFT position of the wallet.
-      required:
-      - type
-      - id
-      - attributes
-      properties:
-        type:
-          type: string
-          description: NFT positions resource type.
-          example: nft_positions
-        id:
-          type: string
-          description: NFT position's unique ID.
-          example: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990:ethereum:22:0x909899c5dbb5002610dd8543b6f638be56e3b17e:57896044618658097711785492504343953928676686534345912800509039648547174119787
-        attributes:
-          $ref: '#/components/schemas/Attributes-6'
-        relationships:
-          $ref: '#/components/schemas/Relationships-3'
-        included:
-          $ref: '#/components/schemas/Included'
-    ContainerShort:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Chain resource type.
-          example: chains
-        id:
-          type: string
-          description: Chain unique identifier.
-          example: polygon
-    MarketDataPrices-2:
-      type: object
-      description: Prices associated with the NFT collection expressed in the currency specified in the request parameters.
-      properties:
-        floor:
-          type: number
-          format: float
-          description: The lowest known price for an NFT in the collection.
-    Refund:
-      type: object
-      description: The refund that was received for the transaction.
-      required:
-      - fungible_info
-      - quantity
-      - value
-      - price
-      properties:
-        fungible_info:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Info'
-        quantity:
-          $ref: '#/components/schemas/Quantity'
-        price:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: Price of the asset when the transaction was mined.
-          example: 2542.23
-        value:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: The refund value in requested currency.
-          example: 5.123456789
-    Relationship-4:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/ContainerShort-4'
-    Info-2:
-      type: object
-      required:
-      - contract_address
-      - token_id
-      - name
-      - interface
-      - flags
-      properties:
-        contract_address:
-          type: string
-          description: Address of the contract of the NFT.
-          example: '0x74ee68a33f6c9f113e22b3b77418b75f85d07d22'
-        token_id:
-          type: string
-          description: Unique identifier of the NFT inside the contract.
-          example: '10'
-        name:
-          type: string
-          description: Name of the NFT.
-          example: '#10 De·genesis'
-        interface:
-          $ref: '#/components/schemas/InterfaceEnum'
-        content:
-          $ref: '#/components/schemas/Content'
-        flags:
-          $ref: '#/components/schemas/Flags-3'
-    Response-5:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-5'
-        data:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/Container-7'
-            - type: object
-              properties:
-                included:
-                  $ref: '#/components/schemas/Included-2'
-    Container-4:
-      type: object
-      required:
-      - type
-      - id
-      - attributes
-      properties:
-        type:
-          type: string
-          description: Resource type
-          enum:
-          - transactions
-        id:
-          type: string
-          description: Unique ID of the transaction.
-          example: 52d994a173d755e99845e861d534a419
-        attributes:
-          $ref: '#/components/schemas/Attributes-5'
-        relationships:
-          $ref: '#/components/schemas/Relationships-2'
-    Info-3:
-      type: object
-      description: Represents an NFT collection short info.
-      properties:
-        name:
-          type: string
-          description: The name of the collection.
-        description:
-          type: string
-          description: The description of the collection.
-        content:
-          $ref: '#/components/schemas/Content-2'
-    ResponseLinks-2:
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
+    ResponseLinks-3:
       type: object
       required:
       - self
@@ -3098,35 +2090,7 @@ components:
         self:
           type: string
           format: url
-          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/portfolio
-    Delegation:
-      type: object
-      description: Delegation created on an EVM chain.
-      required:
-      - address
-      - act_id
-      properties:
-        chain_id:
-          type: string
-          example: ethereum
-        address:
-          type: string
-          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
-        act_id:
-          type: string
-          example: '1'
-    Response-4:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-4'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Container-4'
+          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/positions/
     Transfer:
       type: object
       required:
@@ -3178,6 +2142,42 @@ components:
           type: string
           description: Identifier of the act to which the transfer belongs
           example: '2'
+    Relationships:
+      type: object
+      required:
+      - chain
+      - fungible
+      properties:
+        chain:
+          $ref: '#/components/schemas/Relationship'
+        fungible:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x111c47865ade3b172a928df8f990bc7f2a3b9aaa
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungibles
+                id:
+                  type: string
+                  example: '0x111c47865ade3b172a928df8f990bc7f2a3b9aaa'
+        dapp:
+          $ref: '#/components/schemas/Relationship-2'
     Flags:
       type: object
       required:
@@ -3187,73 +2187,90 @@ components:
           type: boolean
           description: Whether this fungible verified or not
           example: true
-    Attributes-3:
+    DAppInfo-2:
+      type: object
+      required:
+      - contract_address
+      properties:
+        name:
+          type: string
+          example: AAVE
+          description: 'Human readable representation of DApp, that wallet interacted to. That offers more intuitive understanding for users.
+
+            '
+        icon:
+          $ref: '#/components/schemas/Icon'
+        contract_address:
+          type: string
+          description: The address of the executed contract.
+          example: '0x794a61358d6845594f94dc1db02a252b5b4814ad'
+        method:
+          $ref: '#/components/schemas/ExecutionMethod'
+    PositionsDistributionByType:
+      type: object
+      required:
+      - wallet
+      - deposited
+      - borrowed
+      - locked
+      - staked
+      properties:
+        wallet:
+          type: number
+          format: float
+          description: Total value of asset on the wallet in selected currency
+          example: 1864.774102420957
+        deposited:
+          type: number
+          format: float
+          description: Total value of deposited assets in selected currency
+          example: 78.04192492782934
+        borrowed:
+          type: number
+          format: float
+          description: Total value of borrowed assets in selected currency
+          example: 0.9751475798305564
+        locked:
+          type: number
+          format: float
+          description: Total value of locked assets in selected currency
+          example: 5.780032725068765
+        staked:
+          type: number
+          format: float
+          description: Total value of staked assets in selected currency
+          example: 66.13183205505294
+    MarketDataChanges:
       type: object
       properties:
-        positions_distribution_by_type:
-          $ref: '#/components/schemas/PositionsDistributionByType'
-        positions_distribution_by_chain:
-          $ref: '#/components/schemas/PositionsDistributionByChain'
-        total:
-          $ref: '#/components/schemas/Total'
-        changes:
-          $ref: '#/components/schemas/Change'
-    Type:
-      type: string
-      description: 'Type of the transaction operation. This field indicates the primary action performed in the transaction.
-
-
-        Possible values and their meanings:
-
-
-        - `approve` - Grant permission to a smart contract to access and spend tokens on behalf of the wallet
-
-        - `bid` - Place a bid in a prediction market
-
-        - `burn` - Destroy tokens permanently, reducing the total token supply
-
-        - `claim` - Claim earned rewards, airdrops, or vested tokens from a protocol
-
-        - `delegate` - Delegate tokens or voting power to another address
-
-        - `deploy` - Deploy a new smart contract to the blockchain
-
-        - `deposit` - Deposit assets into a protocol (e.g., lending pool, liquidity pool, vault)
-
-        - `execute` - Execute a smart contract function or complex interaction that doesn''t fit other specific types
-
-        - `mint` - Create new tokens, increasing the total token supply
-
-        - `receive` - Receive tokens from another wallet address
-
-        - `revoke` - Revoke previously granted token spending permissions from a smart contract
-
-        - `revoke_delegation` - Revoke a previously delegated token or voting power
-
-        - `send` - Send tokens to another wallet address
-
-        - `trade` - Exchange or swap assets (e.g., on a DEX)
-
-        - `withdraw` - Withdraw assets from a protocol (e.g., from lending pools, liquidity pools, or vaults)
-
-        '
-      example: trade
-      enum:
-      - approve
-      - bid
-      - burn
-      - claim
-      - delegate
-      - deploy
-      - deposit
-      - execute
-      - mint
-      - receive
-      - revoke
-      - revoke_delegation
-      - send
-      - trade
-      - withdraw
+        percent_1d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 1 day
+          example: -0.7379066649086338
+        percent_30d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 30 days
+          example: -2.499465618806962
+        percent_90d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 90 days
+          example: 11.316340269371775
+        percent_365d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 1 year
+          example: null
     ResponseLinks:
       type: object
       properties:
@@ -3261,6 +2278,76 @@ components:
           type: string
           format: url
           example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/charts/day
+    ExecutionMethod:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Execution method id. First 4 bytes of keccak256 of method signature in hex format.
+          example: '0x095ea7b3'
+        name:
+          type: string
+          description: Human readable name of the method.
+          example: Approve
+    Relationships-4:
+      type: object
+      description: Represents relationships of a non-fungible token (NFT) corresponding to JSON API specification.
+      required:
+      - chain
+      properties:
+        chain:
+          allOf:
+          - description: The blockchain on which the NFT exists.
+          - $ref: '#/components/schemas/Relationship'
+        nft_collection:
+          allOf:
+          - description: The collection that the NFT belongs to.
+          - $ref: '#/components/schemas/Relationship-4'
+    Receipt:
+      type: object
+      description: Token representing a DeFi position.
+      properties:
+        fungible_info:
+          $ref: '#/components/schemas/Info'
+    Response:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks'
+        data:
+          $ref: '#/components/schemas/Container'
+    Response-5:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-5'
+        data:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/Container-7'
+            - type: object
+              properties:
+                included:
+                  $ref: '#/components/schemas/Included-2'
+    Info-3:
+      type: object
+      description: Represents an NFT collection short info.
+      properties:
+        name:
+          type: string
+          description: The name of the collection.
+        description:
+          type: string
+          description: The description of the collection.
+        content:
+          $ref: '#/components/schemas/Content-2'
     ExternalLink:
       type: object
       required:
@@ -3279,21 +2366,248 @@ components:
           format: url
           description: Link to the external resource
           example: https://www.indexcoop.com
-    Relationships-4:
+    Attribute:
       type: object
-      description: Represents relationships of a non-fungible token (NFT) corresponding to JSON API specification.
       required:
-      - chain
+      - key
       properties:
-        chain:
-          allOf:
-          - description: The blockchain on which the NFT exists.
-          - $ref: '#/components/schemas/Relationship'
-        nft_collection:
-          allOf:
-          - description: The collection that the NFT belongs to.
-          - $ref: '#/components/schemas/Relationship-4'
-    ResponseManyLinks:
+        key:
+          type: string
+          description: 'Attribute key. The key is not unique and is it possible to have several attributes
+
+            with the same key.
+
+            '
+          example: Rarity
+        value:
+          type: string
+          description: Attribute value
+          example: common
+    ExternalLinks:
+      type: array
+      description: A list of relevant URLs.
+      items:
+        $ref: '#/components/schemas/ExternalLink'
+    ActType:
+      type: string
+      description: Type of act in the transaction.
+      example: trade
+      enum:
+      - send
+      - receive
+      - trade
+      - deposit
+      - withdraw
+      - approve
+      - execute
+      - deploy
+      - fee
+      - mint
+      - burn
+      - claim
+      - delegate
+      - revoke_delegation
+      - bid
+    EVMAddress:
+      type: string
+      description: Ethereum-compatible address (EVM).
+      pattern: ^0x[a-fA-F0-9]{40}$
+      example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+    Statistics:
+      type: object
+      description: PnL statistics for an individual fungible.
+      properties:
+        average_buy_price:
+          type: number
+          format: float
+          description: The average price at which the fungible was purchased.
+          example: 1258.8
+        average_sell_price:
+          type: number
+          format: float
+          description: The average price at which the fungible was sold.
+          example: 1224.96
+        total_gain:
+          type: number
+          format: float
+          description: The sum of realized and unrealized gains for this fungible.
+          example: -6900.85
+        realized_gain:
+          type: number
+          format: float
+          description: The gain (or loss) realized from selling this fungible, calculated using the FIFO method.
+          example: -6871.21
+        unrealized_gain:
+          type: number
+          format: float
+          description: The potential gain (or loss) on unsold holdings of this fungible.
+          example: -29.64
+        relative_total_gain_percentage:
+          type: number
+          format: float
+          description: The percentage return on total investment for this fungible.
+          example: -11.38
+        relative_realized_gain_percentage:
+          type: number
+          format: float
+          description: The percentage return on realized trades for this fungible.
+          example: -15.15
+        relative_unrealized_gain_percentage:
+          type: number
+          format: float
+          description: The percentage return on open positions for this fungible.
+          example: -0.19
+        total_fee:
+          type: number
+          format: float
+          description: The sum of all transaction fees associated with this fungible.
+          example: 4679.93
+        total_invested:
+          type: number
+          format: float
+          description: The total amount invested in this fungible (sum of all buy transactions).
+          example: 60643.33
+        realized_cost_basis:
+          type: number
+          format: float
+          description: The cost basis of closed (sold) positions for this fungible.
+          example: 45363.2
+        net_invested:
+          type: number
+          format: float
+          description: The total amount invested in this fungible that has not been sold.
+          example: 15280.13
+        received_external:
+          type: number
+          format: float
+          description: The cumulative value of this fungible received from other wallets.
+          example: 35402.73
+        sent_external:
+          type: number
+          format: float
+          description: The cumulative value of this fungible sent to other wallets.
+          example: 22213.21
+        sent_for_nfts:
+          type: number
+          format: float
+          description: The cumulative value of this fungible sent in transactions where the wallet receives NFTs.
+          example: 1713.23
+        received_for_nfts:
+          type: number
+          format: float
+          description: The cumulative value of this fungible received in transactions where the wallet sends NFTs.
+          example: 1635.05
+    CollectionApproval:
+      type: object
+      required:
+      - cancelled
+      - spender
+      - act_id
+      properties:
+        collection_info:
+          $ref: '#/components/schemas/CollectionInfo'
+        cancelled:
+          type: boolean
+          description: Indicates if the approval has been cancelled or granted.
+        spender:
+          type: string
+          description: Address of the spender of the approval.
+          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
+        act_id:
+          type: string
+          description: Identifier of the act to which the transfer belongs.
+          example: '1'
+    Change:
+      type: object
+      description: Portfolio changes
+      required:
+      - absolute_1d
+      - percent_1d
+      properties:
+        absolute_1d:
+          type: number
+          format: float
+          description: Daily absolute portfolio change value
+          example: 102.0271468171374
+        percent_1d:
+          type: number
+          format: float
+          description: Daily portfolio change percent
+          example: 5.326512552079021
+    PositionType:
+      type:
+      - string
+      - 'null'
+      description: 'Position''s type indicating how the assets are being used or their current state.
+
+        '
+      enum:
+      - deposit
+      - loan
+      - locked
+      - staked
+      - reward
+      - wallet
+      - investment
+      x-enum-descriptions:
+      - deposit - assets deposited into a DeFi protocol (e.g., lending pools, vaults, LP positions)
+      - loan - borrowed assets representing a debt position
+      - locked - assets locked for a period or purpose (e.g., veTokens, time-locks)
+      - staked - assets staked to earn rewards or participate in consensus
+      - reward - earned but unclaimed rewards
+      - wallet - assets held directly in the user wallet
+      - investment - tokenized funds, indices, structured products
+    ContainerAttributes:
+      type: object
+      description: Represents an NFT collection attributes corresponding to JSON API specification.
+      properties:
+        metadata:
+          $ref: '#/components/schemas/Metadata-2'
+        market_data:
+          $ref: '#/components/schemas/MarketData-3'
+        implementations:
+          type: array
+          description: List of blockchain implementations where this collection is deployed
+          items:
+            $ref: '#/components/schemas/Implementation-2'
+    Quantity:
+      type: object
+      required:
+      - int
+      - decimals
+      - float
+      - numeric
+      properties:
+        int:
+          type: string
+          description: Objective on-chain raw amount in base units. Use this value for building on-chain transactions.
+          example: '12345678'
+        decimals:
+          type: integer
+          description: Decimal number precision of the quantity - digits after the floating point.
+          example: 5
+        float:
+          type: number
+          format: float
+          description: Ready-to-display value = int / 10^decimals. For Token-2022 ScaledUiAmount assets (a small subset of Solana tokens), the display value is int × multiplier / 10^decimals.
+          example: 123.45678
+        numeric:
+          type: string
+          description: Ready-to-display value = int / 10^decimals. For Token-2022 ScaledUiAmount assets (a small subset of Solana tokens), the display value is int × multiplier / 10^decimals.
+          example: '123.45678'
+    WalletAddress:
+      oneOf:
+      - $ref: '#/components/schemas/EVMAddress'
+      - $ref: '#/components/schemas/SolanaAddress'
+      description: A wallet address, which can be either an EVM or Solana address
+    Relationship-3:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/ContainerShort-3'
+    ResponseLinks-2:
       type: object
       required:
       - self
@@ -3301,14 +2615,54 @@ components:
         self:
           type: string
           format: url
-          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/nft-positions/
-    MarketData-2:
+          example: https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/portfolio
+    Response-2:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-2'
+        data:
+          $ref: '#/components/schemas/Container-2'
+    Attributes-6:
       type: object
       properties:
-        prices:
-          $ref: '#/components/schemas/MarketDataPrices'
-        last_sale:
-          $ref: '#/components/schemas/LastSale'
+        changed_at:
+          type: string
+          description: The date and the time when the position was updated in ISO format.
+          example: '2023-02-28T19:24:39Z'
+        amount:
+          type: string
+          description: The quantity of the NFT position.
+          example: '1'
+        price:
+          type: number
+          format: float
+          description: The lowest price (floor) of the position's NFT. Measured in the requested currency.
+          example: 0.043615722
+        value:
+          type: number
+          format: float
+          description: The lowest value of the NFT position (floor). Measured in the requested currency.
+        nft_info:
+          $ref: '#/components/schemas/Info-2'
+        collection_info:
+          $ref: '#/components/schemas/Info-3'
+    InterfaceEnum:
+      type: string
+      description: The standard that the NFT contract follows, e.g. ERC-721.
+      example: erc1155
+      enum:
+      - erc721
+      - erc1155
+    Flags-3:
+      type: object
+      properties:
+        is_spam:
+          type: boolean
+          description: Indicates whether the NFT spam or not.
     Container:
       type: object
       required:
@@ -3326,6 +2680,652 @@ components:
           example: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990-day
         attributes:
           $ref: '#/components/schemas/Attributes'
+    Act:
+      type: object
+      required:
+      - id
+      - type
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the act within the transaction.
+          example: '1'
+        type:
+          $ref: '#/components/schemas/ActType'
+        fee_kind:
+          type: string
+          description: "Classification of the fee for acts of type `fee`. Omitted for non-fee acts.\n\nPossible values:\n  - ui — Fee charged by the UI / client application (e.g., a wallet or dApp frontend)\n  - jito — Jito tip paid on Solana for priority inclusion\n"
+          enum:
+          - ui
+          - jito
+          example: ui
+        sent_from:
+          type: string
+          description: Address of the actual sender of this act. Only set when it differs from the transaction-level `sent_from`, e.g. in ERC-4337 bundler transactions.
+          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+        application_metadata:
+          $ref: '#/components/schemas/DAppInfo-2'
+    Delegation:
+      type: object
+      description: Delegation created on an EVM chain.
+      required:
+      - address
+      - act_id
+      properties:
+        chain_id:
+          type: string
+          example: ethereum
+        address:
+          type: string
+          example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+        act_id:
+          type: string
+          example: '1'
+    Relationships-2:
+      type: object
+      properties:
+        chain:
+          $ref: '#/components/schemas/Relationship'
+        dapp:
+          $ref: '#/components/schemas/Relationship-2'
+    PositionsDistributionByChain-2:
+      type: object
+      properties:
+        arbitrum:
+          type: number
+          format: float
+          description: Total value of NFTs on arbitrum chain in selected currency
+          example: 140.14877478334236
+        aurora:
+          type: number
+          format: float
+          description: Total value of NFTs on polygon chain in selected currency
+          example: 75.59585404617037
+        avalanche:
+          type: number
+          format: float
+          description: Total value of NFTs on avalanche chain in selected currency
+          example: 54.39483513803602
+        binance-smart-chain:
+          type: number
+          format: float
+          description: Total value of NFTs on bsc chain in selected currency
+          example: 1439.98965199211
+        ethereum:
+          type: number
+          format: float
+          description: Total value of NFTs on ethereum chain in selected currency
+          example: 1439.98965199211
+        fantom:
+          type: number
+          format: float
+          description: Total value of NFTs on fantom chain in selected currency
+          example: 104.5039957833603
+        loopring:
+          type: number
+          format: float
+          description: Total value of NFTs on loopring chain in selected currency
+          example: 0
+        optimism:
+          type: number
+          format: float
+          description: Total value of NFTs on optimism chain in selected currency
+          example: 55.111921042409875
+        polygon:
+          type: number
+          format: float
+          description: Total value of NFTs on polygon chain in selected currency
+          example: 37.55943746454931
+        solana:
+          type: number
+          format: float
+          description: Total value of NFTs on solana chain in selected currency
+          example: 0
+        xdai:
+          type: number
+          format: float
+          description: Total value of NFTs on xdai chain in selected currency
+          example: 74.08441891963194
+      additionalProperties:
+        type: number
+        format: float
+        description: Total value of NFTs in selected currency on specified chain.
+        example: 123.5
+    Flags-4:
+      type: object
+      properties:
+        is_trash:
+          type: boolean
+          description: Is the transaction classified by Zerion as trash.
+    Container-9:
+      type: object
+      required:
+      - type
+      - id
+      - attributes
+      properties:
+        type:
+          type: string
+          example: wallet_nft_portfolio
+        id:
+          type: string
+          description: NFT portfolio unique ID
+          example: nft-portfolio-0x42b9df65b219b3dd36ff330a4dd8f327a6ada990
+        attributes:
+          $ref: '#/components/schemas/Attributes-9'
+    Approval:
+      type: object
+      required:
+      - quantity
+      - sender
+      - act_id
+      properties:
+        fungible_info:
+          $ref: '#/components/schemas/Info'
+        nft_info:
+          $ref: '#/components/schemas/Info-2'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        sender:
+          type: string
+          description: Address of the sender of the approval.
+          example: '0x60a26d69263ef43e9a68964ba141263f19d71d51'
+        act_id:
+          type: string
+          description: Identifier of the act to which the transfer belongs
+          example: '1'
+    Attributes-8:
+      type: object
+      required:
+      - nfts_count
+      - total_floor_price
+      properties:
+        min_changed_at:
+          type:
+          - string
+          - 'null'
+          description: The earliest `changed_at` date and time alongside all wallet's positions from the collection.
+          example: '2020-02-28T19:24:39Z'
+        max_changed_at:
+          type:
+          - string
+          - 'null'
+          description: The most recent `changed_at` date and time alongside all wallet's positions from the collection.
+          example: '2023-02-28T19:24:39Z'
+        nfts_count:
+          type: string
+          description: The total quantity of the wallet's NFT positions from the collection.
+          example: '1'
+        total_floor_price:
+          type: number
+          format: float
+          description: The lowest price (floor) of the all wallet's NFTs positions from the collection. Measured in the requested currency.
+        collection_info:
+          $ref: '#/components/schemas/Info-3'
+    Change-2:
+      type: object
+      description: Position changes
+      required:
+      - absolute_1d
+      - percent_1d
+      properties:
+        absolute_1d:
+          type: number
+          format: float
+          description: Daily absolute position change value
+          example: 0.272309794
+        percent_1d:
+          type: number
+          format: float
+          description: Daily position change percent
+          example: 5.326512552079021
+    Attributes-4:
+      type: object
+      required:
+      - quantity
+      - name
+      properties:
+        parent:
+          type:
+          - string
+          - 'null'
+          description: Id of parent position
+          example: 0x111c47865ade3b172a928df8f990bc7f2a3b9aaa-polygon-asset-none-
+        protocol:
+          type:
+          - string
+          - 'null'
+          description: Protocol which the position is belong to.
+        protocol_module:
+          type: string
+          description: 'The specific module or functionality within a DeFi protocol where this position is held. This categorizes the type of protocol interaction.
+
+
+            Possible values and their meanings:
+
+
+            - `deposit` - Generic deposit module for protocols with simple deposit functionality
+
+            - `lending` - Lending and borrowing protocols (e.g., Aave, Compound) where users can supply or borrow assets
+
+            - `yield` - Yield optimization and aggregator protocols (e.g., Yearn Finance) that automatically maximize returns
+
+            - `liquidity_pool` - Automated Market Maker (AMM) liquidity pools (e.g., Uniswap, Curve) where users provide liquidity for trading
+
+            - `staked` - Staking modules where assets are staked for rewards, governance, or network security
+
+            - `leveraged_farming` - Leveraged yield farming protocols (e.g., Alpaca Finance) that enable leveraged positions on farms
+
+            - `nft_staked` - NFT staking modules where NFTs are staked to earn rewards
+
+            - `farming` - Yield farming and reward distribution modules (e.g., liquidity mining programs)
+
+            - `locked` - Token locking mechanisms such as vote-escrowed (ve) tokens or time-locked positions
+
+            - `vesting` - Token vesting schedules for team allocations, investor tokens, or earned rewards
+
+            - `rewards` - Unclaimed rewards modules representing rewards that have been earned but not yet claimed
+
+            - `investment` - Investment product modules such as tokenized funds, indices, or structured investment vehicles
+
+            '
+          example: lending
+        pool_address:
+          type: string
+          description: Address of the pool the position belongs to if applicable
+          example: '0x109830a1aaad605bbf02a9dfa7b0b92ec2fb7daa'
+        name:
+          type: string
+          description: Human readable position name
+          example: Asset
+        group_id:
+          type: string
+          description: Unique ID which could be used to group position within DApp naturally for convenience of users. For example for UniswapV2 it is grouping by specific pool.
+          example: 0a771a0064dad468045899032c7fb01a971f973f7dff0a5cdc3ce199f45e94d7
+        position_type:
+          $ref: '#/components/schemas/PositionType'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        value:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Position value in requested currency
+          example: 5.384656557642683
+        price:
+          type: number
+          format: float
+          description: Price of position's asset
+          example: 0.043615722
+        changes:
+          $ref: '#/components/schemas/Change-2'
+        fungible_info:
+          $ref: '#/components/schemas/Info'
+        flags:
+          $ref: '#/components/schemas/Flags-2'
+        updated_at:
+          type: string
+          description: 'ISO-8601 timestamp the position was updated at.
+
+            The field indicates when our service last checked and updated the balance.
+
+            This update typically occurs immediately after any event causing a change in position.
+
+            '
+          example: '2023-11-10T23:00:00Z'
+        updated_at_block:
+          type: integer
+          format: int32
+          description: Number of the block of the position
+        application_metadata:
+          $ref: '#/components/schemas/DAppInfo'
+        receipt:
+          $ref: '#/components/schemas/Receipt'
+    AssetType:
+      type: string
+      description: Type of concrete asset.
+      example: fungible
+      enum:
+      - fungible
+      - nft
+    ContentLink:
+      type: object
+      required:
+      - url
+      properties:
+        url:
+          type: string
+          format: url
+          description: URL to the content
+          example: https://token-icons.s3.amazonaws.com/0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b.png
+        content_type:
+          type: string
+          description: MIME content type
+          example: image/png
+  responses:
+    NFTPortfolioResponse:
+      description: Response for requested wallet's portfolio
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-6'
+    NFTCollectionsProcessingResponse:
+      description: Request accepted, but NFT collections held by the wallet are still being aggregated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProcessingResponseMany'
+    PortfolioResponse:
+      description: Response for requested wallet's portfolio
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-2'
+    NFTPositionsProcessingResponse:
+      description: Request accepted, but NFT positions are still being aggregated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProcessingResponseMany'
+    ChartsResponse:
+      description: Resource for the requested wallet chart
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response'
+    TransactionsListResponse:
+      description: Response for requested list of transactions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-4'
+    NFTPositionsResponse:
+      description: Response for requested list of NFT positions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseMany'
+    PositionsListResponse:
+      description: Response for requested list of positions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-3'
+    TooManyRequests:
+      description: Too many requests error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Too many requests
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Your request had been throttled
+    NFTCollectionsResponse:
+      description: Response for requested list of NFT collections.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-5'
+    MalformedParameters:
+      description: Parameters are malformed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Parameter is malformed
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Some validation errors will be described here
+    NFTPortfolioProcessingResponse:
+      description: Request accepted, but nft portfolio is still being aggregated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProcessingResponse'
+    RetryAfter:
+      description: Service is temporarily unavailable
+      headers:
+        Retry-After:
+          description: 'Indicates how long the client should wait before making a follow-up request.
+
+            '
+          schema:
+            type: integer
+            example: 10
+            description: Number of seconds to wait.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Service is temporarily unavailable
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Please, retry later (check the Retry-After header)
+    PNLResponse:
+      description: Response for requested wallet's pnl
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WalletPNLResponse'
+    UnauthenticatedError:
+      description: Unathenticated request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Unauthorized Error
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: The API key is invalid, please, make sure that you are using a valid key
+  parameters:
+    Currency:
+      name: currency
+      in: query
+      required: false
+      description: Denominated currency value of returned prices
+      schema:
+        type: string
+        default: usd
+        enum:
+        - eth
+        - btc
+        - usd
+        - eur
+        - krw
+        - rub
+        - gbp
+        - aud
+        - cad
+        - inr
+        - jpy
+        - nzd
+        - try
+        - zar
+        - cny
+        - chf
+    Page:
+      name: page
+      in: query
+      required: false
+      description: Pagination parameters
+      style: deepObject
+      explode: true
+      schema:
+        type: object
+        properties:
+          after:
+            type:
+            - string
+            - 'null'
+            minLength: 1
+            maxLength: 64
+            description: 'This field is used for result pagination. You SHOULD NOT use this parameter directly.
+
+              To get the next page of the results you should use `links.next` field.
+
+              Omit it to return the first page.
+
+              '
+          size:
+            type: integer
+            format: uint8
+            description: Set maximum number of items per a page in the pagination.
+            default: 100
+            minimum: 1
+            maximum: 100
+    NFTPositionsPage:
+      name: page
+      in: query
+      required: false
+      description: Pagination parameters
+      style: deepObject
+      explode: true
+      schema:
+        type: object
+        properties:
+          after:
+            type:
+            - string
+            - 'null'
+            minLength: 1
+            maxLength: 64
+            description: 'This field is used for result pagination. You SHOULD NOT use this parameter directly.
+
+              To get the next page of the results you should use `links.next` field.
+
+              Omit it to return the first page.
+
+              '
+          size:
+            type: integer
+            format: int32
+            description: Set maximum number of items per a page in the pagination.
+            default: 50
+            minimum: 1
+            maximum: 500
+    WalletAddress:
+      name: address
+      in: path
+      required: true
+      description: The web3 wallet address. Must be a valid EVM or Solana address. Returns 400 if the address is not tracked by Zerion.
+      example: '0x42b9df65b219b3dd36ff330a4dd8f327a6ada990'
+      schema:
+        $ref: '#/components/schemas/WalletAddress'
+    ChartPeriod:
+      name: chart_period
+      in: path
+      required: true
+      description: 'Chart period. Determines both the time window covered and the spacing
+
+        between chart points (`points`). Each period samples the window at a fixed
+
+        interval, so the number of points is roughly constant (~290–460) regardless
+
+        of period:
+
+
+        | Period     | Point interval | Time window         |
+
+        | ---------- | -------------- | ------------------- |
+
+        | `hour`     | 10 seconds     | last 1 hour         |
+
+        | `day`      | 5 minutes      | last 24 hours       |
+
+        | `week`     | 30 minutes     | last 7 days         |
+
+        | `month`    | 2 hours        | last 30 days        |
+
+        | `3months`  | 6 hours        | last 90 days        |
+
+        | `6months`  | 12 hours       | last 180 days       |
+
+        | `year`     | 1 day          | last 365 days       |
+
+        | `5years`   | 4 days         | last 5 years        |
+
+        | `max`      | varies         | full available history |
+
+
+        Point counts are approximate, and `begin_at` / `end_at` are aligned to the
+
+        interval. For `max`, the interval is derived from the amount of available
+
+        history (targeting ~400 points), so it varies; for wallet and wallet-set
+
+        charts the spacing is at least 1 day.
+
+        '
+      schema:
+        type: string
+        minLength: 3
+        maxLength: 7
+        default: day
+        enum:
+        - hour
+        - day
+        - week
+        - month
+        - 3months
+        - 6months
+        - year
+        - 5years
+        - max
+    WalletNFTCollectionsSort:
+      name: sort
+      in: query
+      required: false
+      description: The order of NFTs in the result.
+      schema:
+        type: string
+        example: -total_floor_price
+        enum:
+        - -max_changed_at
+        - min_changed_at
+        - total_floor_price
+        - -total_floor_price
   securitySchemes:
     APIKeyBasicAuth:
       type: http

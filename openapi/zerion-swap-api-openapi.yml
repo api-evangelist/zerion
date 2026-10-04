@@ -178,11 +178,631 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    Container-12:
+      type: object
+      description: Object, representing fungible asset.
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Fungible resource type
+          example: fungibles
+        id:
+          type: string
+          description: Fungible unique identifier
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+        attributes:
+          $ref: '#/components/schemas/Attributes-10'
+        relationships:
+          $ref: '#/components/schemas/Relationships-6'
+    QuotesResponse:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-16'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteContainer'
+    QuoteAmount:
+      type: object
+      properties:
+        quantity:
+          type: string
+          description: Human-readable amount as a decimal string. Absent for `output_amount_after_fees` of a cross-chain bridge when the fees are denominated in different tokens and a single-token quantity is not well-defined; in that case the fiat fields (`value`/`usd_value`) still carry the net amount.
+          example: '0.001'
+        value:
+          type: number
+          format: float
+          description: Fiat value of the amount in the requested `currency`. Absent when no price is known for the asset.
+          example: 2.2830463441233997
+        usd_value:
+          type: number
+          format: float
+          description: Fiat value of the amount in USD. Absent when no price is known for the asset.
+          example: 2.2830463441233997
+        currency:
+          type: string
+          description: Currency code that `value` is expressed in, in upper case (matches the requested `currency` query parameter). Present only when `value` is present.
+          example: USD
+    AttributesImplementation:
+      type: object
+      required:
+      - chain_id
+      - address
+      - decimals
+      properties:
+        chain_id:
+          type: string
+          description: Unique id of the chain.
+          example: ethereum
+        address:
+          type:
+          - string
+          - 'null'
+          description: Implementation address on the chain.
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+        decimals:
+          type: integer
+          description: Number of decimals points of the implementation.
+          example: 18
+        market_data:
+          $ref: '#/components/schemas/ImplementationMarketData'
+        deployment_date:
+          type: string
+          format: date-time
+          description: Date and time when the token contract was deployed on this chain (ISO 8601).
+          example: '2020-09-09T11:11:13Z'
+    QuoteRelationships:
+      type: object
+      required:
+      - input_chain
+      - output_chain
+      properties:
+        input_chain:
+          allOf:
+          - description: Source chain the swap originates from.
+          - $ref: '#/components/schemas/Relationship'
+        output_chain:
+          allOf:
+          - description: Target chain the output asset is delivered on.
+          - $ref: '#/components/schemas/Relationship'
+        input_fungible:
+          description: Fungible asset being sent.
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              $ref: '#/components/schemas/RelationshipLinks-2'
+            data:
+              $ref: '#/components/schemas/RelationshipData'
+        output_fungible:
+          description: Fungible asset being received.
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              $ref: '#/components/schemas/RelationshipLinks-2'
+            data:
+              $ref: '#/components/schemas/RelationshipData'
+    FungiblesResponse:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/FungiblesResponseLinks'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container-12'
+    Flags:
+      type: object
+      required:
+      - verified
+      properties:
+        verified:
+          type: boolean
+          description: Whether this fungible verified or not
+          example: true
+    RelationshipLinks-2:
+      type: object
+      required:
+      - related
+      properties:
+        related:
+          type: string
+          format: url
+          description: URL to the current fungible.
+          example: https://api.zerion.io/v1/fungibles/eth
+    Attributes-10:
+      type: object
+      required:
+      - name
+      - symbol
+      - flags
+      - external_links
+      - implementations
+      - market_data
+      properties:
+        name:
+          type: string
+          description: Displayable name of the fungible.
+          example: Bankless BED Index
+        symbol:
+          type: string
+          description: Displayable symbol of the fungible.
+          example: BED
+        description:
+          type:
+          - string
+          - 'null'
+          description: Brief description of the fungible.
+          example: The BED index is meant to track crypto's top 3 investab.
+        icon:
+          $ref: '#/components/schemas/Icon'
+        flags:
+          $ref: '#/components/schemas/Flags'
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+        implementations:
+          type: array
+          description: Implementation details of the fungible on various chains.
+          items:
+            $ref: '#/components/schemas/AttributesImplementation'
+        market_data:
+          $ref: '#/components/schemas/MarketData'
+    MarketDataChanges:
+      type: object
+      properties:
+        percent_1d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 1 day
+          example: -0.7379066649086338
+        percent_30d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 30 days
+          example: -2.499465618806962
+        percent_90d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 90 days
+          example: 11.316340269371775
+        percent_365d:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price relative change in percent for 1 year
+          example: null
+    ContainerShort:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Chain resource type.
+          example: chains
+        id:
+          type: string
+          description: Chain unique identifier.
+          example: polygon
+    RelationshipData:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Fungible resource type
+          example: fungibles
+        id:
+          type: string
+          description: Fungible unique identifier.
+          example: eth
+    ResponseLinks-16:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/wallet/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/swap-list
+    FungiblesResponseLinks:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          description: URL of current resource
+          example: https://api.zerion.io/v1/swap/fungibles
+    EVMTransaction:
+      type: object
+      description: EVM transaction in a form ready to be signed by an EVM wallet. Numeric fields are encoded as `0x`-prefixed hex strings.
+      required:
+      - type
+      - from
+      - to
+      - nonce
+      - chain_id
+      - gas
+      - value
+      - data
+      properties:
+        type:
+          type: string
+          description: EIP-2718 transaction type.
+          example: '0x2'
+        from:
+          type: string
+          description: Address that should sign and send the transaction.
+          example: '0xbf9db3564c22fd22ff30a8db7f689d654bf5f1fd'
+        to:
+          type: string
+          description: Address the transaction is sent to (typically the swap router contract).
+          example: '0xb2be281e8b11b47fec825973fc8bb95332022a54'
+        nonce:
+          type: string
+          description: Transaction nonce at the time the quote was built. The wallet may need to refresh it at signing time if the on-chain value has changed.
+          example: '0x42'
+        chain_id:
+          type: string
+          description: EIP-155 chain ID.
+          example: '0x1'
+        gas:
+          type: string
+          description: Gas limit.
+          example: '0x1c138'
+        gas_price:
+          type: string
+          description: Legacy (Type-0/1) gas price. Mutually exclusive with `max_fee` / `max_priority_fee` — present for legacy transactions, absent for EIP-1559.
+          example: '0x9502f900'
+        max_fee:
+          type: string
+          description: EIP-1559 max fee per gas. Mutually exclusive with `gas_price` — present for EIP-1559 transactions, absent for legacy.
+          example: '0xc6a17141'
+        max_priority_fee:
+          type: string
+          description: EIP-1559 max priority fee per gas. Mutually exclusive with `gas_price` — present for EIP-1559 transactions, absent for legacy.
+          example: '0x35aeb151'
+        value:
+          type: string
+          description: Native-asset value attached to the transaction, in wei.
+          example: '0x0'
+        data:
+          type: string
+          description: Calldata.
+          example: '0xa9059cbb000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa9604500000000000000000000000000000000000000000000000000000000000003e8'
+        custom_data:
+          allOf:
+          - description: Chain-specific extra fields (currently zkSync paymaster parameters). Omitted on chains that don't need them.
+          - $ref: '#/components/schemas/EVMCustomData'
+    ExternalLink:
+      type: object
+      required:
+      - url
+      properties:
+        type:
+          type: string
+          description: Type of the link
+          example: website
+        name:
+          type: string
+          description: Displayable name of the link
+          example: Website
+        url:
+          type: string
+          format: url
+          description: Link to the external resource
+          example: https://www.indexcoop.com
     ExternalLinks:
       type: array
       description: A list of relevant URLs.
       items:
         $ref: '#/components/schemas/ExternalLink'
+    ImplementationMarketData:
+      type: object
+      properties:
+        trading_volumes:
+          $ref: '#/components/schemas/TradingVolumes'
+    QuoteContainer:
+      type: object
+      required:
+      - type
+      - id
+      - attributes
+      - relationships
+      properties:
+        type:
+          type: string
+          example: swap_quotes
+        id:
+          type: string
+          description: Quote's unique id.
+          example: 589a0095e2111df5276ebf073fff9a8bfb821f34
+        attributes:
+          $ref: '#/components/schemas/QuoteAttributes'
+        relationships:
+          $ref: '#/components/schemas/QuoteRelationships'
+    MultichainTransaction:
+      type: object
+      description: Transaction payload in a chain-agnostic envelope. Exactly one of `evm` or `solana` is present, depending on the chain on which the transaction must be sent.
+      properties:
+        evm:
+          type: object
+          description: EVM transaction payload. Present only for EVM-chain transactions.
+          allOf:
+          - $ref: '#/components/schemas/EVMTransaction'
+        solana:
+          type: object
+          description: Solana transaction payload. Present only for Solana transactions.
+          allOf:
+          - $ref: '#/components/schemas/SolanaTransaction'
+    RelationshipLinks:
+      type: object
+      required:
+      - related
+      properties:
+        related:
+          type: string
+          format: url
+          description: URL to the current chain.
+          example: https://api.zerion.io/v1/chains/polygon
+    SolanaTransaction:
+      type: object
+      description: Solana transaction ready to be signed by a Solana wallet.
+      required:
+      - raw
+      properties:
+        raw:
+          type: string
+          description: Base64-encoded raw Solana transaction bytes.
+    Relationships-6:
+      type: object
+      required:
+      - chart_hour
+      - chart_day
+      - chart_week
+      - chart_month
+      - chart_year
+      - chart_max
+      properties:
+        chart_hour:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour
+        chart_day:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day
+        chart_week:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week
+        chart_month:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month
+        chart_year:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year
+        chart_max:
+          type: object
+          required:
+          - links
+          - data
+          properties:
+            links:
+              type: object
+              required:
+              - related
+              properties:
+                related:
+                  format: url
+                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max
+            data:
+              type: object
+              required:
+              - type
+              - id
+              properties:
+                type:
+                  type: string
+                  example: fungible_charts
+                id:
+                  type: string
+                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max
+    EVMCustomData:
+      type: object
+      description: Chain-specific transaction extras. Currently used for zkSync Era paymaster parameters.
+      properties:
+        paymaster_params:
+          type: object
+          description: Paymaster sponsorship parameters. Absent on transactions that do not use a paymaster.
+          required:
+          - paymaster
+          - paymaster_input
+          properties:
+            paymaster:
+              type: string
+              description: Address of the paymaster contract.
+            paymaster_input:
+              type: string
+              description: Calldata for the paymaster.
+        gas_per_pubdata_byte:
+          type: string
+          description: Gas per pubdata byte (zkSync-specific). Absent when the source did not provide it.
+    MarketData:
+      type: object
+      required:
+      - price
+      properties:
+        total_supply:
+          type: number
+          format: double
+          description: Total market supply of fungible
+          example: 29905.762448515918
+        circulating_supply:
+          type: number
+          format: double
+          description: Circulating value of fungible
+          example: 29905.762448515918
+        fully_diluted_valuation:
+          type: number
+          format: double
+          description: Total market capitalization of fungible in selected currency
+          example: 3196313.736038149
+        market_cap:
+          type: number
+          format: double
+          description: Circulating market capitalization of fungible in selected currency
+          example: 3196313.736038149
+        price:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latest fungible price
+          example: 106.87952669793131
+        changes:
+          $ref: '#/components/schemas/MarketDataChanges'
+        trading_volumes:
+          $ref: '#/components/schemas/TradingVolumes'
     Relationship:
       type: object
       required:
@@ -193,6 +813,17 @@ components:
           $ref: '#/components/schemas/RelationshipLinks'
         data:
           $ref: '#/components/schemas/ContainerShort'
+    Icon:
+      type: object
+      description: Icon related to object.
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          format: url
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
     QuoteAttributes:
       type: object
       required:
@@ -360,163 +991,6 @@ components:
           format: float
           description: Estimated time until the output asset is delivered, when the source provides one. Bridge providers typically include it; same-chain DEX aggregators usually do not, but providers that route through bridge-style settlement may include it on same-chain quotes too.
           example: 2
-    MarketData:
-      type: object
-      required:
-      - price
-      properties:
-        total_supply:
-          type: number
-          format: double
-          description: Total market supply of fungible
-          example: 29905.762448515918
-        circulating_supply:
-          type: number
-          format: double
-          description: Circulating value of fungible
-          example: 29905.762448515918
-        fully_diluted_valuation:
-          type: number
-          format: double
-          description: Total market capitalization of fungible in selected currency
-          example: 3196313.736038149
-        market_cap:
-          type: number
-          format: double
-          description: Circulating market capitalization of fungible in selected currency
-          example: 3196313.736038149
-        price:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latest fungible price
-          example: 106.87952669793131
-        changes:
-          $ref: '#/components/schemas/MarketDataChanges'
-        trading_volumes:
-          $ref: '#/components/schemas/TradingVolumes'
-    EVMTransaction:
-      type: object
-      description: EVM transaction in a form ready to be signed by an EVM wallet. Numeric fields are encoded as `0x`-prefixed hex strings.
-      required:
-      - type
-      - from
-      - to
-      - nonce
-      - chain_id
-      - gas
-      - value
-      - data
-      properties:
-        type:
-          type: string
-          description: EIP-2718 transaction type.
-          example: '0x2'
-        from:
-          type: string
-          description: Address that should sign and send the transaction.
-          example: '0xbf9db3564c22fd22ff30a8db7f689d654bf5f1fd'
-        to:
-          type: string
-          description: Address the transaction is sent to (typically the swap router contract).
-          example: '0xb2be281e8b11b47fec825973fc8bb95332022a54'
-        nonce:
-          type: string
-          description: Transaction nonce at the time the quote was built. The wallet may need to refresh it at signing time if the on-chain value has changed.
-          example: '0x42'
-        chain_id:
-          type: string
-          description: EIP-155 chain ID.
-          example: '0x1'
-        gas:
-          type: string
-          description: Gas limit.
-          example: '0x1c138'
-        gas_price:
-          type: string
-          description: Legacy (Type-0/1) gas price. Mutually exclusive with `max_fee` / `max_priority_fee` — present for legacy transactions, absent for EIP-1559.
-          example: '0x9502f900'
-        max_fee:
-          type: string
-          description: EIP-1559 max fee per gas. Mutually exclusive with `gas_price` — present for EIP-1559 transactions, absent for legacy.
-          example: '0xc6a17141'
-        max_priority_fee:
-          type: string
-          description: EIP-1559 max priority fee per gas. Mutually exclusive with `gas_price` — present for EIP-1559 transactions, absent for legacy.
-          example: '0x35aeb151'
-        value:
-          type: string
-          description: Native-asset value attached to the transaction, in wei.
-          example: '0x0'
-        data:
-          type: string
-          description: Calldata.
-          example: '0xa9059cbb000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa9604500000000000000000000000000000000000000000000000000000000000003e8'
-        custom_data:
-          allOf:
-          - description: Chain-specific extra fields (currently zkSync paymaster parameters). Omitted on chains that don't need them.
-          - $ref: '#/components/schemas/EVMCustomData'
-    MarketDataChanges:
-      type: object
-      properties:
-        percent_1d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 1 day
-          example: -0.7379066649086338
-        percent_30d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 30 days
-          example: -2.499465618806962
-        percent_90d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 90 days
-          example: 11.316340269371775
-        percent_365d:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price relative change in percent for 1 year
-          example: null
-    RelationshipLinks:
-      type: object
-      required:
-      - related
-      properties:
-        related:
-          type: string
-          format: url
-          description: URL to the current chain.
-          example: https://api.zerion.io/v1/chains/polygon
-    QuoteContainer:
-      type: object
-      required:
-      - type
-      - id
-      - attributes
-      - relationships
-      properties:
-        type:
-          type: string
-          example: swap_quotes
-        id:
-          type: string
-          description: Quote's unique id.
-          example: 589a0095e2111df5276ebf073fff9a8bfb821f34
-        attributes:
-          $ref: '#/components/schemas/QuoteAttributes'
-        relationships:
-          $ref: '#/components/schemas/QuoteRelationships'
     TradingVolumes:
       type: object
       properties:
@@ -525,483 +999,9 @@ components:
           format: double
           description: Trading volume over the last 24 hours in the selected currency.
           example: 40096375.69294812
-    Icon:
-      type: object
-      description: Icon related to object.
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          format: url
-          description: URL of the icon.
-          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
-    RelationshipLinks-2:
-      type: object
-      required:
-      - related
-      properties:
-        related:
-          type: string
-          format: url
-          description: URL to the current fungible.
-          example: https://api.zerion.io/v1/fungibles/eth
-    ContainerShort:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Chain resource type.
-          example: chains
-        id:
-          type: string
-          description: Chain unique identifier.
-          example: polygon
-    SolanaTransaction:
-      type: object
-      description: Solana transaction ready to be signed by a Solana wallet.
-      required:
-      - raw
-      properties:
-        raw:
-          type: string
-          description: Base64-encoded raw Solana transaction bytes.
-    QuoteRelationships:
-      type: object
-      required:
-      - input_chain
-      - output_chain
-      properties:
-        input_chain:
-          allOf:
-          - description: Source chain the swap originates from.
-          - $ref: '#/components/schemas/Relationship'
-        output_chain:
-          allOf:
-          - description: Target chain the output asset is delivered on.
-          - $ref: '#/components/schemas/Relationship'
-        input_fungible:
-          description: Fungible asset being sent.
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              $ref: '#/components/schemas/RelationshipLinks-2'
-            data:
-              $ref: '#/components/schemas/RelationshipData'
-        output_fungible:
-          description: Fungible asset being received.
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              $ref: '#/components/schemas/RelationshipLinks-2'
-            data:
-              $ref: '#/components/schemas/RelationshipData'
-    ResponseLinks-16:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/wallet/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/swap-list
-    Container-12:
-      type: object
-      description: Object, representing fungible asset.
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Fungible resource type
-          example: fungibles
-        id:
-          type: string
-          description: Fungible unique identifier
-          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
-        attributes:
-          $ref: '#/components/schemas/Attributes-10'
-        relationships:
-          $ref: '#/components/schemas/Relationships-6'
-    Attributes-10:
-      type: object
-      required:
-      - name
-      - symbol
-      - flags
-      - external_links
-      - implementations
-      - market_data
-      properties:
-        name:
-          type: string
-          description: Displayable name of the fungible.
-          example: Bankless BED Index
-        symbol:
-          type: string
-          description: Displayable symbol of the fungible.
-          example: BED
-        description:
-          type:
-          - string
-          - 'null'
-          description: Brief description of the fungible.
-          example: The BED index is meant to track crypto's top 3 investab.
-        icon:
-          $ref: '#/components/schemas/Icon'
-        flags:
-          $ref: '#/components/schemas/Flags'
-        external_links:
-          $ref: '#/components/schemas/ExternalLinks'
-        implementations:
-          type: array
-          description: Implementation details of the fungible on various chains.
-          items:
-            $ref: '#/components/schemas/AttributesImplementation'
-        market_data:
-          $ref: '#/components/schemas/MarketData'
-    ImplementationMarketData:
-      type: object
-      properties:
-        trading_volumes:
-          $ref: '#/components/schemas/TradingVolumes'
-    QuotesResponse:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-16'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteContainer'
-    AttributesImplementation:
-      type: object
-      required:
-      - chain_id
-      - address
-      - decimals
-      properties:
-        chain_id:
-          type: string
-          description: Unique id of the chain.
-          example: ethereum
-        address:
-          type:
-          - string
-          - 'null'
-          description: Implementation address on the chain.
-          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
-        decimals:
-          type: integer
-          description: Number of decimals points of the implementation.
-          example: 18
-        market_data:
-          $ref: '#/components/schemas/ImplementationMarketData'
-        deployment_date:
-          type: string
-          format: date-time
-          description: Date and time when the token contract was deployed on this chain (ISO 8601).
-          example: '2020-09-09T11:11:13Z'
-    Relationships-6:
-      type: object
-      required:
-      - chart_hour
-      - chart_day
-      - chart_week
-      - chart_month
-      - chart_year
-      - chart_max
-      properties:
-        chart_hour:
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              type: object
-              required:
-              - related
-              properties:
-                related:
-                  format: url
-                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/hour
-            data:
-              type: object
-              required:
-              - type
-              - id
-              properties:
-                type:
-                  type: string
-                  example: fungible_charts
-                id:
-                  type: string
-                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-hour
-        chart_day:
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              type: object
-              required:
-              - related
-              properties:
-                related:
-                  format: url
-                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/day
-            data:
-              type: object
-              required:
-              - type
-              - id
-              properties:
-                type:
-                  type: string
-                  example: fungible_charts
-                id:
-                  type: string
-                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-day
-        chart_week:
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              type: object
-              required:
-              - related
-              properties:
-                related:
-                  format: url
-                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/week
-            data:
-              type: object
-              required:
-              - type
-              - id
-              properties:
-                type:
-                  type: string
-                  example: fungible_charts
-                id:
-                  type: string
-                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-week
-        chart_month:
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              type: object
-              required:
-              - related
-              properties:
-                related:
-                  format: url
-                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/month
-            data:
-              type: object
-              required:
-              - type
-              - id
-              properties:
-                type:
-                  type: string
-                  example: fungible_charts
-                id:
-                  type: string
-                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-month
-        chart_year:
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              type: object
-              required:
-              - related
-              properties:
-                related:
-                  format: url
-                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/year
-            data:
-              type: object
-              required:
-              - type
-              - id
-              properties:
-                type:
-                  type: string
-                  example: fungible_charts
-                id:
-                  type: string
-                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-year
-        chart_max:
-          type: object
-          required:
-          - links
-          - data
-          properties:
-            links:
-              type: object
-              required:
-              - related
-              properties:
-                related:
-                  format: url
-                  example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6/charts/max
-            data:
-              type: object
-              required:
-              - type
-              - id
-              properties:
-                type:
-                  type: string
-                  example: fungible_charts
-                id:
-                  type: string
-                  example: 0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6-max
-    Flags:
-      type: object
-      required:
-      - verified
-      properties:
-        verified:
-          type: boolean
-          description: Whether this fungible verified or not
-          example: true
-    FungiblesResponse:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/FungiblesResponseLinks'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Container-12'
-    RelationshipData:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Fungible resource type
-          example: fungibles
-        id:
-          type: string
-          description: Fungible unique identifier.
-          example: eth
-    ExternalLink:
-      type: object
-      required:
-      - url
-      properties:
-        type:
-          type: string
-          description: Type of the link
-          example: website
-        name:
-          type: string
-          description: Displayable name of the link
-          example: Website
-        url:
-          type: string
-          format: url
-          description: Link to the external resource
-          example: https://www.indexcoop.com
-    FungiblesResponseLinks:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          description: URL of current resource
-          example: https://api.zerion.io/v1/swap/fungibles
-    QuoteAmount:
-      type: object
-      properties:
-        quantity:
-          type: string
-          description: Human-readable amount as a decimal string. Absent for `output_amount_after_fees` of a cross-chain bridge when the fees are denominated in different tokens and a single-token quantity is not well-defined; in that case the fiat fields (`value`/`usd_value`) still carry the net amount.
-          example: '0.001'
-        value:
-          type: number
-          format: float
-          description: Fiat value of the amount in the requested `currency`. Absent when no price is known for the asset.
-          example: 2.2830463441233997
-        usd_value:
-          type: number
-          format: float
-          description: Fiat value of the amount in USD. Absent when no price is known for the asset.
-          example: 2.2830463441233997
-        currency:
-          type: string
-          description: Currency code that `value` is expressed in, in upper case (matches the requested `currency` query parameter). Present only when `value` is present.
-          example: USD
-    EVMCustomData:
-      type: object
-      description: Chain-specific transaction extras. Currently used for zkSync Era paymaster parameters.
-      properties:
-        paymaster_params:
-          type: object
-          description: Paymaster sponsorship parameters. Absent on transactions that do not use a paymaster.
-          required:
-          - paymaster
-          - paymaster_input
-          properties:
-            paymaster:
-              type: string
-              description: Address of the paymaster contract.
-            paymaster_input:
-              type: string
-              description: Calldata for the paymaster.
-        gas_per_pubdata_byte:
-          type: string
-          description: Gas per pubdata byte (zkSync-specific). Absent when the source did not provide it.
-    MultichainTransaction:
-      type: object
-      description: Transaction payload in a chain-agnostic envelope. Exactly one of `evm` or `solana` is present, depending on the chain on which the transaction must be sent.
-      properties:
-        evm:
-          type: object
-          description: EVM transaction payload. Present only for EVM-chain transactions.
-          allOf:
-          - $ref: '#/components/schemas/EVMTransaction'
-        solana:
-          type: object
-          description: Solana transaction payload. Present only for Solana transactions.
-          allOf:
-          - $ref: '#/components/schemas/SolanaTransaction'
   responses:
-    UnauthenticatedError:
-      description: Unathenticated request
+    TooManyRequests:
+      description: Too many requests error
       content:
         application/json:
           schema:
@@ -1015,11 +1015,11 @@ components:
                     title:
                       type: string
                       description: Error short title
-                      example: Unauthorized Error
+                      example: Too many requests
                     detail:
                       type: string
                       description: Long description of the error
-                      example: The API key is invalid, please, make sure that you are using a valid key
+                      example: Your request had been throttled
     MalformedParameters:
       description: Parameters are malformed
       content:
@@ -1052,8 +1052,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FungiblesResponse'
-    TooManyRequests:
-      description: Too many requests error
+    UnauthenticatedError:
+      description: Unathenticated request
       content:
         application/json:
           schema:
@@ -1067,11 +1067,11 @@ components:
                     title:
                       type: string
                       description: Error short title
-                      example: Too many requests
+                      example: Unauthorized Error
                     detail:
                       type: string
                       description: Long description of the error
-                      example: Your request had been throttled
+                      example: The API key is invalid, please, make sure that you are using a valid key
   securitySchemes:
     APIKeyBasicAuth:
       type: http
