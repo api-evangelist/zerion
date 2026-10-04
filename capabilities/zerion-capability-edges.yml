@@ -1,0 +1,27 @@
+slug: zerion
+provider: Zerion
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: subscriptions to transactions
+  spec_file: zerion-subscriptions-to-transactions-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.72
+  evidence: POST /v1/tx-subscriptions/  createSubscriptionWalletTransactions  Create subscription; PATCH
+    /v1/tx-subscriptions/{subscription_id}/callback_url  UpdateCallbackUrlInSubscription
+  reason: Despite the word 'subscriptions', these operations manage event-notification subscriptions —
+    callback URLs, subscribed wallets, chain IDs, enable/disable — i.e. outbound webhook delivery for
+    onchain transaction events, matching Webhook & Event Subscription Management rather than any commercial
+    subscription capability.
