@@ -3,6 +3,17 @@ info:
   title: Zerion wallet activity subscription
   version: 1.0.0
   summary: Create a transaction webhook subscription for a set of wallets, confirm it, then verify the watched-wallet count.
+  x-realizes-capability-ids:
+  - BC-4270.80
+  x-capability-derivation:
+    method: 'deterministic join: sourceDescriptions -> per-tag OpenAPI -> tag/capability edge. No classification at this step.'
+    min_confidence: 0.7
+    sources:
+    - capability_id: BC-4270.80
+      capability_name: Webhook & Event Subscription Management
+      spec: zerion-subscriptions-to-transactions-api-openapi.yml
+      confidence: 0.72
+    model: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities, CC BY 4.0
 sourceDescriptions:
 - name: subscriptionsToTransactionsApi
   url: ../openapi/zerion-subscriptions-to-transactions-api-openapi.yml
