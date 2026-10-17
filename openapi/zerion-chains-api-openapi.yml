@@ -81,94 +81,100 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    MalformedParameters:
+      description: Parameters are malformed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Parameter is malformed
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Some validation errors will be described here
+    TooManyRequests:
+      description: Too many requests error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Too many requests
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Your request had been throttled
+    NotFoundResponse:
+      description: Resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Resource was not found
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Requested resource was not found, try later
+    SingleChainResponse:
+      description: Response for requested chain
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ChainResponse'
+    UnauthenticatedError:
+      description: Unathenticated request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Unauthorized Error
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: The API key is invalid, please, make sure that you are using a valid key
+    ChainsListResponse:
+      description: Response for requested list of chains
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-14'
   schemas:
-    ResponseLinks-14:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          description: URL of current resource
-          example: https://api.zerion.io/v1/chains/
-    ChainResponse:
-      type: object
-      required:
-      - links
-      - data
-      properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-15'
-        data:
-          $ref: '#/components/schemas/Container-14'
-    ContainerShort-5:
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: Fungible resource type
-          example: fungibles
-        id:
-          type: string
-          description: Fungible unique identifier
-          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
-    RPC:
-      type: object
-      description: Chain RPC servers data
-      properties:
-        internal_server_url_format:
-          type: string
-          format: url
-          description: URL with placeholders of RPC server which can be used for project purposes
-          example: https://mainnet.polygon.dev/{polygon_API_KEY}
-        public_servers_url:
-          type: array
-          description: List of URL of public RPC servers which can be used by everyone
-          items:
-            type: string
-            format: url
-            example: https://mainnet.polygon.dev
-    ResponseLinks-15:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          format: url
-          description: URL of the current chain.
-          example: https://api.zerion.io/v1/chains/polygon
-    ResponseLinks-12:
-      type: object
-      properties:
-        related:
-          type: string
-          format: url
-          example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6
-    Flags-5:
-      type: object
-      description: Various chain related boolean flags
-      required:
-      - supports_trading
-      - supports_sending
-      - supports_bridge
-      properties:
-        supports_trading:
-          type: boolean
-          description: Whether trading is supported on Zerion for this chain or not
-          example: true
-        supports_sending:
-          type: boolean
-          description: Whether sending is supported on Zerion for this chain or not
-          example: true
-        supports_bridge:
-          type: boolean
-          description: Whether bridges are supported on Zerion for this chain or not
-          example: true
     Attributes-12:
       type: object
       description: Attributes of chain resource
@@ -191,6 +197,13 @@ components:
           $ref: '#/components/schemas/RPC'
         flags:
           $ref: '#/components/schemas/Flags-5'
+    ResponseLinks-12:
+      type: object
+      properties:
+        related:
+          type: string
+          format: url
+          example: https://api.zerion.io/v1/fungibles/0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6
     Explorer:
       type: object
       required:
@@ -216,6 +229,51 @@ components:
           format: url
           description: URL leads to the explorer homepage
           example: https://explorer.mainnet.polygon.dev
+    Icon:
+      type: object
+      description: Icon related to object.
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          format: url
+          description: URL of the icon.
+          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
+    ResponseLinks-15:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          format: url
+          description: URL of the current chain.
+          example: https://api.zerion.io/v1/chains/polygon
+    ContainerShort-5:
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: Fungible resource type
+          example: fungibles
+        id:
+          type: string
+          description: Fungible unique identifier
+          example: '0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6'
+    ChainResponse:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-15'
+        data:
+          $ref: '#/components/schemas/Container-14'
     Response-14:
       type: object
       required:
@@ -228,16 +286,51 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Container-14'
-    ResponseShort:
+    Relationships-7:
       type: object
       required:
-      - links
-      - data
+      - native_fungible
       properties:
-        links:
-          $ref: '#/components/schemas/ResponseLinks-12'
-        data:
-          $ref: '#/components/schemas/ContainerShort-5'
+        native_fungible:
+          $ref: '#/components/schemas/ResponseShort'
+        wrapped_native_fungible:
+          $ref: '#/components/schemas/ResponseShort'
+    RPC:
+      type: object
+      description: Chain RPC servers data
+      properties:
+        internal_server_url_format:
+          type: string
+          format: url
+          description: URL with placeholders of RPC server which can be used for project purposes
+          example: https://mainnet.polygon.dev/{polygon_API_KEY}
+        public_servers_url:
+          type: array
+          description: List of URL of public RPC servers which can be used by everyone
+          items:
+            type: string
+            format: url
+            example: https://mainnet.polygon.dev
+    Flags-5:
+      type: object
+      description: Various chain related boolean flags
+      required:
+      - supports_trading
+      - supports_sending
+      - supports_bridge
+      properties:
+        supports_trading:
+          type: boolean
+          description: Whether trading is supported on Zerion for this chain or not
+          example: true
+        supports_sending:
+          type: boolean
+          description: Whether sending is supported on Zerion for this chain or not
+          example: true
+        supports_bridge:
+          type: boolean
+          description: Whether bridges are supported on Zerion for this chain or not
+          example: true
     Container-14:
       type: object
       required:
@@ -256,119 +349,26 @@ components:
           $ref: '#/components/schemas/Attributes-12'
         relationships:
           $ref: '#/components/schemas/Relationships-7'
-    Relationships-7:
+    ResponseLinks-14:
       type: object
       required:
-      - native_fungible
+      - self
       properties:
-        native_fungible:
-          $ref: '#/components/schemas/ResponseShort'
-        wrapped_native_fungible:
-          $ref: '#/components/schemas/ResponseShort'
-    Icon:
-      type: object
-      description: Icon related to object.
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
+        self:
+          type: string
           format: url
-          description: URL of the icon.
-          example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
-  responses:
-    SingleChainResponse:
-      description: Response for requested chain
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ChainResponse'
-    TooManyRequests:
-      description: Too many requests error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Too many requests
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Your request had been throttled
-    MalformedParameters:
-      description: Parameters are malformed
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Parameter is malformed
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Some validation errors will be described here
-    NotFoundResponse:
-      description: Resource was not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Resource was not found
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Requested resource was not found, try later
-    ChainsListResponse:
-      description: Response for requested list of chains
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-14'
-    UnauthenticatedError:
-      description: Unathenticated request
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Unauthorized Error
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: The API key is invalid, please, make sure that you are using a valid key
+          description: URL of current resource
+          example: https://api.zerion.io/v1/chains/
+    ResponseShort:
+      type: object
+      required:
+      - links
+      - data
+      properties:
+        links:
+          $ref: '#/components/schemas/ResponseLinks-12'
+        data:
+          $ref: '#/components/schemas/ContainerShort-5'
   securitySchemes:
     APIKeyBasicAuth:
       type: http

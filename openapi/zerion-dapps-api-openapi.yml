@@ -62,38 +62,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   responses:
-    TooManyRequests:
-      description: Too many requests error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                      description: Error short title
-                      example: Too many requests
-                    detail:
-                      type: string
-                      description: Long description of the error
-                      example: Your request had been throttled
-    DAppsResponse:
-      description: Response for requested list of DApps
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-18'
-    DAppResponse:
-      description: Requested DApp
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response-19'
     MalformedParameters:
       description: Parameters are malformed
       content:
@@ -114,6 +82,12 @@ components:
                       type: string
                       description: Long description of the error
                       example: Some validation errors will be described here
+    DAppResponse:
+      description: Requested DApp
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-19'
     UnauthenticatedError:
       description: Unathenticated request
       content:
@@ -134,59 +108,33 @@ components:
                       type: string
                       description: Long description of the error
                       example: The API key is invalid, please, make sure that you are using a valid key
+    DAppsResponse:
+      description: Response for requested list of DApps
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response-18'
+    TooManyRequests:
+      description: Too many requests error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Error short title
+                      example: Too many requests
+                    detail:
+                      type: string
+                      description: Long description of the error
+                      example: Your request had been throttled
   schemas:
-    Attributes-14:
-      type: object
-      description: Represents attributes of a decentralized application (DApp) corresponding to JSON API specification.
-      properties:
-        name:
-          type: string
-          description: The name of the decentralized application.
-          example: AAVE V3
-        description:
-          type: string
-          description: A brief summary or details about the decentralized application.
-          example: Earn interest, borrow assets, and build applications.
-        icon:
-          allOf:
-          - description: The URL for the application's icon.
-          - $ref: '#/components/schemas/Icon'
-        url:
-          type: string
-          format: url
-          description: Link to the DApp
-          example: https://aave.com/
-        manage_positions_url:
-          type: string
-          format: url
-          description: A link to the page for managing application positions or configurations.
-          example: https://app.aave.com/
-        external_links:
-          $ref: '#/components/schemas/ExternalLinks'
-    Container-16:
-      type: object
-      description: Represents a decentralized application (DApp).
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          description: DApps resource type.
-          example: dapps
-        id:
-          type: string
-          description: Unique identifier of the DApp.
-        attributes:
-          $ref: '#/components/schemas/Attributes-14'
-    ResponseLinks-19:
-      type: object
-      required:
-      - self
-      properties:
-        self:
-          type: string
-          description: Link to the current response
     ExternalLink:
       type: object
       required:
@@ -215,11 +163,67 @@ components:
           $ref: '#/components/schemas/ResponseLinks-19'
         data:
           $ref: '#/components/schemas/Container-16'
+    ResponseData-2:
+      type: array
+      items:
+        $ref: '#/components/schemas/Container-16'
+    Attributes-14:
+      type: object
+      description: Represents attributes of a decentralized application (DApp) corresponding to JSON API specification.
+      properties:
+        name:
+          type: string
+          description: The name of the decentralized application.
+          example: AAVE V3
+        description:
+          type: string
+          description: A brief summary or details about the decentralized application.
+          example: Earn interest, borrow assets, and build applications.
+        icon:
+          allOf:
+          - description: The URL for the application's icon.
+          - $ref: '#/components/schemas/Icon'
+        url:
+          type: string
+          format: url
+          description: Link to the DApp
+          example: https://aave.com/
+        manage_positions_url:
+          type: string
+          format: url
+          description: A link to the page for managing application positions or configurations.
+          example: https://app.aave.com/
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+    ResponseLinks-19:
+      type: object
+      required:
+      - self
+      properties:
+        self:
+          type: string
+          description: Link to the current response
     ExternalLinks:
       type: array
       description: A list of relevant URLs.
       items:
         $ref: '#/components/schemas/ExternalLink'
+    Container-16:
+      type: object
+      description: Represents a decentralized application (DApp).
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          description: DApps resource type.
+          example: dapps
+        id:
+          type: string
+          description: Unique identifier of the DApp.
+        attributes:
+          $ref: '#/components/schemas/Attributes-14'
     Response-18:
       type: object
       required:
@@ -241,10 +245,6 @@ components:
           format: url
           description: URL of the icon.
           example: https://token-icons.s3.amazonaws.com/0x0391d2021f89dc339f60fff84546ea23e337750f.png
-    ResponseData-2:
-      type: array
-      items:
-        $ref: '#/components/schemas/Container-16'
   parameters:
     Page:
       name: page
